@@ -1,70 +1,249 @@
-# Getting Started with Create React App
+# from everywhere
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+from everywhere is inspired by a Japanese folk tale called "The straw millionaire".  
+Post your item that is not to be used anymore, and exchange it with others. Keep exchanging, you may get something you have never expected in the end.  
 
-In the project directory, you can run:
+Your thing may help others, you may also be helped by others.  
+You can start from everywhere. Let's enjoy serendipity in the world!
 
-### `yarn start`
+For your reference: [Straw Millionaire](https://en.wikipedia.org/wiki/Straw_Millionaire)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## User Stories
 
-### `yarn test`
+-  **404:** As an anon/user I can see a 404 page if I try to reach a page that does not exist so that I know it's my fault
+-  **Signup:** As an anon I can sign up in the platform so that I can start saving favorite restaurants
+-  **Login:** As a user I can login to the platform so that I can see my favorite restaurants
+-  **Logout:** As a user I can logout from the platform so no one else can use it
+-  **Create profile** As a user I can add/edit personal information.
+-  **Add item** As a user I add item that I don't use anymore.(*only 1 item)
+-  **Find item** As a user I want to find/search items that I want to exchange for.
+-  **See user profile** As a user I want to see other user's profile.
+-  **Send a request** As a user I want to send a request to an another user for transaction.
+-  **Accept/Decline** As a user I want to accept/decline the request.
+-  **Send message** As a user I want to send messages to communicate other users.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+## Backlog
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Like:
+- give likes to item/user
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Favorite:
+- add item/user to favorite list
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Review:
+- add review for user
 
-### `yarn eject`
+# Client
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Routes
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- / - Homepage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- /signup - Signup form
+- /signin - Signin form
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- /user/:id -  User profile
+- /user/:id/edit -  Edit form
+- /user/:id/item -  Edit form
+- /user/:id/inbox -  Message box
+- /user/:id/inbox/:id -  Conversation
 
-## Learn More
+- /item/list -  List of items
+- /item/:id -  Detail of item
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- 404
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Pages
 
-### Code Splitting
+- Home Page (public)
+- Sign up Page (anon only)
+- Sign in Page (anon only)
+- User profile Page (public/private)
+- User profile edit Page (private)
+- User profile item upload Page (private)
+- User profile inbox Page (private)
+- Item list Page (public only)
+- Item detail Page(public only)
+- 404 Page (public)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Components
 
-### Analyzing the Bundle Size
+- App.js
+- Nav.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Landing.js
 
-### Making a Progressive Web App
+- ItemList.js
+- ItemDetail.js
+- RandomItems.js
+- SearchItem.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- UserProfile.js
+- UserEdit.js
+- UserItem.js
+- UserInbox.js
+- UserMessage.js
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## IO
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Services
 
-### `yarn build` fails to minify
+- Auth Service
+  - auth.login(user)
+  - auth.signup(user)
+  - auth.logout()
+  - auth.me()
+  - auth.getUser() // synchronous
+- Restaurant Service
+  - restaurant.list()
+  - restaurant.create(data)
+  - restaurant.detail(id)
+  - restaurant.addFavorite(id)
+  - restaurant.removeFavorite(id)   
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Server
+
+## Models
+
+User model
+
+```
+username - String // required
+email - String // required & unique
+password - String // required
+image - String  
+bio - String  
+location - String
+message - [ObjectId<Message>]
+item - [ObjectId<Item>]
+// like
+// favorites - [ObjectID<Restaurant>]
+```
+
+Item model
+
+```
+title - String // required
+description - String // required
+condition - String // required
+image - String
+user - [ObjectID<User>]
+```
+
+Message model
+
+```
+from - [ObjectID<User>] // required
+to - [ObjectID<User>] // required
+message - String // required
+accepted - Boolean
+```
+
+## API Endpoints/Backend Routes
+```
+- GET /auth/me
+- POST /auth/signup
+  - body:
+    - username
+    - email
+    - password
+- POST /auth/login
+  - body:
+    - username
+    - password
+- POST /auth/logout
+  - body: (empty)
+```
+```
+- GET /user/:id
+    - user
+
+- Patch /user/:id/user-edit
+  - body: 
+    - username
+    - bio
+    - image
+    - location
+
+- POST /user/:id/item-create
+  - body: 
+    - title
+    - description
+    - image
+    - condition
+
+- PATCH /user/:id/item-edit/:id
+  - body: 
+    - title
+    - description
+    - image
+    - condition
+
+- DELETE /user/:id/item-edit/:id/delete
+  - body: 
+    - title
+    - description
+    - image
+    - condition
+```
+```
+- GET /items
+    - items
+
+- GET /items/random
+    - items
+
+- GET /items/:id
+    - item
+
+- POST /user/:id/request
+  - body: 
+    - body
+```
+```
+- GET /user/:id/inbox
+  - messages 
+
+- GET /user/:id/inbox/:id
+  - message
+
+- POST /user/:id/inbox/:id/accept
+  - body:
+      - accepted
+
+- POST /user/:id/inbox/:id/decline
+  - body:
+      - accepted
+
+- POST /user/:id/inbox/:id/send
+  - body:
+      - body
+```
+ 
+
+## Links
+
+### Trello/Kanban
+
+[Link to your trello board](https://miro.com/app/board/o9J_kgEJKtY=/) 
+
+### Git
+
+The url to your repository and to your deployed project
+
+[Client repository Link](https://github.com/sumi0820/from-everywhere-client)
+[Server repository Link](https://github.com/sumi0820/from-everywhere-server)
+
+[Deploy Link](http://heroku.com)
+
+### Slides
+
+The url to your presentation slides
+
+[Slides Link](http://slides.com)
