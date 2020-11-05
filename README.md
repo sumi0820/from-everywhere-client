@@ -231,13 +231,17 @@ accepted - Boolean
 
 ### Trello/Kanban
 
-[Link to your trello board](https://miro.com/app/board/o9J_kgEJKtY=/) 
+[Link to Kanban board](https://miro.com/app/board/o9J_kgEJKtY=/)  
+
+### Wireframe
+[Link to Wireframe](https://www.figma.com/file/ilpxXnT6vN9Zi9hTIglnbX/Wireframing-Copy?node-id=0%3A1)  
+
 
 ### Git
 
 The url to your repository and to your deployed project
 
-[Client repository Link](https://github.com/sumi0820/from-everywhere-client)
+[Client repository Link](https://github.com/sumi0820/from-everywhere-client)  
 [Server repository Link](https://github.com/sumi0820/from-everywhere-server)
 
 [Deploy Link](http://heroku.com)
@@ -247,3 +251,4 @@ The url to your repository and to your deployed project
 The url to your presentation slides
 
 [Slides Link](http://slides.com)
+
