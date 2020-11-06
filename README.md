@@ -202,9 +202,6 @@ accepted - Boolean
 - GET /items/:id
     - item
 
-- POST /user/:id/request
-  - body: 
-    - body
 ```
 ```
 - GET /user/:id/inbox
@@ -224,6 +221,11 @@ accepted - Boolean
 - POST /user/:id/inbox/:id/send
   - body:
       - body
+
+
+- POST /user/:id/request
+  - body: 
+    - body
 ```
  
 
