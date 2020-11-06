@@ -1,58 +1,98 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import axios from "axios";
-import debounce from "lodash.debounce";
+import _ from "lodash";
 
 import { API_URL } from "../config";
 
-const sendQuery = (query) => console.log(`Querying for ${query}`);
-
 const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState(undefined);
+  const [email, setEmail] = useState(undefined);
 
-  const updateQuery = () => {
+  const updateUsernameQuery = (username) => {
     // A search query api call.
     axios
       .post(
-        `${API_URL}/input-check`,
-        { username, email },
+        `${API_URL}/input-check/user`,
+        { username },
         { withCredentials: true }
       )
       .then((response) => {
-        if (response.data == "isUser") {
-          setUsername("isUser");
-        } else if (response.data == "isEmail") {
-          setEmail("isEmail");
+        switch (response.data) {
+          case "isUser":
+            setUsername("isUser");
+            break;
+          default:
+            console.log("Available");
         }
       });
   };
 
-  const delayedQuery = useCallback(debounce(updateQuery, 300), [
-    { username, email },
-  ]);
+  const updateEmailQuery = (email) => {
+    // A search query api call.
+    console.log(email);
 
-  const onChange = (e) => {
-    let userInput = {
-      [e.target.name]: e.target.value.toLowerCase(),
-      [e.target.name]: e.target.value.toLowerCase(),
-    };
-    setUsername(userInput.username);
-    setEmail(userInput.email);
+    axios
+      .post(
+        `${API_URL}/input-check/email`,
+        { email },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        switch (response.data) {
+          case "isEmail":
+            setEmail("isEmail");
+            break;
+          default:
+            console.log("Available");
+        }
+      });
   };
 
-  useEffect(() => {
-    delayedQuery();
-    return delayedQuery.cancel;
-  }, [{ username, email }, delayedQuery]);
+  const debounceSearchUsername = useRef(
+    _.debounce((username) => {
+      updateUsernameQuery(username);
+    }, 1000)
+  );
+
+  const debounceSearchEmail = useRef(
+    _.debounce((email) => {
+      updateEmailQuery(email);
+    }, 1000)
+  );
+
+  useEffect(
+    () => {
+      if (username) {
+        setUsername(username);
+        debounceSearchUsername.current(username);
+      }
+    },
+    [username]
+  );
+  useEffect(
+    () => {
+      if (email) {
+        setEmail(email);
+        debounceSearchEmail.current(email);
+      }
+    },
+    [email]
+  );
 
   useEffect(() => {
     return onUnmount;
   }, []);
 
+  console.log(username, email);
+
   return (
     <form onSubmit={onSignUp}>
-      <input type="text" name="username" onChange={onChange} />
-      {username == "" ? (
+      <input
+        type="text"
+        name="username"
+        onChange={(e) => setUsername(e.target.value.toLowerCase())}
+      />
+      {username == "" || username == undefined ? (
         ""
       ) : username == "isUser" ? (
         <p>Username is unavailable, please choose another!</p>
@@ -60,8 +100,12 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
         <p>Username available!</p>
       )}
 
-      <input type="email" name="email" onChange={onChange} />
-      {email == "" ? (
+      <input
+        type="email"
+        name="email"
+        onChange={(e) => setEmail(e.target.value.toLowerCase())}
+      />
+      {email == "" || email == undefined ? (
         ""
       ) : email == "isEmail" ? (
         <p>Email is unavailable, please choose another!</p>

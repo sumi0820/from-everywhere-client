@@ -76,6 +76,13 @@ class App extends Component {
       });
   };
 
+  handleLogOut = (e) => {
+    e.preventDefault();
+    axios.post(`${API_URL}/logout`, {}, { withCredentials: true }).then(() => {
+      this.setState({ loggedInUser: null });
+    });
+  };
+
   handleUnmount = () => {
     this.setState({
       errorMessage: null,
@@ -118,7 +125,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Nav loggedInUser={loggedInUser} />
+        <Nav loggedInUser={loggedInUser} onLogOut={this.handleLogOut} />
         {loggedInUser ? <h5>User is: {loggedInUser.username}</h5> : null}
 
         <h1>test</h1>

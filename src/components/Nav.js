@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Nav = ({ loggedInUser }) => {
+const Nav = ({ loggedInUser, onLogOut }) => {
   return (
     <nav>
       <ul>
@@ -24,7 +24,7 @@ const Nav = ({ loggedInUser }) => {
               <Link to={`user/${loggedInUser._id}`}>Account</Link>
             </li>
             <li>
-              <Link to="/logout">Logout</Link>
+              <button onClick={onLogOut}>Logout</button>
             </li>
           </>
         )}
