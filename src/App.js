@@ -8,6 +8,8 @@ import Nav from "./components/Nav";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import Landing from "./components/Landing";
+import UserProfile from "./components/UserProfile";
+import UserCreate from "./components/UserCreate";
 
 class App extends Component {
   state = {
@@ -18,8 +20,6 @@ class App extends Component {
   handleSignUp = (e) => {
     e.preventDefault();
     const { username, email, password } = e.target;
-    console.log("test");
-    console.log(username);
 
     axios
       .post(
@@ -37,7 +37,7 @@ class App extends Component {
             loggedInUser: response.data,
           },
           () => {
-            this.props.history.push("/");
+            this.props.history.push("user/create");
           }
         );
       })
@@ -49,7 +49,6 @@ class App extends Component {
 
   handleSignIn = (e) => {
     e.preventDefault();
-    console.log("test");
 
     const { email, password } = e.target;
     axios
@@ -89,13 +88,37 @@ class App extends Component {
     });
   };
 
+  handleEditProfile = (e) => {
+    e.preventDefault();
+    const { bio, location, image } = e.target;
+    axios
+      .patch(
+        `${API_URL}/user/user-edit`,
+        {
+          // username: username.value,
+          bio: bio.value,
+          location: location.value,
+          image: image.value,
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log(response.data);
+        this.props.history.push("/");
+      })
+      .catch((err) => {
+        console.log(err.response.data.error);
+        this.setState({ errorMessage: err.response.data.error });
+      });
+  };
+
   render() {
-    console.log(this.state);
     const { loggedInUser, errorMessage } = this.state;
+    console.log(loggedInUser);
 
     return (
       <div className="App">
-        <Nav />
+        <Nav loggedInUser={loggedInUser} />
         {loggedInUser ? <h5>User is: {loggedInUser.username}</h5> : null}
 
         <h1>test</h1>
@@ -133,6 +156,23 @@ class App extends Component {
                   onChange={this.handleCleanError}
                 />
               );
+            }}
+          />
+          <Route
+            path="/user/create"
+            render={() => {
+              return (
+                <UserCreate
+                  loggedInUser={loggedInUser}
+                  onEditProfile={this.handleEditProfile}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/user/:userId"
+            render={() => {
+              return <UserProfile loggedInUser={loggedInUser} />;
             }}
           />
         </Switch>
