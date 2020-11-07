@@ -10,6 +10,7 @@ import SignIn from "./components/SignIn";
 import Landing from "./components/Landing";
 import UserProfile from "./components/UserProfile";
 import UserCreate from "./components/UserCreate";
+import UserEdit from "./components/UserEdit";
 import ItemUpload from "./components/ItemUpload";
 
 class App extends Component {
@@ -242,6 +243,19 @@ class App extends Component {
               return (
                 <UserCreate
                   loggedInUser={loggedInUser}
+                  onEditProfile={this.handleEditProfile}
+                />
+              );
+            }}
+          />
+          <Route
+            exact
+            path="/user/edit"
+            render={() => {
+              return (
+                <UserEdit
+                  loggedInUser={loggedInUser}
+                  onUnmount={this.handleUnmount}
                   onEditProfile={this.handleEditProfile}
                 />
               );
