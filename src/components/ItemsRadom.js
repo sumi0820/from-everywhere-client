@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 import { API_URL } from "../config";
 
 const ItemsRadom = () => {
@@ -24,7 +26,10 @@ const ItemsRadom = () => {
           return (
             <>
               <img src={item.image} alt="" />
-              <p key={item._id}>item.title</p>
+              <p key={item._id}>{item.name}</p>
+              <Link to={`item/${item._id}`}>
+                <button>Detail</button>
+              </Link>
             </>
           );
         })}

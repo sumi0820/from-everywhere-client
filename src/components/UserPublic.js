@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
 
-const UserProfile = ({ loggedInUser, onGoBack }) => {
+const UserProfile = (props) => {
+  const { loggedInUser, match, onGoBack } = props;
   const [user, setUser] = useState(null);
-
+  let userId = match.params.userId;
   useEffect(() => {
-    axios.get(`${API_URL}/user/${loggedInUser._id}`).then((response) => {
+    axios.get(`${API_URL}/user/${userId}`).then((response) => {
       setUser(response.data);
     });
   }, []);
-
+  console.log(loggedInUser, user);
   return (
     <div>
       {!user ? (
         <p>Loading</p>
+      ) : user._id == loggedInUser._id ? (
+        <Redirect to={`/user/${user._id}`} />
       ) : (
         <>
           <div>
@@ -23,23 +26,8 @@ const UserProfile = ({ loggedInUser, onGoBack }) => {
             <p>{user.username}</p>
             <p>{user.bio}</p>
             <p>{user.location}</p>
+          </div>
 
-            <Link to="/user/edit">Edit</Link>
-          </div>
-          <div>
-            {!user.item ? (
-              <>
-                <p>Please upload your item</p>
-                <Link to="/upload-item">Upload</Link>
-              </>
-            ) : (
-              <>
-                <img src={user.item.image} alt="item-image" />
-                <p>{user.item.name}</p>
-                <Link to="/upload-item">Edit</Link>
-              </>
-            )}
-          </div>
           <button
             onClick={() => {
               onGoBack();

@@ -9,6 +9,7 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import Landing from "./components/Landing";
 import UserProfile from "./components/UserProfile";
+import UserPublic from "./components/UserPublic";
 import UserCreate from "./components/UserCreate";
 import UserEdit from "./components/UserEdit";
 import ItemUpload from "./components/ItemUpload";
@@ -193,6 +194,10 @@ class App extends Component {
       });
   };
 
+  handleGoBack = () => {
+    this.props.history.goBack();
+  };
+
   render() {
     const { loggedInUser, errorMessage } = this.state;
     console.log(loggedInUser);
@@ -265,9 +270,29 @@ class App extends Component {
             }}
           />
           <Route
+            exact
             path="/user/:userId"
-            render={() => {
-              return <UserProfile loggedInUser={loggedInUser} />;
+            render={(routeProps) => {
+              return (
+                <UserProfile
+                  loggedInUser={loggedInUser}
+                  {...routeProps}
+                  onGoBack={this.handleGoBack}
+                />
+              );
+            }}
+          />
+          <Route
+            exact
+            path="/user/public/:userId"
+            render={(routeProps) => {
+              return (
+                <UserPublic
+                  loggedInUser={loggedInUser}
+                  {...routeProps}
+                  onGoBack={this.handleGoBack}
+                />
+              );
             }}
           />
 
@@ -300,9 +325,15 @@ class App extends Component {
           />
           <Route
             exact
-            path="/items/:itemId"
-            render={() => {
-              return <ItemDetail loggedInUser={loggedInUser} />;
+            path="/item/:itemId"
+            render={(routeProps) => {
+              return (
+                <ItemDetail
+                  loggedInUser={loggedInUser}
+                  {...routeProps}
+                  onGoBack={this.handleGoBack}
+                />
+              );
             }}
           />
         </Switch>
