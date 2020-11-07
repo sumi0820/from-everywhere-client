@@ -16,7 +16,7 @@ const UserProfile = ({ loggedInUser }) => {
   return (
     <div>
       <div>
-        <img src="{user.image}" alt="profile-image" />
+        <img src={user.image} alt="profile-image" />
         <p>{user.username}</p>
         <p>{user.bio}</p>
         <p>{user.location}</p>

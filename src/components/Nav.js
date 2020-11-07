@@ -5,21 +5,26 @@ const Nav = ({ loggedInUser, onLogOut }) => {
   return (
     <nav>
       <ul>
-        <li>Search</li>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
         {!loggedInUser ? (
-          <li>
+          <>
             <li>
-              <Link to="/sign-up">Signup</Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/sign-in">Signin</Link>
+              <li>
+                <Link to="/sign-up">Signup</Link>
+              </li>
+              <li>
+                <Link to="/sign-in">Signin</Link>
+              </li>
             </li>
-          </li>
+          </>
         ) : (
           <>
+            <li>Search</li>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
             <li>
               <Link to={`user/${loggedInUser._id}`}>Account</Link>
             </li>

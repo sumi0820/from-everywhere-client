@@ -12,6 +12,9 @@ import UserProfile from "./components/UserProfile";
 import UserCreate from "./components/UserCreate";
 import UserEdit from "./components/UserEdit";
 import ItemUpload from "./components/ItemUpload";
+import Home from "./components/Home";
+import ItemsList from "./components/ItemsList";
+import ItemDetail from "./components/ItemDetail";
 
 class App extends Component {
   state = {
@@ -267,6 +270,7 @@ class App extends Component {
               return <UserProfile loggedInUser={loggedInUser} />;
             }}
           />
+
           <Route
             exact
             path="/upload-item"
@@ -278,6 +282,27 @@ class App extends Component {
                   onEditItem={this.handleEditItem}
                 />
               );
+            }}
+          />
+          <Route
+            exact
+            path="/home"
+            render={() => {
+              return <Home loggedInUser={loggedInUser} />;
+            }}
+          />
+          <Route
+            exact
+            path="/item-list"
+            render={() => {
+              return <ItemsList loggedInUser={loggedInUser} />;
+            }}
+          />
+          <Route
+            exact
+            path="/items/:itemId"
+            render={() => {
+              return <ItemDetail loggedInUser={loggedInUser} />;
             }}
           />
         </Switch>
