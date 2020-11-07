@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const UserCreate = ({ onEditProfile }) => {
+const UserCreate = ({ onEditProfile, loggedInUser }) => {
   return (
     <div>
       <form onSubmit={onEditProfile}>
@@ -9,6 +10,7 @@ const UserCreate = ({ onEditProfile }) => {
         <input type="text" name="image" />
         <button type="submit">submit</button>
       </form>
+      <Link to={`/user/${loggedInUser}`}>Skip for now</Link>
     </div>
   );
 };

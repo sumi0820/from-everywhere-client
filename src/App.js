@@ -10,6 +10,7 @@ import SignIn from "./components/SignIn";
 import Landing from "./components/Landing";
 import UserProfile from "./components/UserProfile";
 import UserCreate from "./components/UserCreate";
+import ItemUpload from "./components/ItemUpload";
 
 class App extends Component {
   state = {
@@ -79,7 +80,14 @@ class App extends Component {
   handleLogOut = (e) => {
     e.preventDefault();
     axios.post(`${API_URL}/logout`, {}, { withCredentials: true }).then(() => {
-      this.setState({ loggedInUser: null });
+      this.setState(
+        {
+          loggedInUser: null,
+        },
+        () => {
+          this.props.history.push("/");
+        }
+      );
     });
   };
 
@@ -100,7 +108,7 @@ class App extends Component {
     const { bio, location, image } = e.target;
     axios
       .patch(
-        `${API_URL}/user/user-edit`,
+        `${API_URL}/user-edit`,
         {
           // username: username.value,
           bio: bio.value,
@@ -111,11 +119,73 @@ class App extends Component {
       )
       .then((response) => {
         console.log(response.data);
-        this.props.history.push("/");
+        this.props.history.push(`/user/${this.state.loggedInUser._id}`);
       })
       .catch((err) => {
         console.log(err.response.data.error);
         this.setState({ errorMessage: err.response.data.error });
+      });
+  };
+
+  handleCreateItem = (e) => {
+    e.preventDefault();
+    const { name, description, condition, image } = e.target;
+
+    axios
+      .post(
+        `${API_URL}/item-create`,
+        {
+          name: name.value,
+          description: description.value,
+          condition: condition.value,
+          image: image.value,
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        this.setState(
+          {
+            loggedInUser: response.data,
+          },
+          () => {
+            this.props.history.push(`/user/${this.state.loggedInUser._id}`);
+          }
+        );
+      })
+      .catch((err) => {
+        console.log(err.response.data.errorMessage);
+        this.setState({ errorMessage: err.response.data.errorMessage });
+      });
+  };
+
+  handleEditItem = (e) => {
+    e.preventDefault();
+    const { name, description, condition, image } = e.target;
+
+    axios
+      .patch(
+        `${API_URL}/item-edit`,
+        {
+          name: name.value,
+          description: description.value,
+          condition: condition.value,
+          image: image.value,
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        this.setState(
+          {
+            loggedInUser: response.data,
+          },
+          () => {
+            this.props.history.push(`/user/${this.state.loggedInUser._id}`);
+          }
+        );
+      })
+      .catch((err) => {
+        console.log(err.response.data.errorMessage);
+        this.setState({ errorMessage: err.response.data.errorMessage });
       });
   };
 
@@ -166,6 +236,7 @@ class App extends Component {
             }}
           />
           <Route
+            exact
             path="/user/create"
             render={() => {
               return (
@@ -180,6 +251,19 @@ class App extends Component {
             path="/user/:userId"
             render={() => {
               return <UserProfile loggedInUser={loggedInUser} />;
+            }}
+          />
+          <Route
+            exact
+            path="/upload-item"
+            render={() => {
+              return (
+                <ItemUpload
+                  loggedInUser={loggedInUser}
+                  onCreateItem={this.handleCreateItem}
+                  onEditItem={this.handleEditItem}
+                />
+              );
             }}
           />
         </Switch>

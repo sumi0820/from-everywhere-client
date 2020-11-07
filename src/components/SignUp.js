@@ -101,7 +101,7 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
       )}
 
       <input
-        type="email"
+        type="text"
         name="email"
         onChange={(e) => setEmail(e.target.value.toLowerCase())}
       />

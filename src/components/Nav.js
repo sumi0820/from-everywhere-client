@@ -22,6 +22,7 @@ const Nav = ({ loggedInUser, onLogOut }) => {
           <>
             <li>
               <Link to={`user/${loggedInUser._id}`}>Account</Link>
+              {/* <Link to='/user/upload-item'>Account</Link> */}
             </li>
             <li>
               <button onClick={onLogOut}>Logout</button>
