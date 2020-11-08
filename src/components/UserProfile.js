@@ -47,6 +47,7 @@ const UserProfile = ({ loggedInUser, onGoBack }) => {
           >
             X
           </button>
+          <Link to="/inbox">Inbox</Link>
         </>
       )}
     </div>

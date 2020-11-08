@@ -28,6 +28,8 @@ const UserProfile = (props) => {
             <p>{user.location}</p>
           </div>
 
+          <Link to={`/inbox/${userId}`}>Send Request</Link>
+
           <button
             onClick={() => {
               onGoBack();

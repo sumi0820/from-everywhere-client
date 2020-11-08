@@ -16,6 +16,8 @@ import ItemUpload from "./components/ItemUpload";
 import Home from "./components/Home";
 import ItemsList from "./components/ItemsList";
 import ItemDetail from "./components/ItemDetail";
+import Inbox from "./components/Inbox";
+import Chat from "./components/Chat";
 
 class App extends Component {
   state = {
@@ -26,13 +28,30 @@ class App extends Component {
 
   componentDidMount() {
     axios
-      .get(`${API_URL}/items`)
+      .get(`${API_URL}/items`, { withCredentials: true })
       .then((response) => {
         this.setState({ items: response.data });
       })
       .catch((err) => {
         console.log(err);
       });
+
+    // if (this.state.loggedInUser) {
+    //   axios
+    //     .get(
+    //       `${API_URL}/inbox/${this.state.loggedInUser._id}`,
+
+    //       { withCredentials: true }
+    //     )
+    //     .then((response) => {
+    //       console.log(response.data);
+    //       this.setState({ messages: response.data });
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // }
+
   }
 
   handleSignUp = (e) => {
@@ -210,10 +229,10 @@ class App extends Component {
     this.props.history.goBack();
   };
 
+  
+
   render() {
     const { loggedInUser, errorMessage, items } = this.state;
-    console.log(loggedInUser);
-
     return (
       <div className="App">
         <Nav loggedInUser={loggedInUser} onLogOut={this.handleLogOut} />
@@ -344,6 +363,34 @@ class App extends Component {
                   loggedInUser={loggedInUser}
                   {...routeProps}
                   onGoBack={this.handleGoBack}
+                />
+              );
+            }}
+          />
+          <Route
+            exact
+            path="/inbox"
+            render={(routeProps) => {
+              return (
+                <Inbox
+                  loggedInUser={loggedInUser}
+                  {...routeProps}
+                  onGoBack={this.handleGoBack}
+                  messages={messages}
+                />
+              );
+            }}
+          />
+          <Route
+            exact
+            path="/inbox/:userId"
+            render={(routeProps) => {
+              return (
+                <Chat
+                  loggedInUser={loggedInUser}
+                  {...routeProps}
+                  onGoBack={this.handleGoBack}
+                  // onSend={this.handleSend}
                 />
               );
             }}
