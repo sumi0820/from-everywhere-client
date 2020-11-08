@@ -53,18 +53,18 @@ const Chat = (props) => {
                       flexDirection: "column",
                       alignItems: "flex-end",
                     }}
+                    key={message._id}
                   >
                     <img src={message.from.image} alt="" />
                     <p>{message.from.username}</p>
                     <p>{message.body}</p>
                   </div>
                 ) : (
-                  <>
-                    {" "}
+                  <div key={message._id}>
                     <img src={message.from.image} alt="" />
                     <p>{message.from.username}</p>
                     <p>{message.body}</p>
-                  </>
+                  </div>
                 )}
               </>
             );

@@ -24,6 +24,7 @@ class App extends Component {
     loggedInUser: null,
     errorMessage: null,
     items: [],
+    messages: [],
   };
 
   componentDidMount() {
@@ -36,21 +37,18 @@ class App extends Component {
         console.log(err);
       });
 
-    // if (this.state.loggedInUser) {
-    //   axios
-    //     .get(
-    //       `${API_URL}/inbox/${this.state.loggedInUser._id}`,
-
-    //       { withCredentials: true }
-    //     )
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       this.setState({ messages: response.data });
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // }
+      axios
+      .get(`${API_URL}/inbox`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log("This is messages request", response.data);
+        // setMessages(response.data);
+        this.setState({messages:response.data})
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
   }
 
@@ -229,10 +227,8 @@ class App extends Component {
     this.props.history.goBack();
   };
 
-  
-
   render() {
-    const { loggedInUser, errorMessage, items } = this.state;
+    const { loggedInUser, errorMessage, items,messages } = this.state;
     return (
       <div className="App">
         <Nav loggedInUser={loggedInUser} onLogOut={this.handleLogOut} />
