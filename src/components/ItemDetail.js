@@ -36,7 +36,7 @@ const ItemDetail = (props) => {
           )}
           <p>{item.condition}</p>
           <p>{item.description}</p>
-          <Link to={`/user/public/${item.user._id}`}>
+          <Link to={`/public/${item.user._id}`}>
             <p>{item.user.username}</p>
           </Link>
           <button

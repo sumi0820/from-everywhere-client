@@ -7,6 +7,7 @@ const Chat = (props) => {
   const { loggedInUser, match, onGoBack, onSend } = props;
   let userId = match.params.userId;
   const [chat, setChat] = useState(null);
+  const [accepted, setAccepted] = useState(false)
 
   useEffect(() => {
     axios
@@ -36,13 +37,31 @@ const Chat = (props) => {
       });
   };
 
-  console.log(chat);
+  // const handleAccept = () => {
+  //   axios
+  //     .post(`${API_URL}/item/accept`,{}, { withCredentials: true })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     });
+  // };
+
   return (
     <div>
       {!chat ? (
         <p>No conversation</p>
       ) : (
         <>
+          <div>
+          {/* {!accepted ? (
+            <div>
+              <button onClick={handleAccept}>Accept</button>
+              <button>Decline</button>
+            </div>
+          ) : (
+            <p>You accepted to exchange!</p>
+          )} */}
+
+          </div>
           {chat.map((message) => {
             return (
               <>

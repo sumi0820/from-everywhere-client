@@ -6,13 +6,45 @@ import { API_URL } from "../config";
 const UserProfile = (props) => {
   const { loggedInUser, match, onGoBack } = props;
   const [user, setUser] = useState(null);
+  const [sentHi, setSentHi] = useState(false);
   let userId = match.params.userId;
   useEffect(() => {
     axios.get(`${API_URL}/user/${userId}`).then((response) => {
       setUser(response.data);
+      console.log(response.data.item);
+      if (response.data.item.hi) {
+        if (response.data.item.hi.includes(loggedInUser._id)) {
+          setSentHi(true);
+        }
+      }
     });
   }, []);
-  console.log(loggedInUser, user);
+
+  const handleSendHi = (userId) => {
+    console.log(userId);
+    axios
+      .post(`${API_URL}/send-hi/${userId}`, {}, { withCredentials: true })
+      .then((response) => {
+        console.log("This is send hi", response.data);
+        setSentHi(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  let sentHiValidation = !sentHi ? (
+    <button
+      onClick={() => {
+        handleSendHi(userId);
+      }}
+    >
+      Send Hi
+    </button>
+  ) : (
+    <p>Successfully sent</p>
+  );
+
   return (
     <div>
       {!user ? (
@@ -27,8 +59,13 @@ const UserProfile = (props) => {
             <p>{user.bio}</p>
             <p>{user.location}</p>
           </div>
+          {user.item.accepted ? (
+            <p>This item is no longer available...</p>
+          ) : (
+            sentHiValidation
+          )}
 
-          <Link to={`/inbox/${userId}`}>Send Request</Link>
+          {}
 
           <button
             onClick={() => {

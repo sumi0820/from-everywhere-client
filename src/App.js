@@ -24,32 +24,20 @@ class App extends Component {
     loggedInUser: null,
     errorMessage: null,
     items: [],
-    messages: [],
+    // messages: [],
   };
 
   componentDidMount() {
     axios
       .get(`${API_URL}/items`, { withCredentials: true })
       .then((response) => {
+        console.log("This is items request", response.data);
+
         this.setState({ items: response.data });
       })
       .catch((err) => {
         console.log(err);
       });
-
-      axios
-      .get(`${API_URL}/inbox`, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log("This is messages request", response.data);
-        // setMessages(response.data);
-        this.setState({messages:response.data})
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
   }
 
   handleSignUp = (e) => {
@@ -227,8 +215,10 @@ class App extends Component {
     this.props.history.goBack();
   };
 
+
+
   render() {
-    const { loggedInUser, errorMessage, items,messages } = this.state;
+    const { loggedInUser, errorMessage, items } = this.state;
     return (
       <div className="App">
         <Nav loggedInUser={loggedInUser} onLogOut={this.handleLogOut} />
@@ -311,7 +301,7 @@ class App extends Component {
           />
           <Route
             exact
-            path="/user/public/:userId"
+            path="/public/:userId"
             render={(routeProps) => {
               return (
                 <UserPublic
@@ -372,7 +362,6 @@ class App extends Component {
                   loggedInUser={loggedInUser}
                   {...routeProps}
                   onGoBack={this.handleGoBack}
-                  messages={messages}
                 />
               );
             }}
