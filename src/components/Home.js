@@ -1,20 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ItemsRandom from "../components/ItemsRadom";
 import ItemsLatest from "../components/ItemsLatest";
 import ItemsLocation from "../components/ItemsLocation";
 
-const Home = () => {
-  
+const Home = ({ loggedInUser, items }) => {
   return (
     <>
       <div>
-        <ItemsRandom />
+        <ItemsRandom items={items} />
       </div>
       <div>
-        <ItemsLatest />
+        <ItemsLatest items={items} />
       </div>
       <div>
-        <ItemsLocation/>
+        <ItemsLocation items={items} loggedInUser={loggedInUser}/>
       </div>
     </>
   );

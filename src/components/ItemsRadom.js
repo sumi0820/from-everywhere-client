@@ -4,18 +4,26 @@ import { Link } from "react-router-dom";
 
 import { API_URL } from "../config";
 
-const ItemsRadom = () => {
+const ItemsRadom = ({ items }) => {
   const [randomItems, setRandomItems] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${API_URL}/items/random`)
-      .then((response) => {
-        setRandomItems(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axios
+    //   .get(`${API_URL}/items/random`)
+    //   .then((response) => {
+    //     setRandomItems(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    const randomNum = (max, min) =>
+      Math.floor(Math.random() * (max - min + 1) + min);
+
+    let newRandomItems = [];
+    for (let i = 0; i < 3; i++) {
+      newRandomItems.push(items[randomNum(items.length - 1, 0)]);
+    }
+    setRandomItems(newRandomItems);
   }, []);
 
   return (

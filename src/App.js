@@ -21,7 +21,19 @@ class App extends Component {
   state = {
     loggedInUser: null,
     errorMessage: null,
+    items: [],
   };
+
+  componentDidMount() {
+    axios
+      .get(`${API_URL}/items`)
+      .then((response) => {
+        this.setState({ items: response.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   handleSignUp = (e) => {
     e.preventDefault();
@@ -72,7 +84,7 @@ class App extends Component {
             loggedInUser: response.data,
           },
           () => {
-            this.props.history.push("/");
+            this.props.history.push("/home");
           }
         );
       })
@@ -199,7 +211,7 @@ class App extends Component {
   };
 
   render() {
-    const { loggedInUser, errorMessage } = this.state;
+    const { loggedInUser, errorMessage, items } = this.state;
     console.log(loggedInUser);
 
     return (
@@ -313,14 +325,14 @@ class App extends Component {
             exact
             path="/home"
             render={() => {
-              return <Home loggedInUser={loggedInUser} />;
+              return <Home loggedInUser={loggedInUser} items={items} />;
             }}
           />
           <Route
             exact
             path="/item-list"
             render={() => {
-              return <ItemsList loggedInUser={loggedInUser} />;
+              return <ItemsList loggedInUser={loggedInUser} items={items} />;
             }}
           />
           <Route

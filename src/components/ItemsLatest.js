@@ -4,18 +4,26 @@ import { Link } from "react-router-dom";
 
 import { API_URL } from "../config";
 
-const ItemsLatest = () => {
+const ItemsLatest = ({ items }) => {
   const [latestItems, setLatestItems] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${API_URL}/items/latest`)
-      .then((response) => {
-        setLatestItems(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axios
+    //   .get(`${API_URL}/items/latest`)
+    //   .then((response) => {
+    //     setLatestItems(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    let sorted = items.sort((a, b) => {
+      return a.updatedAt - b.updatedAt;
+    });
+    if (items.length > 7) {
+      setLatestItems(sorted.slice(0, 6));
+    } else {
+      setLatestItems(sorted);
+    }
   }, []);
 
   return (
