@@ -1,5 +1,6 @@
 @import "./breakpoints.scss";
 
+
 //Random items
 
 .random__image {
@@ -28,9 +29,56 @@
     @include media("<=phone") {
         left:10%
         }
-   
 }
 
 .latest__image{
     max-height: 300px;
+}
+
+// item detail
+.itemDetail__img{
+
+    width: 100%;
+    max-height: 500px;
+    @include media("<=phone") {
+        width: 100%;
+        }
+}
+
+.itemDetail__location{
+    font-size: 20px;
+    @include media("<=phone") {
+        font-size: 15px;
+    }
+}
+
+.itemDetail__description{
+    margin-top: 10px;
+}
+
+.itemDetail__btn{
+    display:flex;
+    justify-content:center;
+}
+
+.goback{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    animation: slide 2s ease-in-out .5s infinite alternate;
+}
+
+.goback:hover {
+	box-shadow: 0 3px 0 #12978d, 0 6px 0 rgba(0,0,0,.2);
+	transform: translateY(3px);
+}
+
+.goback:active {
+	color: #ddd;
+	box-shadow: 0 0 0 #047c71, 0 0 0 rgba(0,0,0,.2);
+	transform: translateY(6px);
+	transition-duration: .1s;
 }
