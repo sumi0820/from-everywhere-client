@@ -35,6 +35,19 @@
     max-height: 300px;
 }
 
+// Location
+
+.location__header{
+    margin-left: 20px;
+    padding-bottom: 30px;
+    @include media("<=phone") {
+        text-align:center;
+        margin-bottom: 50px;
+    }
+}
+
+
+
 // item detail
 .itemDetail__img{
 
@@ -82,3 +95,9 @@
 	transform: translateY(6px);
 	transition-duration: .1s;
 }
+
+// Item List
+.itemList__container{
+    margin-top: 50px;
+}
+

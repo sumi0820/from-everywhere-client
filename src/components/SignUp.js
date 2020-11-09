@@ -126,7 +126,7 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
       <Container text>
         <Grid container>
           <Grid.Column>
-            <Form onSubmit={onSignUp}>
+            <Form onSubmit={onSignUp} className="form__form">
               <Form.Field required>
                 <label>Username</label>
                 <input

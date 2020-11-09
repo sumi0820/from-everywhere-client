@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { stack as Menu } from "react-burger-menu";
 import "./styles/Nav.scss";
 
 const Nav = ({ loggedInUser, onLogOut }) => {
-  const showSettings = (event) => {
-    event.preventDefault();
+  const [burger, setBurger] = useState(true);
+
+  const handleOnClose = () => {
+    setBurger(false);
   };
+
+  console.log(burger);
+
   return (
     // <nav>
     //   <ul>
@@ -41,19 +46,19 @@ const Nav = ({ loggedInUser, onLogOut }) => {
     //   </ul>
     <>
       {!loggedInUser ? (
-        <Menu right pageWrapId={"page-wrap"}>
-          <Link to="/" className="menu-item">
+        <Menu right isOpen={burger}>
+          <Link to="/" className="menu-item" onClick={handleOnClose}>
             Home
           </Link>
-          <Link to="/sign-up" className="menu-item">
+          <Link to="/sign-up" className="menu-item" onClick={handleOnClose}>
             Signup
           </Link>
-          <Link to="/sign-in" className="menu-item">
+          <Link to="/sign-in" className="menu-item" onClick={handleOnClose}>
             Signin
           </Link>
         </Menu>
       ) : (
-        <Menu right pageWrapId={"page-wrap"}>
+        <Menu right>
           <p className="menu-item">Search</p>
           <Link to="/home" className="menu-item">
             Home

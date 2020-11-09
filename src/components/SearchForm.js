@@ -1,19 +1,21 @@
 import React from "react";
+import {  Input, Grid } from "semantic-ui-react";
 
 const Search = ({ onQuickSearch, onSearch }) => {
   return (
-    <div>
-      <input
-        name="keyWord"
-        type="text"
-        onChange={onQuickSearch}
-        placeholder="Quick Filter"
-      />
-      <form onSubmit={onSearch}>
-        <input name="keyWord" type="text" placeholder="Search" />
-        <button type="submit">Search</button>
-      </form>
-    </div>
+    <Grid container columns={1}  relaxed stackable>
+      <Grid.Column>
+        <form onSubmit={onSearch}>
+          <Input
+            name="keyWord"
+            type="text"
+            placeholder="Search"
+            onChange={onQuickSearch}
+            icon={{ name: 'search', circular: true, link: true, type: 'submit',}}
+          />
+        </form>
+      </Grid.Column>
+    </Grid>
   );
 };
 

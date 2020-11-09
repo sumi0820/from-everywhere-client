@@ -28,7 +28,7 @@ const SignIn = ({ onSignIn, onUnmount, onChange, errorMessage }) => {
       <Container text>
         <Grid container>
           <Grid.Column>
-            <Form onSubmit={onSignIn}>
+            <Form onSubmit={onSignIn} className="form__form">
               <Form.Field>
                 <label>Email</label>
                 <input type="email" name="email" onChange={onChange} />

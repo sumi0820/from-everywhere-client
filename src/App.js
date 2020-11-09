@@ -97,7 +97,6 @@ class App extends Component {
         );
       })
       .catch((err) => {
-        console.log(err.response.data.error);
         this.setState({ errorMessage: err.response.data.error });
       });
   };
