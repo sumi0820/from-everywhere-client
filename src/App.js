@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
 import axios from "axios";
-import "./App.css";
+import "./App.scss";
 import { API_URL } from "./config";
 
 import Nav from "./components/Nav";
@@ -22,6 +22,7 @@ import Chat from "./components/Chat";
 class App extends Component {
   state = {
     loggedInUser: null,
+    // updatedUser: null,
     errorMessage: null,
     items: [],
     cloneItems: [],
@@ -166,15 +167,24 @@ class App extends Component {
         },
         { withCredentials: true }
       )
-      .then((response) => {
-        this.setState(
-          {
-            loggedInUser: response.data,
-          },
-          () => {
-            this.props.history.push(`/user/${this.state.loggedInUser._id}`);
-          }
-        );
+      .then(() => {
+        axios
+          .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
+            withCredentials: true,
+          })
+          .then((response) => {
+            let items = response.data;
+            axios
+              .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
+                withCredentials: true,
+              })
+              .then((response) => {
+                let userData = response.data;
+                this.setState({ loggedInUser: userData, items: items }, () => {
+                  this.props.history.push(`/user/${this.state.loggedInUser._id}`);
+                });
+              });
+          })
       })
       .catch((err) => {
         console.log(err.response.data.errorMessage);
@@ -198,18 +208,21 @@ class App extends Component {
         { withCredentials: true }
       )
       .then((response) => {
-        this.setState(
-          {
-            loggedInUser: response.data,
-          },
-          () => {
-            this.props.history.push(`/user/${this.state.loggedInUser._id}`);
-          }
-        );
+        let items = response.data;
+        axios
+          .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
+            withCredentials: true,
+          })
+          .then((response) => {
+            let userData = response.data;
+            this.setState({ loggedInUser: userData, items: items }, () => {
+              this.props.history.push(`/user/${this.state.loggedInUser._id}`);
+            });
+          });
       })
       .catch((err) => {
-        console.log(err.response.data.errorMessage);
-        this.setState({ errorMessage: err.response.data.errorMessage });
+        console.log(err);
+        // this.setState({ errorMessage: err.response.data.errorMessage });
       });
   };
 
@@ -217,12 +230,20 @@ class App extends Component {
     axios
       .delete(`${API_URL}/item-delete/${itemId}`, { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
-        this.props.history.push(`/user/${this.state.loggedInUser._id}`);
+        let items = response.data;
+        axios
+          .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
+            withCredentials: true,
+          })
+          .then((response) => {
+            let userData = response.data;
+            this.setState({ loggedInUser: userData, items: items }, () => {
+              this.props.history.push(`/user/${this.state.loggedInUser._id}`);
+            });
+          });
       })
       .catch((err) => {
-        console.log(err.response.data.errorMessage);
-        this.setState({ errorMessage: err.response.data.errorMessage });
+        console.log(err);
       });
   };
 
@@ -241,7 +262,7 @@ class App extends Component {
   handleSearch = (e) => {
     e.preventDefault();
     let useInput = e.target.keyWord.value.toLowerCase();
-    axios.get(`${API_URL}/search?q=${useInput}`).then((response) => {
+    axios.get(`${API_URL}/item-search/?q=${useInput}`).then((response) => {
       this.setState({ cloneItems: response.data });
     });
   };

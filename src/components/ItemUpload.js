@@ -9,26 +9,39 @@ const ItemUpload = ({
   onEditItem,
   onDeleteItem,
 }) => {
-  const [userItem, setUserItem] = useState({});
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/item/${loggedInUser.item}`, { withCredentials: true })
-      .then((response) => {
-        setUserItem(response.data);
-      });
-  }, []);
-  console.log(loggedInUser, userItem);
+  // const [userItem, setUserItem] = useState(null);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${API_URL}/item/${loggedInUser.item}`, { withCredentials: true })
+  //     .then((response) => {
+  //       setUserItem(response.data);
+  //     });
+  // }, []);
+
+  console.log(loggedInUser);
   return (
     <div>
       <form onSubmit={!loggedInUser.item ? onCreateItem : onEditItem}>
-        <input type="text" name="name" defaultValue={userItem.name} />
+        <input
+          type="text"
+          name="name"
+          defaultValue={loggedInUser.item ? loggedInUser.item.name : null}
+        />
         <textarea
           type="text"
           name="description"
-          defaultValue={userItem.description}
+          defaultValue={loggedInUser.item ? loggedInUser.item.description : null}
         />
-        <input type="text" name="condition" defaultValue={userItem.condition} />
-        <input type="text" name="image" defaultValue={userItem.image} />
+        <input
+          type="text"
+          name="condition"
+          defaultValue={loggedInUser.item ? loggedInUser.item.condition : null}
+        />
+        <input
+          type="text"
+          name="image"
+          defaultValue={loggedInUser.item ? loggedInUser.item.image : null}
+        />
         <button type="submit">
           {!loggedInUser.item ? <p>Upload</p> : <p>Edit</p>}
         </button>
@@ -37,7 +50,7 @@ const ItemUpload = ({
         <>
           <button
             onClick={() => {
-              onDeleteItem(loggedInUser.item);
+              onDeleteItem(loggedInUser.item._id);
             }}
           >
             <p>Delete</p>

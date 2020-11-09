@@ -1,7 +1,16 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import axios from "axios";
 import _ from "lodash";
+import {
+  Container,
+  Grid,
+  Button,
+  Message,
+  Form,
+  Icon,
+} from "semantic-ui-react";
 
+import "./styles/Form.scss";
 import { API_URL } from "../config";
 
 const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
@@ -60,24 +69,18 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
     }, 1000)
   );
 
-  useEffect(
-    () => {
-      if (username) {
-        setUsername(username);
-        debounceSearchUsername.current(username);
-      }
-    },
-    [username]
-  );
-  useEffect(
-    () => {
-      if (email) {
-        setEmail(email);
-        debounceSearchEmail.current(email);
-      }
-    },
-    [email]
-  );
+  useEffect(() => {
+    if (username) {
+      setUsername(username);
+      debounceSearchUsername.current(username);
+    }
+  }, [username]);
+  useEffect(() => {
+    if (email) {
+      setEmail(email);
+      debounceSearchEmail.current(email);
+    }
+  }, [email]);
 
   useEffect(() => {
     return onUnmount;
@@ -86,54 +89,100 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
   console.log(username, email);
 
   return (
-    <form onSubmit={onSignUp}>
-      <input
-        type="text"
-        name="username"
-        onChange={(e) => setUsername(e.target.value.toLowerCase())}
-      />
-      {username == "" || username == undefined ? (
-        ""
-      ) : username == "isUser" ? (
-        <p>Username is unavailable, please choose another!</p>
-      ) : (
-        <p>Username available!</p>
-      )}
+    // <form onSubmit={onSignUp}>
+    //   <input
+    //     type="text"
+    //     name="username"
+    //     onChange={(e) => setUsername(e.target.value.toLowerCase())}
+    //   />
+    //   {username == "" || username == undefined ? (
+    //     ""
+    //   ) : username == "isUser" ? (
+    //     <p>Username is unavailable, please choose another!</p>
+    //   ) : (
+    //     <p>Username available!</p>
+    //   )}
 
-      <input
-        type="text"
-        name="email"
-        onChange={(e) => setEmail(e.target.value.toLowerCase())}
-      />
-      {email == "" || email == undefined ? (
-        ""
-      ) : email == "isEmail" ? (
-        <p>Email is unavailable, please choose another!</p>
-      ) : (
-        <p>Email available!</p>
-      )}
-      <input type="password" name="password" />
+    //   <input
+    //     type="text"
+    //     name="email"
+    //     onChange={(e) => setEmail(e.target.value.toLowerCase())}
+    //   />
+    // {email == "" || email == undefined ? (
+    //   ""
+    // ) : email == "isEmail" ? (
+    //   <p>Email is unavailable, please choose another!</p>
+    // ) : (
+    //   <p>Email available!</p>
+    // )}
+    //   <input type="password" name="password" />
 
-      <button type="submit">Sign up?</button>
-      {errorMessage ? (
-        <p style={{ color: "red", fontSize: "20px" }}>{errorMessage}</p>
-      ) : null}
-    </form>
+    //   <button type="submit">Sign up?</button>
+    //   {errorMessage ? (
+    //     <p style={{ color: "red", fontSize: "20px" }}>{errorMessage}</p>
+    //   ) : null}
+    // </form>
+    <div className="form__container">
+      <Container text>
+        <Grid container>
+          <Grid.Column>
+            <Form onSubmit={onSignUp}>
+              <Form.Field required>
+                <label>Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  onChange={(e) => setUsername(e.target.value.toLowerCase())}
+                />
+              </Form.Field>
+              {username == "" || username == undefined ? (
+                ""
+              ) : username == "isUser" ? (
+                <p className="form__alert">Username is unavailable, please choose another!</p>
+              ) : (
+                <p className="form__available">Username available!</p>
+              )}
+              <Form.Field required>
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  onChange={(e) => setEmail(e.target.value.toLowerCase())}
+                />
+              </Form.Field>
+              {email == "" || email == undefined ? (
+                ""
+              ) : email == "isEmail" ? (
+                <p className="form__alert">Email is unavailable, please choose another!</p>
+              ) : (
+                <p className="form__available">Email available!</p>
+              )}
+
+              <Form.Field required>
+                <label>Password</label>
+                <input type="password" name="password" />
+              </Form.Field>
+
+              <Button className='form__button' animated type="submit" secondary>
+                <Button.Content hidden>
+                  <Icon name="sign-in" />
+                </Button.Content>
+                <Button.Content visible>Sign in</Button.Content>
+              </Button>
+
+              {errorMessage ? (
+                <Message
+                  error
+                  header="Action Forbidden"
+                  content={errorMessage}
+                />
+              ) : null}
+            </Form>
+          </Grid.Column>
+        </Grid>
+      </Container>
+    </div>
   );
 };
 
 export default SignUp;
-
-// {
-//   props.usernameStatus == "undefined" ? (
-//     ""
-//   ) : props.usernameStatus === true ? (
-//     <span className="icon is-small is-right check-icon">
-//       <Icon path={mdiAlertCircle} size={1} color="#e20f0f" />
-//     </span>
-//   ) : (
-//     <span className="icon is-small is-right check-icon">
-//       <Icon path={mdiCheck} size={1} color="#2ed400" />
-//     </span>
-//   );
-// }

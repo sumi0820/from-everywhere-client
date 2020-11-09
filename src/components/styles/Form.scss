@@ -1,0 +1,36 @@
+.form__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+}
+
+Form {
+    border-radius: 10%;
+    padding: 40px 40px 0 40px;
+}
+
+.form__button {
+    width: 100%;
+}
+
+.form__right {
+    text-align: right;
+    float: right;
+    padding: 20px 50px 0 0;
+}
+
+
+
+.form__alert {
+    color: #fa5246;
+    font-weight: 800;
+    padding-left: 5px;
+}
+
+.form__available {
+    color: #2cb67d;
+    font-weight: 800;
+    padding-left: 5px;
+}
