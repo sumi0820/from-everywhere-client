@@ -1,0 +1,18 @@
+@import "./breakpoints.scss";
+
+//Random items
+
+.random__image {
+    height: 600px;
+    width: 100%;
+    @include media("<=phone") {
+     height: 100%;
+    }
+
+}
+
+
+#random__text {
+    font-size: 24px;
+    width: 30%;
+}

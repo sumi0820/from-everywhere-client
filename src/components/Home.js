@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import ItemsRandom from "../components/ItemsRadom";
 import ItemsLatest from "../components/ItemsLatest";
 import ItemsLocation from "../components/ItemsLocation";
+import { Container } from "semantic-ui-react";
 
 const Home = ({ loggedInUser, items }) => {
   return (
@@ -9,12 +10,12 @@ const Home = ({ loggedInUser, items }) => {
       <div>
         <ItemsRandom items={items} />
       </div>
-      <div>
+      <Container>
         <ItemsLatest items={items} />
-      </div>
-      <div>
-        <ItemsLocation items={items} loggedInUser={loggedInUser}/>
-      </div>
+      </Container>
+      <Container>
+        <ItemsLocation items={items} loggedInUser={loggedInUser} />
+      </Container>
     </>
   );
 };

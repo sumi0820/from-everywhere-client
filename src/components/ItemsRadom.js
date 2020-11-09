@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import { Carousel } from "react-responsive-carousel";
+import './styles/Items.scss'
 import { API_URL } from "../config";
 
 const ItemsRadom = ({ items }) => {
@@ -27,22 +28,34 @@ const ItemsRadom = ({ items }) => {
   }, []);
 
   return (
-    <div>
-      <h1>Random Items</h1>
-      <div>
+      <Carousel
+        showArrows={true}
+        showStatus={false}
+        showThumbs={false}
+        thumbWidth={false}
+        infiniteLoop
+        autoPlay
+        
+      >
         {randomItems.map((item) => {
           return (
-            <>
-              <img src={item.image} alt="" />
-              <p key={item._id}>{item.name}</p>
-              <Link to={`item/${item._id}`}>
-                <button>Detail</button>
+            <div>
+              <Link to={`item/${item._id}`} key={item._id}>
+                <div>
+                  <img
+                    src={item.image}
+                    alt="random__item"
+                    className="random__image"
+                  />
+                </div>
+                <p className="legend" id="random__text">
+                  {item.name}
+                </p>
               </Link>
-            </>
+            </div>
           );
         })}
-      </div>
-    </div>
+      </Carousel>
   );
 };
 
