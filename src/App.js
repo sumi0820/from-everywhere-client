@@ -24,6 +24,7 @@ class App extends Component {
     loggedInUser: null,
     errorMessage: null,
     items: [],
+    cloneItems: [],
     // messages: [],
   };
 
@@ -34,6 +35,7 @@ class App extends Component {
         console.log("This is items request", response.data);
 
         this.setState({ items: response.data });
+        this.setState({ cloneItems: response.data });
       })
       .catch((err) => {
         console.log(err);
@@ -211,20 +213,46 @@ class App extends Component {
       });
   };
 
+  handleDeleteItem = (itemId) => {
+    axios
+      .delete(`${API_URL}/item-delete/${itemId}`, { withCredentials: true })
+      .then((response) => {
+        console.log(response.data);
+        this.props.history.push(`/user/${this.state.loggedInUser._id}`);
+      })
+      .catch((err) => {
+        console.log(err.response.data.errorMessage);
+        this.setState({ errorMessage: err.response.data.errorMessage });
+      });
+  };
+
   handleGoBack = () => {
     this.props.history.goBack();
   };
 
+  handleQuickSearch = (e) => {
+    let searchInput = e.target.value.toLowerCase();
+    let filteredItems = this.state.items.filter((item) => {
+      return item.name.toLowerCase().startsWith(searchInput);
+    });
+    this.setState({ cloneItems: filteredItems });
+  };
 
+  handleSearch = (e) => {
+    e.preventDefault();
+    let useInput = e.target.keyWord.value.toLowerCase();
+    axios.get(`${API_URL}/search?q=${useInput}`).then((response) => {
+      this.setState({ cloneItems: response.data });
+    });
+  };
 
   render() {
-    const { loggedInUser, errorMessage, items } = this.state;
+    const { loggedInUser, errorMessage, items, cloneItems } = this.state;
     return (
       <div className="App">
         <Nav loggedInUser={loggedInUser} onLogOut={this.handleLogOut} />
         {loggedInUser ? <h5>User is: {loggedInUser.username}</h5> : null}
 
-        <h1>test</h1>
         <Switch>
           <Route
             exact
@@ -322,6 +350,7 @@ class App extends Component {
                   loggedInUser={loggedInUser}
                   onCreateItem={this.handleCreateItem}
                   onEditItem={this.handleEditItem}
+                  onDeleteItem={this.handleDeleteItem}
                 />
               );
             }}
@@ -337,7 +366,14 @@ class App extends Component {
             exact
             path="/item-list"
             render={() => {
-              return <ItemsList loggedInUser={loggedInUser} items={items} />;
+              return (
+                <ItemsList
+                  loggedInUser={loggedInUser}
+                  items={cloneItems}
+                  onQuickSearch={this.handleQuickSearch}
+                  onSearch={this.handleSearch}
+                />
+              );
             }}
           />
           <Route
