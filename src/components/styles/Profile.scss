@@ -1,0 +1,37 @@
+// @import "./breakpoints.scss";
+
+// Profile
+
+
+.profile__bg {
+  background-image: url('https://images.pexels.com/photos/2465877/pexels-photo-2465877.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
+  height: 500px;
+  width: 100%;
+  filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.6));
+  margin-bottom: 50px;
+}
+.profile__top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .profile__photo {
+    margin-top: 150px !important;
+    object-fit: contain;
+    height: 200px;
+    border-radius: 50%;
+  }
+  .profile__top__header{
+    color: white !important;
+    font-weight: 800 !important;
+  }
+}
+
+.profile__btn__container{
+  flex-direction: column;
+  a{
+    text-decoration: none;
+    color: white !important;
+  }
+}
+
+

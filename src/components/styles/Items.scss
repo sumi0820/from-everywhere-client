@@ -50,11 +50,13 @@
 
 // item detail
 .itemDetail__img{
-
+    filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.6));
     width: 100%;
     max-height: 500px;
     @include media("<=phone") {
         width: 100%;
+        filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.6));
+
         }
 }
 
@@ -72,6 +74,7 @@
 .itemDetail__btn{
     display:flex;
     justify-content:center;
+
 }
 
 .goback{
@@ -82,6 +85,7 @@
     overflow: hidden;
     outline:none;
     animation: slide 2s ease-in-out .5s infinite alternate;
+    width: 100%;
 }
 
 .goback:hover {

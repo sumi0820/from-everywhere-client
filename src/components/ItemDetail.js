@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import {
-  Container,
-  Grid,
-  Button,
-  Message,
-  Header,
-  Icon,
-  Card,
-  Image,
-} from "semantic-ui-react";
+import { Container, Grid, Header, Icon, Image } from "semantic-ui-react";
 import "./styles/Items.scss";
 import { API_URL } from "../config";
 
@@ -76,15 +67,22 @@ const ItemDetail = (props) => {
             </Grid>
 
             <p className="itemDetail__description">{item.description}</p>
-            <div className="itemDetail__btn" > 
-            <button className="goback"
-              onClick={() => {
-                onGoBack();
-              }}
-            >
-              <Icon name="hand point left outline large" />
-            </button>
-            </div>
+            <Container>
+              <Grid columns={1} ui centered grid stackable>
+                <Grid.Row>
+                  <div className="itemDetail__btn">
+                    <button
+                      className="goback"
+                      onClick={() => {
+                        onGoBack();
+                      }}
+                    >
+                      <Icon name="hand point left outline large" />
+                    </button>
+                  </div>
+                </Grid.Row>
+              </Grid>
+            </Container>
           </Container>
         </>
       )}
