@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import {
+  Container,
+  Grid,
+  Button,
+  Message,
+  Form,
+  Icon,
+} from "semantic-ui-react";
 import { API_URL } from "../config";
 
 const ItemsLatest = ({ items }) => {
@@ -28,6 +35,14 @@ const ItemsLatest = ({ items }) => {
 
   return (
     <div>
+      <Grid>
+    <Grid.Column floated='left' width={5}>
+      <Image src='/images/wireframe/paragraph.png' />
+    </Grid.Column>
+    <Grid.Column floated='right' width={5}>
+      <Image src='/images/wireframe/paragraph.png' />
+    </Grid.Column>
+  </Grid>
       <h1>Latest Items</h1>
       <button>
         <Link to="/item-list">...</Link>
