@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { Container, Item, Image } from "semantic-ui-react";
 
 import { API_URL } from "../config";
 
@@ -29,7 +30,7 @@ const ItemsLocation = ({ loggedInUser, items }) => {
   return (
     <div>
       <h1>Near to your place</h1>
-      <div>
+      {/* <div>
         {locationItems.map((item) => {
           return (
             <>
@@ -42,7 +43,66 @@ const ItemsLocation = ({ loggedInUser, items }) => {
             </>
           );
         })}
-      </div>
+      </div> */}
+
+      <Container text>
+        <Item.Group divided>
+          {locationItems.map((item, i) => {
+            return (
+              <>
+                {i % 2 ? (
+                  <Item>
+                    <Item.Content>
+                      <Item.Header as={Link} to={`item/${item._id}`}>
+                        {item.name}
+                      </Item.Header>
+                      <Item.Meta>
+                        <span>{item.user.location}</span>
+                      </Item.Meta>
+                      <Item.Description>{item.description}</Item.Description>
+                      <Item.Extra>
+                        <Link to={`/public/${item.user._id}`}>
+                          <Image avatar circular src={item.user.image} />
+                          {item.user.username}
+                        </Link>
+                      </Item.Extra>
+                    </Item.Content>
+                    <Item.Image
+                      src={item.image}
+                      as={Link}
+                      to={`item/${item._id}`}
+                    />
+                  </Item>
+                ) : (
+                  <Item>
+                    <Item.Image
+                      src={item.image}
+                      as={Link}
+                      to={`item/${item._id}`}
+                    />
+
+                    <Item.Content>
+                      <Item.Header as={Link} to={`item/${item._id}`}>
+                        {item.name}
+                      </Item.Header>
+                      <Item.Meta>
+                        <span>{item.user.location}</span>
+                      </Item.Meta>
+                      <Item.Description>{item.description}</Item.Description>
+                      <Item.Extra>
+                        <Link to={`/public/${item.user._id}`}>
+                          <Image avatar circular src={item.user.image} />
+                          {item.user.username}
+                        </Link>
+                      </Item.Extra>
+                    </Item.Content>
+                  </Item>
+                )}
+              </>
+            );
+          })}
+        </Item.Group>
+      </Container>
     </div>
   );
 };

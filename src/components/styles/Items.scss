@@ -24,6 +24,13 @@
     margin-top: 50px !important;
 }
 
+.latest__grid {
+    @include media("<=phone") {
+        left:10%
+        }
+   
+}
+
 .latest__image{
     max-height: 300px;
 }

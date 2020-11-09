@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
+
+import { Container, Divider } from "semantic-ui-react";
 import ItemsRandom from "../components/ItemsRadom";
 import ItemsLatest from "../components/ItemsLatest";
 import ItemsLocation from "../components/ItemsLocation";
-import { Container } from "semantic-ui-react";
 
 const Home = ({ loggedInUser, items }) => {
   return (
@@ -13,6 +14,9 @@ const Home = ({ loggedInUser, items }) => {
       <div>
         <ItemsLatest items={items} />
       </div>
+      <Container >
+        <Divider />
+      </Container>
       <Container>
         <ItemsLocation items={items} loggedInUser={loggedInUser} />
       </Container>

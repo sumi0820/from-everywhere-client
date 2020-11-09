@@ -52,11 +52,10 @@ const ItemsLatest = ({ items }) => {
         </Grid>
 
 
-        <Grid container columns={3} doubling stackable>
+        <Grid container columns={3} doubling stackable >
             {latestItems.map((item) => {
               return (
-                <Grid.Column>
-
+                <Grid.Column className="latest__grid" as={Link} to={`item/${item._id}`}>
                 <Card key={item._id}>
                   <img src={item.image} style={{width:'100%', height:'200px', objectFit:'cover'}}/>
                   <Card.Content>
@@ -82,6 +81,7 @@ const ItemsLatest = ({ items }) => {
               );
             })}
         </Grid>
+
       </Container>
     </div>
   );
