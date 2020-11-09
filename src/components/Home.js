@@ -10,9 +10,9 @@ const Home = ({ loggedInUser, items }) => {
       <div>
         <ItemsRandom items={items} />
       </div>
-      <Container>
+      <div>
         <ItemsLatest items={items} />
-      </Container>
+      </div>
       <Container>
         <ItemsLocation items={items} loggedInUser={loggedInUser} />
       </Container>

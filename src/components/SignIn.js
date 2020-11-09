@@ -15,7 +15,6 @@ const SignIn = ({ onSignIn, onUnmount, onChange, errorMessage }) => {
   useEffect(() => {
     return onUnmount;
   }, []);
-
   return (
     // <form onSubmit={onSignIn}>
     //   <input type="email" name="email" onChange={onChange} />
@@ -47,11 +46,12 @@ const SignIn = ({ onSignIn, onUnmount, onChange, errorMessage }) => {
               </Button>
 
               {errorMessage ? (
-                <Message
-                  error
-                  header="Action Forbidden"
-                  content={errorMessage}
-                />
+                <>
+                  <Message negative>
+                    <Message.Header>{errorMessage}</Message.Header>
+                    <p>Please try again.</p>
+                  </Message>
+                </>
               ) : null}
             </Form>
           </Grid.Column>

@@ -138,7 +138,9 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
               {username == "" || username == undefined ? (
                 ""
               ) : username == "isUser" ? (
-                <p className="form__alert">Username is unavailable, please choose another!</p>
+                <p className="form__alert">
+                  Username is unavailable, please choose another!
+                </p>
               ) : (
                 <p className="form__available">Username available!</p>
               )}
@@ -153,7 +155,9 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
               {email == "" || email == undefined ? (
                 ""
               ) : email == "isEmail" ? (
-                <p className="form__alert">Email is unavailable, please choose another!</p>
+                <p className="form__alert">
+                  Email is unavailable, please choose another!
+                </p>
               ) : (
                 <p className="form__available">Email available!</p>
               )}
@@ -163,7 +167,7 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
                 <input type="password" name="password" />
               </Form.Field>
 
-              <Button className='form__button' animated type="submit" secondary>
+              <Button className="form__button" animated type="submit" secondary>
                 <Button.Content hidden>
                   <Icon name="sign-in" />
                 </Button.Content>
@@ -171,11 +175,10 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
               </Button>
 
               {errorMessage ? (
-                <Message
-                  error
-                  header="Action Forbidden"
-                  content={errorMessage}
-                />
+                <Message negative>
+                  <Message.Header>{errorMessage}</Message.Header>
+                  <p>Please try again.</p>
+                </Message>
               ) : null}
             </Form>
           </Grid.Column>
