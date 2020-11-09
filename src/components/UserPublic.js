@@ -60,7 +60,7 @@ const UserProfile = (props) => {
             <p>{user.location}</p>
           </div>
           {user.item.accepted ? (
-            <p>This item is no longer available...</p>
+            <p>Sorry the item no longer available...</p>
           ) : (
             sentHiValidation
           )}

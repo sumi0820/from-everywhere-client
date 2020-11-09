@@ -3,14 +3,28 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
 
-const UserProfile = ({ loggedInUser, onGoBack }) => {
+const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    axios.get(`${API_URL}/user/${loggedInUser._id}`).then((response) => {
-      setUser(response.data);
-    });
+    axios
+      .get(`${API_URL}/user/${loggedInUser._id}`, { withCredentials: true })
+      .then((response) => {
+        setUser(response.data);
+      });
   }, []);
+
+  const handleUpdate = () => {
+    axios
+      .post(
+        `${API_URL}/user/${loggedInUser._id}/update-status`,
+        {},
+        { withCredentials: true }
+      )
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
 
   return (
     <div>
@@ -33,11 +47,22 @@ const UserProfile = ({ loggedInUser, onGoBack }) => {
                 <Link to="/upload-item">Upload</Link>
               </>
             ) : (
-              <>
-                <img src={user.item.image} alt="item-image" />
-                <p>{user.item.name}</p>
-                <Link to="/upload-item">Edit</Link>
-              </>
+              <div>
+                {user && user.item.accepted ? (
+                  <>
+                    <p>Have you received the item?</p>
+                    <Link to="/upload-item">
+                      <button onClick={handleUpdate}>Yes!</button>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <img src={user.item.image} alt="item-image" />
+                    <p>{user.item.name}</p>
+                    <Link to="/upload-item">Edit</Link>
+                  </>
+                )}
+              </div>
             )}
           </div>
           <button

@@ -7,17 +7,27 @@ const Chat = (props) => {
   const { loggedInUser, match, onGoBack, onSend } = props;
   let userId = match.params.userId;
   const [chat, setChat] = useState(null);
-  const [accepted, setAccepted] = useState(false)
+  const [accepted, setAccepted] = useState(null);
+  const [item, setItem] = useState(null);
 
   useEffect(() => {
     axios
       .get(`${API_URL}/chat/${userId}`, { withCredentials: true })
       .then((response) => {
         setChat(response.data);
+        axios
+        .get(`${API_URL}/item/${loggedInUser.item}`, { withCredentials: true })
+        .then((response) => {
+          setAccepted(response.data.accepted);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       })
       .catch((err) => {
         console.log(err);
       });
+
   }, []);
 
   const handleSend = (userId, e) => {
@@ -37,14 +47,24 @@ const Chat = (props) => {
       });
   };
 
-  // const handleAccept = () => {
-  //   axios
-  //     .post(`${API_URL}/item/accept`,{}, { withCredentials: true })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     });
-  // };
+  const handleAccept = (userId) => {
+    axios
+      .post(`${API_URL}/item/${userId}/accept`, {}, { withCredentials: true })
+      .then((response) => {
+        setAccepted(true);
+        console.log(response.data);
+      });
+  };
 
+  const handleRevoke = (userId) => {
+    axios
+      .post(`${API_URL}/item/${userId}/revoke`, {}, { withCredentials: true })
+      .then((response) => {
+        setAccepted(false);
+        console.log(response.data);
+      });
+  };
+console.log(item);
   return (
     <div>
       {!chat ? (
@@ -52,17 +72,30 @@ const Chat = (props) => {
       ) : (
         <>
           <div>
-          {/* {!accepted ? (
-            <div>
-              <button onClick={handleAccept}>Accept</button>
-              <button>Decline</button>
-            </div>
-          ) : (
-            <p>You accepted to exchange!</p>
-          )} */}
-
+            {!accepted? (
+              <div>
+                <button
+                  onClick={() => {
+                    handleAccept(userId);
+                  }}
+                >
+                  Accept
+                </button>
+              </div>
+            ) : (
+              <>
+                <p>You accepted to exchange!</p>
+                <button
+                  onClick={() => {
+                    handleRevoke(userId);
+                  }}
+                >
+                  Revoke?
+                </button>
+              </>
+            )}
           </div>
-          {chat.map((message) => {
+          {chat.map((message, i) => {
             return (
               <>
                 {message.from._id == loggedInUser._id ? (
@@ -72,14 +105,14 @@ const Chat = (props) => {
                       flexDirection: "column",
                       alignItems: "flex-end",
                     }}
-                    key={message._id}
+                    key={message._id + i}
                   >
                     <img src={message.from.image} alt="" />
                     <p>{message.from.username}</p>
                     <p>{message.body}</p>
                   </div>
                 ) : (
-                  <div key={message._id}>
+                  <div key={message._id + i}>
                     <img src={message.from.image} alt="" />
                     <p>{message.from.username}</p>
                     <p>{message.body}</p>
