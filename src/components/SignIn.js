@@ -11,19 +11,11 @@ import {
 
 import "./styles/Form.scss";
 
-const SignIn = ({ onSignIn, onUnmount, onChange, errorMessage }) => {
+const SignIn = ({ onSignIn, onUnmount, onChange, errorMessage, onTest }) => {
   useEffect(() => {
     return onUnmount;
   }, []);
   return (
-    // <form onSubmit={onSignIn}>
-    //   <input type="email" name="email" onChange={onChange} />
-    //   <input type="password" name="password" onChange={onChange} />
-    //   <button type="submit">Sign in</button>
-    //   {errorMessage ? (
-    //     <p style={{ color: "red", fontSize: "20px" }}>{errorMessage}</p>
-    //   ) : null}
-    // </form>
     <div className="form__container">
       <Container text>
         <Grid container>
@@ -38,7 +30,7 @@ const SignIn = ({ onSignIn, onUnmount, onChange, errorMessage }) => {
                 <input type="password" name="password" onChange={onChange} />
               </Form.Field>
 
-              <Button className="form__button" animated type="submit" secondary>
+              <Button className="form__button goback" animated type="submit" secondary>
                 <Button.Content hidden>
                   <Icon name="sign-in" />
                 </Button.Content>
@@ -56,6 +48,20 @@ const SignIn = ({ onSignIn, onUnmount, onChange, errorMessage }) => {
             </Form>
           </Grid.Column>
         </Grid>
+        <div className="form__testMode__container goback">
+          <Button
+            className="form__button form__testMode"
+            animated
+            onClick={onTest}
+            color="linkedin"
+          >
+            <Button.Content hidden>
+              <Icon name="wrench" />
+            </Button.Content>
+            <Button.Content visible>Test Mode</Button.Content>
+          </Button>
+        </div>
+
         <div className="form__right">
           <Link to="/sign-up">Sign up?</Link>
         </div>

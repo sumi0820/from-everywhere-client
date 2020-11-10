@@ -114,7 +114,7 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
                             <Item.Image
                               src={user.item.image}
                               as={Link}
-                              to={`item/${user.item._id}`}
+                              to={`/item/${user.item._id}`}
                             />
                             <Item.Content>
                               <Item.Header
@@ -139,32 +139,35 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
               )}
             </div>
           </Container>
-          <Container>
             <Container>
               <Grid columns={1} ui centered grid stackable>
                 <Grid.Row>
                   <div className="itemDetail__btn profile__btn__container">
                     <Link to="/inbox">
-                      <Button className="profile__inbox" animated secondary>
+                      <Button className="profile__inbox goback" animated secondary>
                         <Button.Content hidden>
-                          <Icon name="mail outline" />
+                          <Icon name="mail outline large" />
                         </Button.Content>
                         <Button.Content visible>Inbox</Button.Content>
                       </Button>
                     </Link>
-                    <button
-                      className="goback"
+                    <Button
+                      className="profile__inbox goback"
+                      animated
+                      secondary
                       onClick={() => {
                         onGoBack();
                       }}
                     >
-                      <Icon name="hand point left outline large" />
-                    </button>
+                      <Button.Content hidden>
+                        <Icon name="hand point left outline large" />
+                      </Button.Content>
+                      <Button.Content visible>Go Back</Button.Content>
+                    </Button>
                   </div>
                 </Grid.Row>
               </Grid>
             </Container>
-          </Container>
         </>
       )}
     </div>

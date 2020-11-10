@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Container, Grid, Header, Icon, Image } from "semantic-ui-react";
+import {
+  Container,
+  Button,
+  Grid,
+  Header,
+  Icon,
+  Image,
+} from "semantic-ui-react";
 import "./styles/Items.scss";
 import { API_URL } from "../config";
 
@@ -71,14 +78,19 @@ const ItemDetail = (props) => {
               <Grid columns={1} ui centered grid stackable>
                 <Grid.Row>
                   <div className="itemDetail__btn">
-                    <button
-                      className="goback"
+                    <Button
+                      className="profile__inbox goback"
+                      animated
+                      secondary
                       onClick={() => {
                         onGoBack();
                       }}
                     >
-                      <Icon name="hand point left outline large" />
-                    </button>
+                      <Button.Content hidden>
+                        <Icon name="hand point left outline large" />
+                      </Button.Content>
+                      <Button.Content visible>Go Back</Button.Content>
+                    </Button>
                   </div>
                 </Grid.Row>
               </Grid>

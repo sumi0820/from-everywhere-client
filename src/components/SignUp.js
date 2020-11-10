@@ -167,7 +167,7 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
                 <input type="password" name="password" />
               </Form.Field>
 
-              <Button className="form__button" animated type="submit" secondary>
+              <Button className="form__button goback" animated type="submit" secondary>
                 <Button.Content hidden>
                   <Icon name="sign-in" />
                 </Button.Content>

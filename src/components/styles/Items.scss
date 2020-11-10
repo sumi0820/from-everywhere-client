@@ -74,7 +74,6 @@
 .itemDetail__btn{
     display:flex;
     justify-content:center;
-
 }
 
 .goback{
@@ -89,13 +88,12 @@
 }
 
 .goback:hover {
-	box-shadow: 0 3px 0 #12978d, 0 6px 0 rgba(0,0,0,.2);
+
 	transform: translateY(3px);
 }
 
 .goback:active {
-	color: #ddd;
-	box-shadow: 0 0 0 #047c71, 0 0 0 rgba(0,0,0,.2);
+
 	transform: translateY(6px);
 	transition-duration: .1s;
 }

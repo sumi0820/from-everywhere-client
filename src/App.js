@@ -101,6 +101,26 @@ class App extends Component {
       });
   };
 
+  handleTestMode = (e) => {
+    e.preventDefault();
+
+    axios
+      .post(`${API_URL}/signin-test`, {}, { withCredentials: true })
+      .then((response) => {
+        this.setState(
+          {
+            loggedInUser: response.data,
+          },
+          () => {
+            this.props.history.push("/home");
+          }
+        );
+      })
+      .catch((err) => {
+        this.setState({ errorMessage: err.response.data.error });
+      });
+  };
+
   handleLogOut = (e) => {
     e.preventDefault();
     axios.post(`${API_URL}/logout`, {}, { withCredentials: true }).then(() => {
@@ -180,10 +200,12 @@ class App extends Component {
               .then((response) => {
                 let userData = response.data;
                 this.setState({ loggedInUser: userData, items: items }, () => {
-                  this.props.history.push(`/user/${this.state.loggedInUser._id}`);
+                  this.props.history.push(
+                    `/user/${this.state.loggedInUser._id}`
+                  );
                 });
               });
-          })
+          });
       })
       .catch((err) => {
         console.log(err.response.data.errorMessage);
@@ -305,6 +327,7 @@ class App extends Component {
                   errorMessage={errorMessage}
                   onUnmount={this.handleUnmount}
                   onChange={this.handleCleanError}
+                  onTest={this.handleTestMode}
                 />
               );
             }}
