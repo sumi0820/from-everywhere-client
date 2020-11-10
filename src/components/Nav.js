@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { stack as Menu } from "react-burger-menu";
+import { Icon, Button } from "semantic-ui-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+
 import "./styles/Nav.scss";
 
 const Nav = ({ loggedInUser, onLogOut }) => {
@@ -50,6 +54,15 @@ const Nav = ({ loggedInUser, onLogOut }) => {
           <Link to="/" className="menu-item" onClick={handleOnClose}>
             Home
           </Link>
+          <Button className="profile__inbox goback " animated id="nav__btn">
+            <Button.Content hidden>
+              <FontAwesomeIcon icon={faHome} color="white"/>
+            </Button.Content>
+            <Button.Content visible>
+              <p className="nav__btn__text">Home</p>
+            </Button.Content>
+          </Button>
+
           <Link to="/sign-up" className="menu-item" onClick={handleOnClose}>
             Signup
           </Link>

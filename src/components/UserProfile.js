@@ -37,27 +37,29 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
       });
   };
 
+  const profileStyle = {
+    backgroundImage: `url(${loggedInUser.image})`,
+  };
+
   return (
     <div>
       {!user ? (
         <p>Loading</p>
       ) : (
         <>
-          <div className="profile__bg ">
-            <div className="profile__bg ">
-              <Grid container columns={1} stackable textAlign="center">
-                <div className="profile__top">
-                  <img
-                    src={user.image}
-                    alt="profile-image"
-                    className="profile__photo"
-                  />
-                  <Header as="h1" className="profile__top__header">
-                    {user.username}
-                  </Header>
-                </div>
-              </Grid>
-            </div>
+          <div className="profile__bg" style={profileStyle}>
+            <Grid container columns={1} stackable textAlign="center">
+              <div className="profile__top">
+                <img
+                  src={user.image}
+                  alt="profile-image"
+                  className="profile__photo"
+                />
+                <Header as="h1" className="profile__top__header">
+                  {user.username}
+                </Header>
+              </div>
+            </Grid>
           </div>
 
           <Container text>
@@ -139,35 +141,39 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
               )}
             </div>
           </Container>
-            <Container>
-              <Grid columns={1} ui centered grid stackable>
-                <Grid.Row>
-                  <div className="itemDetail__btn profile__btn__container">
-                    <Link to="/inbox">
-                      <Button className="profile__inbox goback" animated secondary>
-                        <Button.Content hidden>
-                          <Icon name="mail outline large" />
-                        </Button.Content>
-                        <Button.Content visible>Inbox</Button.Content>
-                      </Button>
-                    </Link>
+          <Container>
+            <Grid columns={1} ui centered grid stackable>
+              <Grid.Row>
+                <div className="itemDetail__btn profile__btn__container">
+                  <Link to="/inbox">
                     <Button
                       className="profile__inbox goback"
                       animated
                       secondary
-                      onClick={() => {
-                        onGoBack();
-                      }}
                     >
                       <Button.Content hidden>
-                        <Icon name="hand point left outline large" />
+                        <Icon name="mail outline large" />
                       </Button.Content>
-                      <Button.Content visible>Go Back</Button.Content>
+                      <Button.Content visible>Inbox</Button.Content>
                     </Button>
-                  </div>
-                </Grid.Row>
-              </Grid>
-            </Container>
+                  </Link>
+                  <Button
+                    className="profile__inbox goback"
+                    animated
+                    secondary
+                    onClick={() => {
+                      onGoBack();
+                    }}
+                  >
+                    <Button.Content hidden>
+                      <Icon name="hand point left outline large" />
+                    </Button.Content>
+                    <Button.Content visible>Go Back</Button.Content>
+                  </Button>
+                </div>
+              </Grid.Row>
+            </Grid>
+          </Container>
         </>
       )}
     </div>
