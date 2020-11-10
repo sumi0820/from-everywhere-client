@@ -29,92 +29,92 @@ const ItemsLocation = ({ loggedInUser, items }) => {
   }, []);
 
   return (
-    <div>
-      {/* <div>
-        {locationItems.map((item) => {
-          return (
-            <>
-              <img src={item.image} alt="" />
-              <p key={item._id}>{item.name}</p>
-              <p key={item._id}>{item.description}</p>
-              <Link to={`item/${item._id}`}>
-                <button>Detail</button>
-              </Link>
-            </>
-          );
-        })}
-      </div> */}
-      <Container className="location__header__container">
-        <h1 className="location__header">Near to your place</h1>
-      </Container>
+    <>
+      {!items.length ? (
+        <p>There's no item uploaded yet</p>
+      ) : (
+        <div>
+          <Container className="location__header__container">
+            <h1 className="location__header">Near to your place</h1>
+          </Container>
 
-      <Container text>
-        <Grid columns={1} container divided="vertically" stackable>
-          <Grid.Row>
-            <Item.Group divided>
-              {locationItems.map((item, i) => {
-                return (
-                  <>
-                    {i % 2 ? (
-                      <Item>
-                        <Item.Content>
-                          <Item.Header as={Link} to={`item/${item._id}`}>
-                            {item.name}
-                          </Item.Header>
-                          <Item.Meta>
-                            <span>{item.user.location}</span>
-                          </Item.Meta>
-                          <Item.Description>
-                            {item.description}
-                          </Item.Description>
-                          <Item.Extra>
-                            <Link to={`/public/${item.user._id}`}>
-                              <Image avatar circular src={item.user.image} />
-                              {item.user.username}
-                            </Link>
-                          </Item.Extra>
-                        </Item.Content>
-                        <Item.Image
-                          src={item.image}
-                          as={Link}
-                          to={`item/${item._id}`}
-                        />
-                      </Item>
-                    ) : (
-                      <Item>
-                        <Item.Image
-                          src={item.image}
-                          as={Link}
-                          to={`item/${item._id}`}
-                        />
+          <Container text>
+            <Grid columns={1} container divided="vertically" stackable>
+              <Grid.Row>
+                <Item.Group divided>
+                  {locationItems.map((item, i) => {
+                    return (
+                      <>
+                        {i % 2 ? (
+                          <Item>
+                            <Item.Content>
+                              <Item.Header as={Link} to={`item/${item._id}`}>
+                                {item.name}
+                              </Item.Header>
+                              <Item.Meta>
+                                <span>{item.user.location}</span>
+                              </Item.Meta>
+                              <Item.Description>
+                                {item.description}
+                              </Item.Description>
+                              <Item.Extra>
+                                <Link to={`/public/${item.user._id}`}>
+                                  <Image
+                                    avatar
+                                    circular
+                                    src={item.user.image}
+                                  />
+                                  {item.user.username}
+                                </Link>
+                              </Item.Extra>
+                            </Item.Content>
+                            <Item.Image
+                              src={item.image}
+                              as={Link}
+                              to={`item/${item._id}`}
+                            />
+                          </Item>
+                        ) : (
+                          <Item>
+                            <Item.Image
+                              src={item.image}
+                              as={Link}
+                              to={`item/${item._id}`}
+                            />
 
-                        <Item.Content>
-                          <Item.Header as={Link} to={`item/${item._id}`}>
-                            {item.name}
-                          </Item.Header>
-                          <Item.Meta>
-                            <span>{item.user.location}</span>
-                          </Item.Meta>
-                          <Item.Description>
-                            {item.description}
-                          </Item.Description>
-                          <Item.Extra>
-                            <Link to={`/public/${item.user._id}`}>
-                              <Image avatar circular src={item.user.image} />
-                              {item.user.username}
-                            </Link>
-                          </Item.Extra>
-                        </Item.Content>
-                      </Item>
-                    )}
-                  </>
-                );
-              })}
-            </Item.Group>
-          </Grid.Row>
-        </Grid>
-      </Container>
-    </div>
+                            <Item.Content>
+                              <Item.Header as={Link} to={`item/${item._id}`}>
+                                {item.name}
+                              </Item.Header>
+                              <Item.Meta>
+                                <span>{item.user.location}</span>
+                              </Item.Meta>
+                              <Item.Description>
+                                {item.description}
+                              </Item.Description>
+                              <Item.Extra>
+                                <Link to={`/public/${item.user._id}`}>
+                                  <Image
+                                    avatar
+                                    circular
+                                    src={item.user.image}
+                                  />
+                                  {item.user.username}
+                                </Link>
+                              </Item.Extra>
+                            </Item.Content>
+                          </Item>
+                        )}
+                      </>
+                    );
+                  })}
+                </Item.Group>
+              </Grid.Row>
+            </Grid>
+          </Container>
+        </div>
+      )}
+    </>
   );
 };
 

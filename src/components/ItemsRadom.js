@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
-import './styles/Items.scss'
+import "./styles/Items.scss";
 import { API_URL } from "../config";
 
 const ItemsRadom = ({ items }) => {
@@ -28,34 +28,39 @@ const ItemsRadom = ({ items }) => {
   }, []);
 
   return (
-      <Carousel
-        showArrows={true}
-        showStatus={false}
-        showThumbs={false}
-        thumbWidth={false}
-        infiniteLoop
-        autoPlay
-        
-      >
-        {randomItems.map((item) => {
-          return (
-            <div>
-              <Link to={`item/${item._id}`} key={item._id}>
-                <div>
-                  <img
-                    src={item.image}
-                    alt="random__item"
-                    className="random__image"
-                  />
-                </div>
-                <p className="legend" id="random__text">
-                  {item.name}
-                </p>
-              </Link>
-            </div>
-          );
-        })}
-      </Carousel>
+    <>
+      {!items.length ? (
+        <p>There's no item uploaded yet</p>
+      ) : (
+        <Carousel
+          showArrows={true}
+          showStatus={false}
+          showThumbs={false}
+          thumbWidth={false}
+          infiniteLoop
+          autoPlay
+        >
+          {randomItems.map((item) => {
+            return (
+              <div>
+                <Link to={`item/${item._id}`} key={item._id}>
+                  <div>
+                    <img
+                      src={item.image}
+                      alt="random__item"
+                      className="random__image"
+                    />
+                  </div>
+                  <p className="legend" id="random__text">
+                    {item.name}
+                  </p>
+                </Link>
+              </div>
+            );
+          })}
+        </Carousel>
+      )}
+    </>
   );
 };
 

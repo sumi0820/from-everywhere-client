@@ -20,7 +20,7 @@
 
   .profile__photo {
     margin-top: 150px !important;
-    object-fit: contain;
+    width: 200px;
     height: 200px;
     border-radius: 50%;
   }
@@ -28,7 +28,16 @@
   .profile__top__header {
     color: white !important;
     font-weight: 800 !important;
+    text-shadow:
+    1px 0 0 black,
+    0 1px 0 black,
+    -1px 0 0 black,
+    0 -1px 0 black
   }
+}
+.profile__item{
+  padding: 10px 0 15px 0;
+  
 }
 
 .profile__btn__container {

@@ -38,7 +38,7 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
   };
 
   const profileStyle = {
-    backgroundImage: `url(${loggedInUser.image})`,
+    backgroundImage: user && user.imageBg ? `url(${user.imageBg})` : loggedInUser.imageBg,
   };
 
   return (
@@ -51,7 +51,7 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
             <Grid container columns={1} stackable textAlign="center">
               <div className="profile__top">
                 <img
-                  src={user.image}
+                  src={user.imageProfile}
                   alt="profile-image"
                   className="profile__photo"
                 />
@@ -93,7 +93,7 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
             <Container>
               <Divider />
             </Container>
-            <div>
+            <div className='profile__item'>
               {!user.item ? (
                 <>
                   <p>Please upload your item</p>
@@ -141,7 +141,7 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
               )}
             </div>
           </Container>
-          <Container>
+
             <Grid columns={1} ui centered grid stackable>
               <Grid.Row>
                 <div className="itemDetail__btn profile__btn__container">
@@ -173,7 +173,6 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
                 </div>
               </Grid.Row>
             </Grid>
-          </Container>
         </>
       )}
     </div>

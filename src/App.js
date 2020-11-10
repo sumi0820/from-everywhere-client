@@ -95,10 +95,10 @@ class App extends Component {
             this.props.history.push("/home");
           }
         );
-      })
-      .catch((err) => {
-        this.setState({ errorMessage: err.response.data.error });
       });
+    // .catch((err) => {
+    //   this.setState({ errorMessage: err.response.data.error });
+    // });
   };
 
   handleTestMode = (e) => {
@@ -115,10 +115,10 @@ class App extends Component {
             this.props.history.push("/home");
           }
         );
-      })
-      .catch((err) => {
-        this.setState({ errorMessage: err.response.data.error });
       });
+    // .catch((err) => {
+    //   this.setState({ errorMessage: err.response.data.error });
+    // });
   };
 
   handleLogOut = (e) => {
@@ -149,68 +149,86 @@ class App extends Component {
 
   handleEditProfile = (e) => {
     e.preventDefault();
-    const { bio, location, image } = e.target;
-    axios
-      .patch(
-        `${API_URL}/user-edit`,
-        {
-          // username: username.value,
+    const { bio, location, imageProfile, imageBg, username, email } = e.target;
+
+    let imageProfFile = imageProfile.files[0];
+    let uploadProfForm = new FormData();
+    uploadProfForm.append("imageUrl", imageProfFile);
+
+    let imageBgFile = imageBg.files[0];
+    let uploadBgForm = new FormData();
+    uploadBgForm.append("imageUrl", imageBgFile);
+
+    axios.post(`${API_URL}/upload`, uploadProfForm).then((responseProf) => {
+      axios.post(`${API_URL}/upload`, uploadBgForm).then((responseBg) => {
+        let newProfile = {
+          username: username
+            ? username.value
+            : this.state.loggedInUser.username,
+          email: email ? email.value : this.state.loggedInUser.email,
           bio: bio.value,
           location: location.value,
-          image: image.value,
-        },
-        { withCredentials: true }
-      )
-      .then((response) => {
-        console.log(response.data);
-        this.props.history.push(`/user/${this.state.loggedInUser._id}`);
-      })
-      .catch((err) => {
-        console.log(err.response.data.error);
-        this.setState({ errorMessage: err.response.data.error });
+          imageProfile: responseProf.data.image,
+          imageBg: responseBg.data.image,
+        };
+        axios
+          .patch(`${API_URL}/user-edit`, newProfile, { withCredentials: true })
+          .then((response) => {
+            console.log(response.data);
+            this.props.history.push(`/user/${this.state.loggedInUser._id}`);
+          });
+        // .catch((err) => {
+        //   this.setState({ errorMessage: err.response.data.error });
+        // });
       });
+    });
   };
 
   handleCreateItem = (e) => {
     e.preventDefault();
     const { name, description, condition, image } = e.target;
 
-    axios
-      .post(
-        `${API_URL}/item-create`,
-        {
-          name: name.value,
-          description: description.value,
-          condition: condition.value,
-          image: image.value,
-        },
-        { withCredentials: true }
-      )
-      .then(() => {
-        axios
-          .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
-            withCredentials: true,
-          })
-          .then((response) => {
-            let items = response.data;
-            axios
-              .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
-                withCredentials: true,
-              })
-              .then((response) => {
-                let userData = response.data;
-                this.setState({ loggedInUser: userData, items: items }, () => {
-                  this.props.history.push(
-                    `/user/${this.state.loggedInUser._id}`
+    let imageFile = image.files[0];
+    let uploadForm = new FormData();
+    uploadForm.append("imageUrl", imageFile);
+    axios.post(`${API_URL}/upload`, uploadForm).then((response) => {
+      let newItem = {
+        name: name.value,
+        description: description.value,
+        condition: condition.value,
+        image: response.data.image,
+      };
+      axios
+        .post(`${API_URL}/item-create`, newItem, { withCredentials: true })
+        .then(() => {
+          axios
+            .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
+              withCredentials: true,
+            })
+            .then((response) => {
+              let items = response.data;
+              axios
+                .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
+                  withCredentials: true,
+                })
+                .then((response) => {
+                  let userData = response.data;
+                  this.setState(
+                    { loggedInUser: userData, items: items },
+                    () => {
+                      this.props.history.push(
+                        `/user/${this.state.loggedInUser._id}`
+                      );
+                    }
                   );
                 });
-              });
-          });
-      })
-      .catch((err) => {
-        console.log(err.response.data.errorMessage);
-        this.setState({ errorMessage: err.response.data.errorMessage });
-      });
+            });
+        })
+        .catch((err) => {
+          console.log(err.response.data.errorMessage);
+          this.setState({ errorMessage: err.response.data.errorMessage });
+        });
+    });
   };
 
   handleEditItem = (e) => {
@@ -353,6 +371,7 @@ class App extends Component {
                   loggedInUser={loggedInUser}
                   onUnmount={this.handleUnmount}
                   onEditProfile={this.handleEditProfile}
+                  onGoBack={this.handleGoBack}
                 />
               );
             }}
@@ -394,6 +413,7 @@ class App extends Component {
                   onCreateItem={this.handleCreateItem}
                   onEditItem={this.handleEditItem}
                   onDeleteItem={this.handleDeleteItem}
+                  onGoBack={this.handleGoBack}
                 />
               );
             }}

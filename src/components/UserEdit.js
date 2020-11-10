@@ -15,7 +15,7 @@ import {
 import "./styles/Form.scss";
 import { API_URL } from "../config";
 
-const UserEdit = ({ onEditProfile, loggedInUser, onUnmount }) => {
+const UserEdit = ({ onEditProfile, loggedInUser, onUnmount, onGoBack }) => {
   const [username, setUsername] = useState(undefined);
   const [email, setEmail] = useState(undefined);
 
@@ -90,60 +90,6 @@ const UserEdit = ({ onEditProfile, loggedInUser, onUnmount }) => {
 
   return (
     <div>
-      {/* <form onSubmit={onEditProfile}>
-        <input
-          type="text"
-          name="location"
-          defaultValue={loggedInUser.username}
-          onChange={(e) => setUsername(e.target.value.toLowerCase())}
-        />
-        {username == "" || username == undefined ? (
-          ""
-        ) : username == "isUser" ? (
-          <p>Username is unavailable, please choose another!</p>
-        ) : (
-          <p>Username available!</p>
-        )}
-
-        <input
-          type="text"
-          name="location"
-          defaultValue={loggedInUser.email}
-          onChange={(e) => setEmail(e.target.value.toLowerCase())}
-        />
-        {email == "" || email == undefined ? (
-          ""
-        ) : email == "isEmail" ? (
-          <p>Email is unavailable, please choose another!</p>
-        ) : (
-          <p>Email available!</p>
-        )}
-
-        <textarea type="text" name="bio" defaultValue={loggedInUser.bio} />
-        <input
-          type="text"
-          name="location"
-          defaultValue={loggedInUser.location}
-        />
-        <input type="text" name="image" defaultValue={loggedInUser.image} />
-
-
-
-        {username == "isUser" || email == "isEmail" ? (
-          <>
-            <button type="submit" disabled>
-              submit
-            </button>
-            <p>Username and Email need to be unique!</p>
-          </>
-        ) : (
-          <>
-            <button type="submit">submit</button>
-          </>
-        )}
-      </form>
-      <Link to={`/user/${loggedInUser}`}>X</Link> */}
-
       <div className="form__container">
         <Container text>
           <Grid container>
@@ -208,37 +154,57 @@ const UserEdit = ({ onEditProfile, loggedInUser, onUnmount }) => {
                   <Grid.Column>
                     <Form.Field>
                       <label>Profile Image</label>
-                      <Input type="file" name="image-profile" />
+                      <Input type="file" name="imageProfile" />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column>
                     <Form.Field>
                       <label>Background Image</label>
-                      <Input type="file" name="image-bg" />
+                      <Input type="file" name="imageBg" />
                     </Form.Field>
                   </Grid.Column>
                 </Grid>
-                
-                <Button
-                  className="form__button goback"
-                  animated
-                  type="submit"
-                  secondary
-                >
-                  <Button.Content hidden>
-                    <Icon name="sign-in" />
-                  </Button.Content>
-                  <Button.Content visible>Sign in</Button.Content>
-                </Button>
-                {/* 
-                {errorMessage ? (
-                  <Message negative>
-                    <Message.Header>{errorMessage}</Message.Header>
-                    <p>Please try again.</p>
-                  </Message>
-                ) : null} */}
+
+                <Grid columns={1} ui centered grid stackable>
+                  <Grid.Row>
+                    <div className="itemDetail__btn profile__btn__container">
+                      <Button
+                        className="form__button goback "
+                        animated
+                        type="submit"
+                        secondary
+                      >
+                        <Button.Content hidden>
+                          <Icon name="edit outline" />
+                        </Button.Content>
+                        <Button.Content visible>Update</Button.Content>
+                      </Button>
+                    </div>
+                  </Grid.Row>
+                </Grid>
               </Form>
             </Grid.Column>
+          </Grid>
+        </Container>
+        <Container text className='form__edit__container'>
+          <Grid columns={1} ui centered grid stackable>
+            <Grid.Row>
+              <div className="itemDetail__btn profile__btn__container">
+                <Button
+                  className="profile__inbox goback"
+                  animated
+                  secondary
+                  onClick={() => {
+                    onGoBack();
+                  }}
+                >
+                  <Button.Content hidden>
+                    <Icon name="hand point left outline large" />
+                  </Button.Content>
+                  <Button.Content visible>Go Back</Button.Content>
+                </Button>
+              </div>
+            </Grid.Row>
           </Grid>
         </Container>
       </div>
