@@ -178,10 +178,10 @@ class App extends Component {
           .then((response) => {
             console.log(response.data);
             this.props.history.push(`/user/${this.state.loggedInUser._id}`);
-          });
-        // .catch((err) => {
-        //   this.setState({ errorMessage: err.response.data.error });
-        // });
+          })
+        .catch((err) => {
+          this.setState({ errorMessage: err.response.data.error });
+        });
       });
     });
   };

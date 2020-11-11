@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { List, Container, Image, Grid } from "semantic-ui-react";
+import { List, Button, Image, Icon } from "semantic-ui-react";
 
 import { API_URL } from "../config";
 import MessageForm from "./MessageForm";
@@ -17,10 +17,11 @@ const Chat = (props) => {
   } = props;
   // let userId = match.params.userId;
   const [chat, setChat] = useState(initialChat);
-  const [accepted, setAccepted] = useState(initialAccepted);
+  const [accepted, setAccepted] = useState(null);
   const [item, setItem] = useState(null);
 
   let chatCheck = !chat ? initialChat : chat;
+  let acceptedStatus = accepted == null ? initialAccepted : accepted;
   console.log(selectedUser);
   // useEffect(() => {
   //   axios
@@ -56,7 +57,7 @@ const Chat = (props) => {
       )
       .then((response) => {
         setChat(response.data);
-        console.log(response.data)
+        console.log(response.data);
       });
   };
 
@@ -80,156 +81,94 @@ const Chat = (props) => {
 
   return (
     <div>
-        {!chatCheck ? (
-          <div className="chat__noChat">
-            <p className="chat__noChat__text">Please select conversation</p>
-          </div>
-        ) : (
-          <>
-            <div className="inbox__chatBox__header">
-              <List divided relaxed style={{ marginTop: "20px" }}>
-                <List.Item>
-                  <Image avatar src={selectedUser.imageProfile} />
-                  <List.Content>
-                    <List.Header as="h3">{selectedUser.username}</List.Header>
-                  </List.Content>
-                </List.Item>
-              </List>
-              {!accepted ? (
-                <div>
-                  <button
-                    onClick={() => {
-                      handleAccept(selectedUser._id);
-                    }}
-                  >
-                    Accept
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <p>You accepted to exchange!</p>
-                  <button
-                    onClick={() => {
-                      handleRevoke(selectedUser._id);
-                    }}
-                  >
-                    Revoke?
-                  </button>
-                </>
-              )}
-            </div>
-            <div className="inbox__chatBox__container">
-              {chatCheck.map((message, i) => {
-                return (
-                  <>
-                    {message.from._id == loggedInUser._id ? (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "flex-end",
-                        }}
-                        key={message._id + i}
-                        className="inbox__me"
-                      >
-                        <div className="inbox__entete">
-                          <h2>{message.from.username}</h2>
-                        </div>
-                        <div className="inbox__triangle"></div>
-                        <p className="inbox__text">{message.body}</p>
-                      </div>
-                    ) : (
-                      <div key={message._id + i} className="inbox__you">
-                        <div className="inbox__entete">
-                          <h2>{message.from.username}</h2>
-                        </div>
-                        <div className="inbox__triangle"></div>
-                        <p className="inbox__text">{message.body}</p>
-                      </div>
-                    )}
-                  </>
-                );
-              })}
-            </div>
-          </>
-        )}
-        <MessageForm onSend={handleSend} />
-      <div className="chat__mobile__container">
       {!chatCheck ? (
-          <div className="chat__noChat">
-            <p className="chat__noChat__text">Please select conversation</p>
+        <div className="chat__noChat">
+          <p className="chat__noChat__text">Please select conversation</p>
+        </div>
+      ) : (
+        <>
+          <div className="inbox__chatBox__header">
+            <List divided relaxed style={{ marginTop: "20px" }}>
+              <List.Item>
+                <Image avatar src={selectedUser.imageProfile} />
+                <List.Content>
+                  <List.Header as="h3">{selectedUser.username}</List.Header>
+                </List.Content>
+              </List.Item>
+            </List>
+            {!acceptedStatus ? (
+              <div>
+                <Button
+                  className="form__button goback"
+                  animated
+                  type="submit"
+                  secondary
+                  onClick={() => {
+                    handleAccept(selectedUser._id);
+                  }}
+                >
+                  <Button.Content hidden>
+                    <Icon name="check square outline" />
+                  </Button.Content>
+                  <Button.Content visible>Accept</Button.Content>
+                </Button>
+              </div>
+            ) : (
+              <div className="inbox__chatBox__revoke">
+                <Button
+                  className="form__button goback"
+                  animated
+                  type="submit"
+                  color="google plus"
+                  onClick={() => {
+                    handleRevoke(selectedUser._id);
+                  }}
+                >
+                  <Button.Content hidden>
+                    <Icon name="cancel" />
+                  </Button.Content>
+                  <Button.Content visible>Revoke</Button.Content>
+                </Button>
+                <p>You accepted to exchange!</p>
+              </div>
+            )}
           </div>
-        ) : (
-          <>
-            <div className="inbox__chatBox__header">
-              <List divided relaxed style={{ marginTop: "20px" }}>
-                <List.Item>
-                  <Image avatar src={selectedUser.imageProfile} />
-                  <List.Content>
-                    <List.Header as="h3">{selectedUser.username}</List.Header>
-                  </List.Content>
-                </List.Item>
-              </List>
-              {!accepted ? (
-                <div>
-                  <button
-                    onClick={() => {
-                      handleAccept(selectedUser._id);
-                    }}
-                  >
-                    Accept
-                  </button>
-                </div>
-              ) : (
+          <div className="inbox__chatBox__container">
+            {chatCheck.map((message, i) => {
+              return (
                 <>
-                  <p>You accepted to exchange!</p>
-                  <button
-                    onClick={() => {
-                      handleRevoke(selectedUser._id);
-                    }}
-                  >
-                    Revoke?
-                  </button>
+                  {message.from._id == loggedInUser._id ? (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-end",
+                      }}
+                      key={message._id + i}
+                      className="inbox__me"
+                    >
+                      <div className="inbox__entete">
+                        <h2>{message.from.username}</h2>
+                      </div>
+                      <div className="inbox__triangle"></div>
+                      <p className="inbox__text">{message.body}</p>
+                    </div>
+                  ) : (
+                    <div key={message._id + i} className="inbox__you">
+                      <div className="inbox__entete">
+                        <h2>{message.from.username}</h2>
+                      </div>
+                      <div className="inbox__triangle"></div>
+                      <p className="inbox__text">{message.body}</p>
+                    </div>
+                  )}
                 </>
-              )}
-            </div>
-            <div className="inbox__chatBox__container">
-              {chatCheck.map((message, i) => {
-                return (
-                  <>
-                    {message.from._id == loggedInUser._id ? (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "flex-end",
-                        }}
-                        key={message._id + i}
-                        className="inbox__me"
-                      >
-                        <div className="inbox__entete">
-                          <h2>{message.from.username}</h2>
-                        </div>
-                        <div className="inbox__triangle"></div>
-                        <p className="inbox__text">{message.body}</p>
-                      </div>
-                    ) : (
-                      <div key={message._id + i} className="inbox__you">
-                        <div className="inbox__entete">
-                          <h2>{message.from.username}</h2>
-                        </div>
-                        <div className="inbox__triangle"></div>
-                        <p className="inbox__text">{message.body}</p>
-                      </div>
-                    )}
-                  </>
-                );
-              })}
-            </div>
-          </>
-        )}
-        <MessageForm selectedUserId={selectedUser._id} onSend={handleSend} />
-      </div>
+              );
+            })}
+          </div>
+        </>
+      )}
+      <MessageForm onSend={handleSend} />
     </div>
   );
 };

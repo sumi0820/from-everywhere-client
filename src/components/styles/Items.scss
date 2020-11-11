@@ -6,43 +6,45 @@
 .random__image {
     // width:100%;
     object-fit: contain;
-    height:400px;
+    height: 400px;
+
     @include media("<=phone") {
-     height: 300px;
+        height: 300px;
     }
 }
 
 #random__text {
     font-size: 24px;
-    
+
     @include media("<=phone") {
-    font-size: 14px;
-    width: 30%;
+        font-size: 14px;
+        width: 30%;
     }
 }
 
 // Latest
-.items__container{
+.items__container {
     margin-top: 50px !important;
 }
 
 .latest__grid {
     @include media("<=phone") {
-        left:10%
-        }
+        left: 10%
+    }
 }
 
-.latest__image{
+.latest__image {
     max-height: 300px;
 }
 
 // Location
 
-.location__header{
+.location__header {
     margin-left: 20px;
     padding-bottom: 30px;
+
     @include media("<=phone") {
-        text-align:center;
+        text-align: center;
         margin-bottom: 50px;
     }
 }
@@ -50,56 +52,62 @@
 
 
 // item detail
-.itemDetail__img{
-    filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.6));
-    width: 100%;
-    max-height: 500px;
-    @include media("<=phone") {
-        width: 100%;
-        filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.6));
-
-        }
+.itemDetail__img__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.itemDetail__location{
+.itemDetail__img {
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.6));
+    object-fit: contain;
+    max-height: 500px;
+
+    @include media("<=phone") {
+        width: 100%;
+        filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.6));
+    }
+}
+
+.itemDetail__location {
     font-size: 20px;
+
     @include media("<=phone") {
         font-size: 15px;
     }
 }
 
-.itemDetail__description{
+.itemDetail__description {
     margin-top: 10px;
 }
 
-.itemDetail__btn{
+.itemDetail__btn {
     margin-top: 15px;
 }
 
-.goback{
+.goback {
     background-color: Transparent;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     border: none;
-    cursor:pointer;
+    cursor: pointer;
     overflow: hidden;
-    outline:none;
+    outline: none;
     animation: slide 2s ease-in-out .5s infinite alternate;
     width: 100%;
 }
 
 .goback:hover {
 
-	transform: translateY(3px);
+    transform: translateY(3px);
 }
 
 .goback:active {
 
-	transform: translateY(6px);
-	transition-duration: .1s;
+    transform: translateY(6px);
+    transition-duration: .1s;
 }
 
 // Item List
-.itemList__container{
+.itemList__container {
     margin-top: 50px;
 }
-

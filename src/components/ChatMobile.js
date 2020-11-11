@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { List, Container, Image, Grid } from "semantic-ui-react";
+import { List, Button, Image, Icon } from "semantic-ui-react";
 
 import { API_URL } from "../config";
 import MessageForm from "./MessageForm";
@@ -16,14 +16,16 @@ const Chat = (props) => {
   } = props;
   // let userId = match.params.userId;
   const [chat, setChat] = useState(initialChat);
-  const [accepted, setAccepted] = useState(initialAccepted);
-  const [receiver, setReceiver] = useState(null)
+  const [accepted, setAccepted] = useState(null);
+  const [receiver, setReceiver] = useState(null);
   const [item, setItem] = useState(null);
 
   let chatCheck = !chat ? initialChat : chat;
+  let acceptedStatus = accepted == null ? initialAccepted : accepted;
+
   console.log(selectedUser);
 
-  const handleSend = ( e) => {
+  const handleSend = (e) => {
     e.preventDefault();
     console.log(selectedUser);
 
@@ -37,7 +39,7 @@ const Chat = (props) => {
         { withCredentials: true }
       )
       .then((response) => {
-        setReceiver(selectedUser)
+        setReceiver(selectedUser);
         setChat(response.data);
       });
   };
@@ -63,42 +65,58 @@ const Chat = (props) => {
   return (
     <div>
       <div className="chat__mobile__container">
-      {!chatCheck ? (
+        {!chatCheck ? (
           <div className="chat__noChat">
             <p className="chat__noChat__text">Please select conversation</p>
           </div>
         ) : (
           <>
-            <div className="inbox__chatBox__header">
+            <div className="chat__mobile__header">
               <List divided relaxed style={{ marginTop: "20px" }}>
                 <List.Item>
-                  <Image avatar src={!selectedUser ? receiver.imageProfile : selectedUser.imageProfile} />
-                  <List.Content>
-                    <List.Header as="h3">{!selectedUser ? receiver.username : selectedUser.username}</List.Header>
-                  </List.Content>
+                  <Image
+                    avatar
+                    src={
+                      !selectedUser
+                        ? receiver.imageProfile
+                        : selectedUser.imageProfile
+                    }
+                    size="tiny"
+                  />
                 </List.Item>
               </List>
-              {!accepted ? (
-                <div>
-                  <button
+              {!acceptedStatus ? (
+                <div  className='inbox__chatBox__header__btn'>
+                  <Button
+                    animated
+                    type="submit"
+                    secondary
                     onClick={() => {
-                      handleAccept(!selectedUser ? receiver._id : selectedUser._id);
+                      handleAccept(selectedUser._id);
                     }}
                   >
-                    Accept
-                  </button>
+                    <Button.Content hidden>
+                      <Icon name="check square outline" />
+                    </Button.Content>
+                    <Button.Content visible>Accept</Button.Content>
+                  </Button>
                 </div>
               ) : (
-                <>
-                  <p>You accepted to exchange!</p>
-                  <button
+                <div className='inbox__chatBox__header__btn'>
+                  <Button
+                    animated
+                    type="submit"
+                    color="google plus"
                     onClick={() => {
-                      handleRevoke(!selectedUser ? receiver._id : selectedUser._id);
+                      handleRevoke(selectedUser._id);
                     }}
                   >
-                    Revoke?
-                  </button>
-                </>
+                    <Button.Content hidden>
+                      <Icon name="cancel" />
+                    </Button.Content>
+                    <Button.Content visible>Revoke</Button.Content>
+                  </Button>
+                </div>
               )}
             </div>
             <div className="inbox__chatBox__container">
@@ -136,10 +154,14 @@ const Chat = (props) => {
             </div>
           </>
         )}
-        <MessageForm selectedUserId={!selectedUser ? receiver._id : selectedUser._id} onSend={handleSend} />
+        <MessageForm
+          selectedUserId={!selectedUser ? receiver._id : selectedUser._id}
+          onSend={handleSend}
+        />
       </div>
     </div>
   );
 };
 
 export default Chat;
+

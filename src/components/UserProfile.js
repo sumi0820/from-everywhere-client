@@ -148,8 +148,8 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
           <Grid columns={1} ui centered grid stackable>
             <Grid.Row>
               <div className="itemDetail__btn profile__btn__container">
-                <Link to="/inbox">
-                  <Button className="profile__inbox goback" animated secondary>
+                <Link to="/inbox" >
+                  <Button className="profile__inbox goback" animated secondary style={{marginBottom:'10px'}}>
                     <Button.Content hidden>
                       <Icon name="mail outline large" />
                     </Button.Content>

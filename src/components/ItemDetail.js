@@ -36,14 +36,16 @@ const ItemDetail = (props) => {
         <p>Loading</p>
       ) : (
         <>
-          <Container text
-            style={{ marginTop: "30px", height: "500px", objectFit: "contain" }}
+          <Container
+            style={{ marginTop: "30px", maxHeight: "500px", objectFit: "contain", marginBottom:'20px'}}
           >
-            <img
-              src={item.image}
-              alt="itemDetail__img"
-              className="itemDetail__img"
-            />
+            <div className="itemDetail__img__container">
+              <img
+                src={item.image}
+                alt="itemDetail__img"
+                className="itemDetail__img"
+              />
+            </div>
           </Container>
 
           <Container text>
