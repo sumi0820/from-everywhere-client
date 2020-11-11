@@ -246,7 +246,7 @@ The url to your repository and to your deployed project
 [Client repository Link](https://github.com/sumi0820/from-everywhere-client)  
 [Server repository Link](https://github.com/sumi0820/from-everywhere-server)
 
-[Deploy Link](http://heroku.com)
+[Deploy Link](https://from-everywhere.herokuapp.com/)
 
 ### Slides
 
