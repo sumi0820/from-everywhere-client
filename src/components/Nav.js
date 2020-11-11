@@ -8,46 +8,26 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 import "./styles/Nav.scss";
 
 const Nav = ({ loggedInUser, onLogOut }) => {
-  const [burger, setBurger] = useState(true);
+  const [burger, setBurger] = useState(false);
+
+  const handleOnOpen = () =>{
+    if(!burger) {
+      setBurger(true)
+      console.log(burger);
+    }
+    
+  }
 
   const handleOnClose = () => {
-    setBurger(false);
+    if(burger) {
+      setBurger(false)
+      console.log(burger);
+    }
   };
 
-  console.log(burger);
 
   return (
-    // <nav>
-    //   <ul>
-    //     {!loggedInUser ? (
-    //       <>
-    //         <li>
-    //           <Link to="/">Home</Link>
-    //         </li>
-    //         <li>
-    //           <li>
-    //             <Link to="/sign-up">Signup</Link>
-    //           </li>
-    //           <li>
-    //             <Link to="/sign-in">Signin</Link>
-    //           </li>
-    //         </li>
-    //       </>
-    //     ) : (
-    //       <>
-    //         <li>Search</li>
-    //         <li>
-    //           <Link to="/home">Home</Link>
-    //         </li>
-    //         <li>
-    //           <Link to={`user/${loggedInUser._id}`}>Account</Link>
-    //         </li>
-    //         <li>
-    //           <button onClick={onLogOut}>Logout</button>
-    //         </li>
-    //       </>
-    //     )}
-    //   </ul>
+
     <>
       {!loggedInUser ? (
         <Menu right isOpen={burger}>
@@ -63,23 +43,44 @@ const Nav = ({ loggedInUser, onLogOut }) => {
             </Button.Content>
           </Button> */}
 
-          <Link to="/sign-up" className="menu-item" onClick={handleOnClose}>
+          <Link to="/sign-up" className="menu-item" onClick={() =>{
+            handleOnOpen()
+            handleOnClose()
+          }}>
             Signup
           </Link>
-          <Link to="/sign-in" className="menu-item" onClick={handleOnClose}>
+          <Link to="/sign-in" className="menu-item" onClick={() =>{
+            handleOnOpen()
+            handleOnClose()
+          }}>
             Signin
           </Link>
         </Menu>
       ) : (
         <Menu right>
           <p className="menu-item">Search</p>
-          <Link to="/home" className="menu-item">
+          <Link to="/home" className="menu-item" onClick={() =>{
+            handleOnOpen()
+            handleOnClose()
+          }}>
             Home
           </Link>
-          <Link to={`/user/${loggedInUser._id}`} className="menu-item">
+          <Link to={`/user/${loggedInUser._id}`} className="menu-item" onClick={() =>{
+            handleOnOpen()
+            handleOnClose()
+          }}>
             Account
           </Link>
-          <button onClick={onLogOut} className="menu-item">
+          <Link to={`/inbox/${loggedInUser._id}`} className="menu-item" onClick={() =>{
+            handleOnOpen()
+            handleOnClose()
+          }}>
+            Inbox
+          </Link>
+          <button onClick={onLogOut} className="menu-item" onClick={() =>{
+            handleOnOpen()
+            handleOnClose()
+          }}>
             Logout
           </button>
         </Menu>
