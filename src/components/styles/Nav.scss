@@ -1,3 +1,5 @@
+@import "./breakpoints.scss";
+
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
@@ -10,6 +12,10 @@
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
   background: #373a47;
+      @include media("<=phone") {
+      background: #1F88BE;
+
+    }
 }
 
 /* Color/shape of burger icon bars on hover*/

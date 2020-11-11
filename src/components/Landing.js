@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Container, Grid, Button, Icon } from "semantic-ui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { TweenMax, Power3 } from "gsap";
 
 import "./styles/Landing.scss";
 
@@ -15,6 +16,11 @@ class Landing extends React.Component {
   afterLoad(origin, destination, direction) {
     console.log("After load: " + destination.index);
   }
+  componentDidMount() {
+
+
+  }
+
   render() {
     return (
       <ReactFullpage
@@ -28,14 +34,14 @@ class Landing extends React.Component {
               <div className="section section1">
                 <Container>
                   <div className="sec1__container">
-                    <h1>from everywhere</h1>
+                    <h1 id='sec1__header'>from everywhere</h1>
                     <div className="sec1__content">
                       <Grid columns={2} container doubling stackable>
                         <Grid.Column
                           width={10}
                           style={{ display: "flex", alignItems: "center" }}
                         >
-                          <p>
+                          <p id='sec1__header'>
                             Lorem, ipsum dolor sit amet consectetur adipisicing
                             elit. Facere, quis dicta ipsa ipsam omnis nesciunt
                             impedit quidem quibusdam est nemo? Natus, vel!
@@ -47,6 +53,7 @@ class Landing extends React.Component {
                           <img
                             src="https://res.cloudinary.com/djct87vbj/image/upload/v1605094483/original_cb6fc0b556c5151ccb1480c27f96a81c_wcreh2.jpg"
                             alt="landing__img01"
+                            
                           />
                         </Grid.Column>
                       </Grid>

@@ -106,18 +106,7 @@ const Nav = ({ loggedInUser, onLogOut, onSearch }) => {
         </Menu>
       ) : (
         <Menu right isOpen={burger}>
-          <Grid container columns={1} centered stackable className="menu-item">
-            <Grid.Column>
-              <form onSubmit={onSearch} style={{display:'flex', justifyContent:'center'}}>
-                <Input
-                  name="keyWord"
-                  type="text"
-                  action={{ icon: "search", type: "submit" }}
-                  placeholder="Search"
-                />
-              </form>
-            </Grid.Column>
-          </Grid>
+
           <Link
             to="/home"
             className="menu-item"
@@ -195,6 +184,18 @@ const Nav = ({ loggedInUser, onLogOut, onSearch }) => {
               </Button.Content>
             </Button>
           </Link>
+                    <Grid container columns={1} centered stackable className="menu-item">
+            <Grid.Column>
+              <form onSubmit={onSearch} style={{display:'flex', justifyContent:'center'}}>
+                <Input
+                  name="keyWord"
+                  type="text"
+                  action={{ icon: "search", type: "submit" }}
+                  placeholder="Search"
+                />
+              </form>
+            </Grid.Column>
+          </Grid>
         </Menu>
       )}
     </>
