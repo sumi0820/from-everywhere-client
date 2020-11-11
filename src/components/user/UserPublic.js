@@ -10,8 +10,8 @@ import {
   Item,
   Divider,
 } from "semantic-ui-react";
-import "./styles/Profile.scss";
-import { API_URL } from "../config";
+import "../styles/Profile.scss";
+import { API_URL } from "../../config";
 
 const UserProfile = (props) => {
   const { loggedInUser, match, onGoBack } = props;
@@ -74,7 +74,9 @@ const UserProfile = (props) => {
     backgroundImage:
       user && user.imageBg ? `url(${user.imageBg})` : loggedInUser.imageBg,
   };
-
+  if (!loggedInUser) {
+    return <Redirect to={"/sign-in"} />;
+  }
   return (
     <div>
       {!user ? (
@@ -83,27 +85,6 @@ const UserProfile = (props) => {
         <Redirect to={`/user/${user._id}`} />
       ) : (
         <>
-          {/* <div>
-            <img src={user.image} alt="profile-image" />
-            <p>{user.username}</p>
-            <p>{user.bio}</p>
-            <p>{user.location}</p>
-          </div>
-          {user.item.accepted ? (
-            <p>Sorry the item no longer available...</p>
-          ) : (
-            sentHiValidation
-          )}
-
-          {}
-
-          <button
-            onClick={() => {
-              onGoBack();
-            }}
-          >
-            X
-          </button> */}
           <Container style={{ marginTop: "30px" }}>
             <div className="profile__bg " style={profileStyle}>
               <div className="profile__bg ">

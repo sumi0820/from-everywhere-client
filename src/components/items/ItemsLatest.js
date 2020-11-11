@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Grid, Icon, Card } from "semantic-ui-react";
-import "./styles/Items.scss";
+import "../styles/Items.scss";
 
-import { API_URL } from "../config";
 
 const ItemsLatest = ({ items }) => {
   const [latestItems, setLatestItems] = useState([]);
@@ -37,7 +35,7 @@ const ItemsLatest = ({ items }) => {
           <Container>
             <Grid columns={2} container divided="vertically" stackable>
               <Grid.Row>
-                <Grid.Column floated="left" width={5} textAlign="center">
+                <Grid.Column floated="left" width={5} textAlign="left">
                   <h1>Latest Items</h1>
                 </Grid.Column>
                 <Grid.Column floated="right" width={5} textAlign="center">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 import {
   Container,
@@ -10,9 +10,10 @@ import {
   Item,
   Divider,
 } from "semantic-ui-react";
-import "./styles/Profile.scss";
-
-import { API_URL } from "../config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBackspace } from "@fortawesome/free-solid-svg-icons";
+import "../styles/Profile.scss";
+import { API_URL } from "../../config";
 
 const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
   const [user, setUser] = useState(null);
@@ -41,7 +42,9 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
     backgroundImage:
       user && user.imageBg ? `url(${user.imageBg})` : loggedInUser.imageBg,
   };
-
+  if (!loggedInUser) {
+    return <Redirect to={"/sign-in"} />;
+  }
   return (
     <div>
       {!user ? (
@@ -74,8 +77,10 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
                     {user.location}
                   </p>
                 </Grid.Column>
-                <Grid.Column floated="right" width={5} textAlign="center">
-                  <Link to="/user/edit">Edit</Link>
+                <Grid.Column floated="right" width={2} textAlign="center">
+                  <Link to="/user/edit">
+                    <Icon name="edit outline" />
+                  </Link>
                 </Grid.Column>
               </Grid>
             ) : (
@@ -86,8 +91,10 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
                     <span>No location provided</span>
                   </p>
                 </Grid.Column>
-                <Grid.Column floated="right" width={5} textAlign="center">
-                  <Link to="/user/edit">Edit</Link>
+                <Grid.Column floated="right" width={2} textAlign="center">
+                  <Link to="/user/edit">
+                    <Icon name="edit outline" />
+                  </Link>
                 </Grid.Column>
               </Grid.Column>
             )}
@@ -105,12 +112,25 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
               ) : (
                 <div>
                   {user && user.item.accepted ? (
-                    <>
-                      <p>Have you received the item?</p>
-                      <Link to="/upload-item">
-                        <button onClick={handleUpdate}>Yes!</button>
-                      </Link>
-                    </>
+                    <Container text>
+                      <div className="profile__itemStatus">
+                        <p>Have you received the item?</p>
+                        <Link to="/upload-item">
+                          <Button
+                            className="profile__inbox goback"
+                            animated
+                            secondary
+                            style={{ marginBottom: "10px" }}
+                            onClick={handleUpdate}
+                          >
+                            <Button.Content hidden>
+                              <Icon name="check circle outline" />
+                            </Button.Content>
+                            <Button.Content visible>Yes</Button.Content>
+                          </Button>
+                        </Link>
+                      </div>
+                    </Container>
                   ) : (
                     <Grid columns={1} container divided="vertically" stackable>
                       <Grid.Row>
@@ -129,7 +149,9 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
                                 {user.item.name}
                               </Item.Header>
                               <Item.Meta>
-                                <Link to="/upload-item">Edit</Link>
+                                <Link to="/upload-item">
+                                  <Icon name="edit outline" />
+                                </Link>
                               </Item.Meta>
                               <Item.Description>
                                 {user.item.description}
@@ -148,8 +170,13 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
           <Grid columns={1} ui centered grid stackable>
             <Grid.Row>
               <div className="itemDetail__btn profile__btn__container">
-                <Link to="/inbox" >
-                  <Button className="profile__inbox goback" animated secondary style={{marginBottom:'10px'}}>
+                <Link to="/inbox">
+                  <Button
+                    className="profile__inbox goback"
+                    animated
+                    secondary
+                    style={{ marginBottom: "10px" }}
+                  >
                     <Button.Content hidden>
                       <Icon name="mail outline large" />
                     </Button.Content>
@@ -166,7 +193,7 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
                   }}
                 >
                   <Button.Content hidden>
-                    <Icon name="hand point left outline large" />
+                    <FontAwesomeIcon icon={faBackspace} color="white" />
                   </Button.Content>
                   <Button.Content visible>Go Back</Button.Content>
                 </Button>

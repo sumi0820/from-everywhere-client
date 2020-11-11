@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
-import {
-  List,
-  Container,
-  Image,
-  Grid,
-  Divider,
-  Button,
-} from "semantic-ui-react";
-import "./styles/Inbox.scss";
+import { List, Image, Grid } from "semantic-ui-react";
+import "../styles/Inbox.scss";
 
-import Chat from "../components/Chat";
-import { API_URL } from "../config";
+import Chat from "./Chat";
+import { API_URL } from "../../config";
 
 const Inbox = ({ loggedInUser, onSelectedUserMobile, onGoBack }) => {
   const [messages, setMessages] = useState([]);
@@ -61,7 +54,9 @@ const Inbox = ({ loggedInUser, onSelectedUserMobile, onGoBack }) => {
         console.log(err);
       });
   };
-
+  if (!loggedInUser) {
+    return <Redirect to={"/sign-in"} />;
+  }
   // console.log(selectedUser, chat);
   return (
     <div>
@@ -121,42 +116,42 @@ const Inbox = ({ loggedInUser, onSelectedUserMobile, onGoBack }) => {
               There's no message...
             </h3>
           ) : (
-              <Grid.Column width={16} >
-                <List divided relaxed size="huge">
-                  {messages.map((chat, i) => {
-                    return (
-                      <>
-                        <List.Item className="inbox__mobile__fromList" key={i}>
-                          <Image avatar src={chat.from.imageProfile} />
-                          <List.Content className="inbox__mobile__fromList__content">
-                            <List.Header
-                              as="button"
-                              onClick={() => {
-                                onSelectedUserMobile(chat.from._id);
-                              }}
-                              style={{ textAlign: "left" }}
-                              className="inbox__mobile__btn"
-                            >
-                              {chat.from.username}
-                            </List.Header>
-                            <List.Description
-                              as="button"
-                              onClick={() => {
-                                onSelectedUserMobile(chat.from._id);
-                              }}
-                              className="inbox__mobile__btn"
-                            >
-                              {chat.bodylength >= 20
-                                ? chat.body.slice(0, 20) + "..."
-                                : chat.body}
-                            </List.Description>
-                          </List.Content>
-                        </List.Item>
-                      </>
-                    );
-                  })}
-                </List>
-              </Grid.Column>
+            <Grid.Column width={16}>
+              <List divided relaxed size="huge">
+                {messages.map((chat, i) => {
+                  return (
+                    <>
+                      <List.Item className="inbox__mobile__fromList" key={i}>
+                        <Image avatar src={chat.from.imageProfile} />
+                        <List.Content className="inbox__mobile__fromList__content">
+                          <List.Header
+                            as="button"
+                            onClick={() => {
+                              onSelectedUserMobile(chat.from._id);
+                            }}
+                            style={{ textAlign: "left" }}
+                            className="inbox__mobile__btn"
+                          >
+                            {chat.from.username}
+                          </List.Header>
+                          <List.Description
+                            as="button"
+                            onClick={() => {
+                              onSelectedUserMobile(chat.from._id);
+                            }}
+                            className="inbox__mobile__btn"
+                          >
+                            {chat.bodylength >= 20
+                              ? chat.body.slice(0, 20) + "..."
+                              : chat.body}
+                          </List.Description>
+                        </List.Content>
+                      </List.Item>
+                    </>
+                  );
+                })}
+              </List>
+            </Grid.Column>
           )}
         </Grid>
       </div>

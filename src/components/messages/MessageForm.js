@@ -1,6 +1,6 @@
 import React from "react";
-import { Form, Input, Grid, Button, Icon } from "semantic-ui-react";
-import "./styles/Inbox.scss";
+import { Input, Button, Icon } from "semantic-ui-react";
+import "../styles/Inbox.scss";
 
 const MessageForm = ({ onSend }) => {
   return (

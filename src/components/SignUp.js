@@ -9,7 +9,8 @@ import {
   Form,
   Icon,
 } from "semantic-ui-react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import "./styles/Form.scss";
 import { API_URL } from "../config";
 
@@ -89,39 +90,6 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
   console.log(username, email);
 
   return (
-    // <form onSubmit={onSignUp}>
-    //   <input
-    //     type="text"
-    //     name="username"
-    //     onChange={(e) => setUsername(e.target.value.toLowerCase())}
-    //   />
-    //   {username == "" || username == undefined ? (
-    //     ""
-    //   ) : username == "isUser" ? (
-    //     <p>Username is unavailable, please choose another!</p>
-    //   ) : (
-    //     <p>Username available!</p>
-    //   )}
-
-    //   <input
-    //     type="text"
-    //     name="email"
-    //     onChange={(e) => setEmail(e.target.value.toLowerCase())}
-    //   />
-    // {email == "" || email == undefined ? (
-    //   ""
-    // ) : email == "isEmail" ? (
-    //   <p>Email is unavailable, please choose another!</p>
-    // ) : (
-    //   <p>Email available!</p>
-    // )}
-    //   <input type="password" name="password" />
-
-    //   <button type="submit">Sign up?</button>
-    //   {errorMessage ? (
-    //     <p style={{ color: "red", fontSize: "20px" }}>{errorMessage}</p>
-    //   ) : null}
-    // </form>
     <div className="form__container">
       <Container text>
         <Grid container>
@@ -167,9 +135,14 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
                 <input type="password" name="password" />
               </Form.Field>
 
-              <Button className="form__button goback" animated type="submit" secondary>
+              <Button
+                className="form__button goback"
+                animated
+                type="submit"
+                secondary
+              >
                 <Button.Content hidden>
-                  <Icon name="sign-in" />
+                  <FontAwesomeIcon icon={faUserPlus} color="white" />{" "}
                 </Button.Content>
                 <Button.Content visible>Sign up</Button.Content>
               </Button>

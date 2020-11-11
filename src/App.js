@@ -8,17 +8,17 @@ import Nav from "./components/Nav";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import Landing from "./components/Landing";
-import UserProfile from "./components/UserProfile";
-import UserPublic from "./components/UserPublic";
-import UserCreate from "./components/UserCreate";
-import UserEdit from "./components/UserEdit";
-import ItemUpload from "./components/ItemUpload";
-import Home from "./components/Home";
-import ItemsList from "./components/ItemsList";
-import ItemDetail from "./components/ItemDetail";
-import Inbox from "./components/Inbox";
-import Chat from "./components/Chat";
-import ChatMobile from "./components/ChatMobile";
+import UserProfile from "./components/user/UserProfile";
+import UserPublic from "./components/user/UserPublic";
+import UserCreate from "./components/user/UserCreate";
+import UserEdit from "./components/user/UserEdit";
+import ItemUpload from "./components/items/ItemUpload";
+import Home from "./components/items/Home";
+import ItemsList from "./components/items/ItemsList";
+import ItemDetail from "./components/items/ItemDetail";
+import Inbox from "./components/messages/Inbox";
+import Chat from "./components/messages/Chat";
+import ChatMobile from "./components/messages/ChatMobile";
 
 class App extends Component {
   state = {
@@ -124,8 +124,9 @@ class App extends Component {
   };
 
   handleLogOut = (e) => {
-    e.preventDefault();
+
     axios.post(`${API_URL}/logout`, {}, { withCredentials: true }).then(() => {
+      console.log('logout', this.props.history.push);
       this.setState(
         {
           loggedInUser: null,
@@ -152,7 +153,7 @@ class App extends Component {
   handleEditProfile = (e) => {
     e.preventDefault();
     const { bio, location, imageProfile, imageBg, username, email } = e.target;
-
+console.log(location.value);
     let imageProfFile = imageProfile.files[0];
     let uploadProfForm = new FormData();
     uploadProfForm.append("imageUrl", imageProfFile);
@@ -352,7 +353,6 @@ class App extends Component {
     return (
       <div className="App">
         <Nav loggedInUser={loggedInUser} onLogOut={this.handleLogOut} />
-        {/* {loggedInUser ? <h5>User is: {loggedInUser.username}</h5> : null} */}
 
         <Switch>
           <Route

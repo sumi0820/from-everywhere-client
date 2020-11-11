@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {
   Container,
   Button,
@@ -9,8 +9,8 @@ import {
   Icon,
   Image,
 } from "semantic-ui-react";
-import "./styles/Items.scss";
-import { API_URL } from "../config";
+import "../styles/Items.scss";
+import { API_URL } from "../../config";
 
 const ItemDetail = (props) => {
   const { onGoBack } = props;
@@ -29,7 +29,9 @@ const ItemDetail = (props) => {
         console.log(err);
       });
   }, []);
-
+  if (!props.loggedInUser) {
+    return <Redirect to={"/sign-in"} />;
+  }
   return (
     <div>
       {!item ? (
@@ -37,7 +39,12 @@ const ItemDetail = (props) => {
       ) : (
         <>
           <Container
-            style={{ marginTop: "30px", maxHeight: "500px", objectFit: "contain", marginBottom:'20px'}}
+            style={{
+              marginTop: "30px",
+              maxHeight: "500px",
+              objectFit: "contain",
+              marginBottom: "20px",
+            }}
           >
             <div className="itemDetail__img__container">
               <img

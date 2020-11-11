@@ -1,17 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {
   Container,
   Grid,
   Button,
-  Message,
   Form,
   Icon,
   TextArea,
   Input,
-  Select,
 } from "semantic-ui-react";
-import "./styles/Form.scss";
+import "../styles/Items.scss";
 
 const ItemUpload = ({
   loggedInUser,
@@ -28,7 +26,9 @@ const ItemUpload = ({
   //       setUserItem(response.data);
   //     });
   // }, []);
-
+  if (!loggedInUser) {
+    return <Redirect to={"/sign-in"} />;
+  }
   return (
     <div>
       {/* <form onSubmit={!loggedInUser.item ? onCreateItem : onEditItem}>

@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { Redirect } from "react-router-dom";
 
 import { Container, Divider } from "semantic-ui-react";
-import ItemsRandom from "../components/ItemsRadom";
-import ItemsLatest from "../components/ItemsLatest";
-import ItemsLocation from "../components/ItemsLocation";
+import ItemsRandom from "./ItemsRadom";
+import ItemsLatest from "./ItemsLatest";
+import ItemsLocation from "./ItemsLocation";
 
 const Home = ({ loggedInUser, items }) => {
+  if (!loggedInUser) {
+    return <Redirect to={"/sign-in"} />;
+  }
   return (
     <>
       <Container>

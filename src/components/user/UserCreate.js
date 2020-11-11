@@ -1,18 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
 import {
   Container,
   Grid,
   Button,
-  Message,
   Form,
   Icon,
   TextArea,
   Input,
 } from "semantic-ui-react";
-import "./styles/Form.scss";
+import { CountryDropdown } from "react-country-region-selector";
+import "../styles/Form.scss";
 
 const UserCreate = ({ onEditProfile, loggedInUser }) => {
+  const [location, setLocation] = useState("");
+
+  const handleLocation = (_, e) => {
+    const { type, value } = e.target;
+    const val = type === "number" ? parseFloat(value) : value;
+    setLocation(val);
+  };
+  if (!loggedInUser) {
+    return <Redirect to={"/sign-in"} />;
+  }
   return (
     <div>
       <div className="form__container">
@@ -27,7 +37,14 @@ const UserCreate = ({ onEditProfile, loggedInUser }) => {
 
                 <Form.Field>
                   <label>Location</label>
-                  <input type="text" name="location" />
+                  <CountryDropdown
+                    name="location"
+                    valueType="short"
+                    value={location}
+                    onChange={handleLocation}
+                    priorityOptions={["US", "CA", "DE", "FR", "CN", "JP"]}
+                    defaultOptionLabel={loggedInUser.location}
+                  />
                 </Form.Field>
 
                 <Grid container columns={2} stackable>
@@ -61,7 +78,7 @@ const UserCreate = ({ onEditProfile, loggedInUser }) => {
               </Form>
 
               <div className="form__testMode__container goback">
-                <Link to={`/user/${loggedInUser}`} style={{width:'100%'}}>
+                <Link to={`/user/${loggedInUser}`} style={{ width: "100%" }}>
                   <Button
                     className="form__button "
                     animated

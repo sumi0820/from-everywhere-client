@@ -2,17 +2,9 @@ import React from "react";
 import ReactFullpage from "@fullpage/react-fullpage";
 import "fullpage.js/vendors/scrolloverflow";
 import { Link } from "react-router-dom";
-import {
-  Container,
-  Grid,
-  Button,
-  Message,
-  Form,
-  Icon,
-  TextArea,
-  Input,
-  Select,
-} from "semantic-ui-react";
+import { Container, Grid, Button, Icon } from "semantic-ui-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 import "./styles/Landing.scss";
 
@@ -182,7 +174,10 @@ class Landing extends React.Component {
                               secondary
                             >
                               <Button.Content hidden>
-                                <Icon name="sign-in" />
+                                <FontAwesomeIcon
+                                  icon={faUserPlus}
+                                  color="white"
+                                />
                               </Button.Content>
                               <Button.Content visible>Sign up</Button.Content>
                             </Button>

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Item, Image, Grid } from "semantic-ui-react";
-import "./styles/Items.scss";
+import "../styles/Items.scss";
 
-import { API_URL } from "../config";
 
 const ItemsLocation = ({ loggedInUser, items }) => {
   const [locationItems, setLocationItems] = useState([]);

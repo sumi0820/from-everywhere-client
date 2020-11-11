@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { List, Button, Image, Icon } from "semantic-ui-react";
+import { Redirect } from "react-router-dom";
 
-import { API_URL } from "../config";
+import { API_URL } from "../../config";
 import MessageForm from "./MessageForm";
-import "./styles/Inbox.scss";
+import "../styles/Inbox.scss";
 
 const Chat = (props) => {
   const {
@@ -62,6 +63,10 @@ const Chat = (props) => {
       });
   };
 
+  if (!loggedInUser) {
+    return <Redirect to={"/sign-in"} />;
+  }
+
   return (
     <div>
       <div className="chat__mobile__container">
@@ -86,7 +91,7 @@ const Chat = (props) => {
                 </List.Item>
               </List>
               {!acceptedStatus ? (
-                <div  className='inbox__chatBox__header__btn'>
+                <div className="inbox__chatBox__header__btn">
                   <Button
                     animated
                     type="submit"
@@ -96,13 +101,13 @@ const Chat = (props) => {
                     }}
                   >
                     <Button.Content hidden>
-                      <Icon name="check square outline" />
+                      <Icon name="handshake outline" />
                     </Button.Content>
                     <Button.Content visible>Accept</Button.Content>
                   </Button>
                 </div>
               ) : (
-                <div className='inbox__chatBox__header__btn'>
+                <div className="inbox__chatBox__header__btn">
                   <Button
                     animated
                     type="submit"
@@ -164,4 +169,3 @@ const Chat = (props) => {
 };
 
 export default Chat;
-

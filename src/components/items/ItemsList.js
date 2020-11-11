@@ -1,10 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Container, Card, Grid } from "semantic-ui-react";
 
 import SearchForm from "./SearchForm";
 
-const ItemsList = ({ items, onQuickSearch, onSearch }) => {
+const ItemsList = ({ items, onQuickSearch, onSearch, loggedInUser }) => {
+  if (!loggedInUser) {
+    return <Redirect to={"/sign-in"} />;
+  }
   return (
     <Container className="itemList__container">
       <Grid columns={2} container divided="vertically" stackable>

@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
-import "./styles/Items.scss";
-import { API_URL } from "../config";
+import "../styles/Items.scss";
 
 const ItemsRadom = ({ items }) => {
   const [randomItems, setRandomItems] = useState([]);
 
   useEffect(() => {
-    // axios
-    //   .get(`${API_URL}/items/random`)
-    //   .then((response) => {
-    //     setRandomItems(response.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+
     const randomNum = (max, min) =>
       Math.floor(Math.random() * (max - min + 1) + min);
 
@@ -27,9 +18,12 @@ const ItemsRadom = ({ items }) => {
     setRandomItems(newRandomItems);
   }, []);
 
+  console.log(items);
+
+
   return (
     <>
-      {!items.length ? (
+      {!items.length || !randomItems.length ? (
         <p>There's no item uploaded yet</p>
       ) : (
         <Carousel

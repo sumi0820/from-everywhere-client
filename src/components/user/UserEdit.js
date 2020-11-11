@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 import _ from "lodash";
 import {
@@ -12,13 +12,15 @@ import {
   TextArea,
   Input,
 } from "semantic-ui-react";
-import "./styles/Form.scss";
-import { API_URL } from "../config";
+import { CountryDropdown } from "react-country-region-selector";
+import "../styles/Form.scss";
+
+import { API_URL } from "../../config";
 
 const UserEdit = ({ onEditProfile, loggedInUser, onUnmount, onGoBack }) => {
   const [username, setUsername] = useState(undefined);
   const [email, setEmail] = useState(undefined);
-
+  const [location, setLocation] = useState("");
   const updateUsernameQuery = (username) => {
     // A search query api call.
     axios
@@ -71,6 +73,13 @@ const UserEdit = ({ onEditProfile, loggedInUser, onUnmount, onGoBack }) => {
     }, 1000)
   );
 
+  const handleLocation = (_, e) => {
+    const { type, value } = e.target;
+    const val = type === "number" ? parseFloat(value) : value;
+    setLocation(val);
+    
+  };
+
   useEffect(() => {
     if (username) {
       setUsername(username);
@@ -87,7 +96,9 @@ const UserEdit = ({ onEditProfile, loggedInUser, onUnmount, onGoBack }) => {
   useEffect(() => {
     return onUnmount;
   }, []);
-
+  if (!loggedInUser) {
+    return <Redirect to={"/sign-in"} />;
+  }
   return (
     <div>
       <div className="form__container">
@@ -143,10 +154,13 @@ const UserEdit = ({ onEditProfile, loggedInUser, onUnmount, onGoBack }) => {
 
                 <Form.Field>
                   <label>Location</label>
-                  <input
-                    type="text"
+                  <CountryDropdown
                     name="location"
-                    defaultValue={loggedInUser.location}
+                    valueType="short"
+                    value={location}
+                    onChange={handleLocation}
+                    priorityOptions={["US", "CA", "DE", "FR", "CN", "JP"]}
+                    defaultOptionLabel={loggedInUser.location}
                   />
                 </Form.Field>
 

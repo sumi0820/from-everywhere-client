@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { List, Button, Image, Icon } from "semantic-ui-react";
 
-import { API_URL } from "../config";
+import { API_URL } from "../../config";
 import MessageForm from "./MessageForm";
-import "./styles/Inbox.scss";
+import "../styles/Inbox.scss";
 
 const Chat = (props) => {
   const {
@@ -23,25 +23,6 @@ const Chat = (props) => {
   let chatCheck = !chat ? initialChat : chat;
   let acceptedStatus = accepted == null ? initialAccepted : accepted;
   console.log(selectedUser);
-  // useEffect(() => {
-  //   axios
-  //     .get(`${API_URL}/chat/${userId}`, { withCredentials: true })
-  //     .then((response) => {
-  //       setChat(response.data);
-  //       axios
-  //       .get(`${API_URL}/item/${loggedInUser.item}`, { withCredentials: true })
-  //       .then((response) => {
-  //         setAccepted(response.data.accepted);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-
-  // }, []);
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -108,7 +89,7 @@ const Chat = (props) => {
                   }}
                 >
                   <Button.Content hidden>
-                    <Icon name="check square outline" />
+                    <Icon name="handshake outline " />
                   </Button.Content>
                   <Button.Content visible>Accept</Button.Content>
                 </Button>
