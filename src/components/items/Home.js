@@ -13,12 +13,12 @@ const Home = ({ loggedInUser, items }) => {
   return (
     <>
       <Container>
-        <ItemsRandom items={items} />
+        <ItemsRandom items={items} loggedInUser={loggedInUser} />
       </Container>
       <div>
-        <ItemsLatest items={items} />
+        <ItemsLatest items={items} loggedInUser={loggedInUser} />
       </div>
-      <Container >
+      <Container>
         <Divider />
       </Container>
       <Container>

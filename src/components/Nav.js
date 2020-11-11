@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { stack as Menu } from "react-burger-menu";
-import { Icon, Button } from "semantic-ui-react";
+import { Button, Grid, Input } from "semantic-ui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
@@ -11,10 +11,9 @@ import {
   faUser,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
-
 import "./styles/Nav.scss";
 
-const Nav = ({ loggedInUser, onLogOut }) => {
+const Nav = ({ loggedInUser, onLogOut, onSearch }) => {
   const [burger, setBurger] = useState(false);
 
   const handleOnOpen = () => {
@@ -107,9 +106,20 @@ const Nav = ({ loggedInUser, onLogOut }) => {
         </Menu>
       ) : (
         <Menu right isOpen={burger}>
-          <p className="menu-item">Search</p>
+          <Grid container columns={1} centered stackable className="menu-item">
+            <Grid.Column>
+              <form onSubmit={onSearch} style={{display:'flex', justifyContent:'center'}}>
+                <Input
+                  name="keyWord"
+                  type="text"
+                  action={{ icon: "search", type: "submit" }}
+                  placeholder="Search"
+                />
+              </form>
+            </Grid.Column>
+          </Grid>
           <Link
-            to="/"
+            to="/home"
             className="menu-item"
             onClick={() => {
               handleOnOpen();

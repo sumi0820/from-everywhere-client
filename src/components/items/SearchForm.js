@@ -1,11 +1,11 @@
 import React from "react";
 import {  Input, Grid } from "semantic-ui-react";
 
-const Search = ({ onQuickSearch, onSearch }) => {
+const Search = ({ onQuickSearch }) => {
   return (
     <Grid container columns={1}  relaxed stackable>
       <Grid.Column>
-        <form onSubmit={onSearch}>
+        <form>
           <Input
             name="keyWord"
             type="text"

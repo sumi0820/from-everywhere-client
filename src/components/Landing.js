@@ -192,7 +192,7 @@ class Landing extends React.Component {
                               <Button.Content hidden>
                                 <Icon name="sign-in" />
                               </Button.Content>
-                              <Button.Content visible>Sign ip</Button.Content>
+                              <Button.Content visible>Sign in</Button.Content>
                             </Button>
                           </Link>
                         </div>

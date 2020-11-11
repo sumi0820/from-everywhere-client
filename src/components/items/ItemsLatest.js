@@ -4,20 +4,15 @@ import { Container, Grid, Icon, Card } from "semantic-ui-react";
 import "../styles/Items.scss";
 
 
-const ItemsLatest = ({ items }) => {
+const ItemsLatest = ({ items, loggedInUser }) => {
   const [latestItems, setLatestItems] = useState([]);
 
   useEffect(() => {
-    // axios
-    //   .get(`${API_URL}/items/latest`)
-    //   .then((response) => {
-    //     setLatestItems(response.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+
     let sorted = items.sort((a, b) => {
       return a.updatedAt - b.updatedAt;
+    }).filter(item =>{
+      return item.user._id != loggedInUser._id
     });
     if (items.length > 7) {
       setLatestItems(sorted.slice(0, 6));

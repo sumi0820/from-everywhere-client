@@ -18,48 +18,11 @@ const ItemUpload = ({
   onDeleteItem,
   onGoBack,
 }) => {
-  // const [userItem, setUserItem] = useState(null);
-  // useEffect(() => {
-  //   axios
-  //     .get(`${API_URL}/item/${loggedInUser.item}`, { withCredentials: true })
-  //     .then((response) => {
-  //       setUserItem(response.data);
-  //     });
-  // }, []);
   if (!loggedInUser) {
     return <Redirect to={"/sign-in"} />;
   }
   return (
     <div>
-      {/* <form onSubmit={!loggedInUser.item ? onCreateItem : onEditItem}>
-        <input
-          type="text"
-          name="name"
-          defaultValue={loggedInUser.item ? loggedInUser.item.name : null}
-        />
-        <textarea
-          type="text"
-          name="description"
-          defaultValue={
-            loggedInUser.item ? loggedInUser.item.description : null
-          }
-        />
-        <input
-          type="text"
-          name="condition"
-          defaultValue={loggedInUser.item ? loggedInUser.item.condition : null}
-        />
-
-        <input
-          type="text"
-          name="image"
-          defaultValue={loggedInUser.item ? loggedInUser.item.image : null}
-        />
-        <button type="submit">
-          {!loggedInUser.item ? <p>Upload</p> : <p>Edit</p>}
-        </button>
-      </form> */}
-
       <div className="form__container">
         <Container text>
           <Grid container>
@@ -136,25 +99,28 @@ const ItemUpload = ({
                   </Button.Content>
                   <Button.Content visible>Go Back</Button.Content>
                 </Button>
+                {loggedInUser.item ? (
+                  <>
+                    <Button
+                      className="profile__inbox goback"
+                      animated
+                      color="google plus"
+                      onClick={() => {
+                        onDeleteItem(loggedInUser.item._id);
+                      }}
+                    >
+                      <Button.Content hidden>
+                        <Icon name="trash alternate" />
+                      </Button.Content>
+                      <Button.Content visible>Delete</Button.Content>
+                    </Button>
+                  </>
+                ) : null}
               </div>
             </Grid.Column>
           </Grid>
         </Container>
       </div>
-
-      {loggedInUser.item ? (
-        <>
-          <button
-            onClick={() => {
-              onDeleteItem(loggedInUser.item._id);
-            }}
-          >
-            <p>Delete</p>
-          </button>
-        </>
-      ) : null}
-
-      <Link to={`/user/${loggedInUser}`}>X</Link>
     </div>
   );
 };

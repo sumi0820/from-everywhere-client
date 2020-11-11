@@ -124,9 +124,8 @@ class App extends Component {
   };
 
   handleLogOut = (e) => {
-
     axios.post(`${API_URL}/logout`, {}, { withCredentials: true }).then(() => {
-      console.log('logout', this.props.history.push);
+      console.log("logout", this.props.history.push);
       this.setState(
         {
           loggedInUser: null,
@@ -153,7 +152,7 @@ class App extends Component {
   handleEditProfile = (e) => {
     e.preventDefault();
     const { bio, location, imageProfile, imageBg, username, email } = e.target;
-console.log(location.value);
+    console.log(location.value);
     let imageProfFile = imageProfile.files[0];
     let uploadProfForm = new FormData();
     uploadProfForm.append("imageUrl", imageProfFile);
@@ -180,9 +179,9 @@ console.log(location.value);
             console.log(response.data);
             this.props.history.push(`/user/${this.state.loggedInUser._id}`);
           })
-        .catch((err) => {
-          this.setState({ errorMessage: err.response.data.error });
-        });
+          .catch((err) => {
+            this.setState({ errorMessage: err.response.data.error });
+          });
       });
     });
   };
@@ -307,7 +306,9 @@ console.log(location.value);
     e.preventDefault();
     let useInput = e.target.keyWord.value.toLowerCase();
     axios.get(`${API_URL}/item-search/?q=${useInput}`).then((response) => {
-      this.setState({ cloneItems: response.data });
+      this.setState({ cloneItems: response.data }, () => {
+        this.props.history.push("/item-list");
+      });
     });
   };
 
@@ -317,14 +318,16 @@ console.log(location.value);
       .then((response) => {
         this.setState({
           chat: response.data,
-          selectedUser: response.data[0].from._id == this.state.loggedInUser._id ? response.data[1].from : response.data[0].from,
+          selectedUser:
+            response.data[0].from._id == this.state.loggedInUser._id
+              ? response.data[1].from
+              : response.data[0].from,
         });
         axios
           .get(`${API_URL}/item/${this.state.loggedInUser.item._id}`, {
             withCredentials: true,
           })
           .then((response) => {
-
             this.setState(
               {
                 accepted: response.data.accepted,
@@ -352,7 +355,11 @@ console.log(location.value);
     } = this.state;
     return (
       <div className="App">
-        <Nav loggedInUser={loggedInUser} onLogOut={this.handleLogOut} />
+        <Nav
+          loggedInUser={loggedInUser}
+          onLogOut={this.handleLogOut}
+          onSearch={this.handleSearch}
+        />
 
         <Switch>
           <Route
@@ -475,7 +482,7 @@ console.log(location.value);
                   loggedInUser={loggedInUser}
                   items={cloneItems}
                   onQuickSearch={this.handleQuickSearch}
-                  onSearch={this.handleSearch}
+                  // onSearch={this.handleSearch}
                 />
               );
             }}

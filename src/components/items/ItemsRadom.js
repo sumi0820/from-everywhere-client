@@ -3,23 +3,25 @@ import { Link } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
 import "../styles/Items.scss";
 
-const ItemsRadom = ({ items }) => {
+const ItemsRadom = ({ items, loggedInUser }) => {
   const [randomItems, setRandomItems] = useState([]);
 
   useEffect(() => {
-
     const randomNum = (max, min) =>
       Math.floor(Math.random() * (max - min + 1) + min);
 
+    let filtered = items.filter((item) => {
+      return item.user._id != loggedInUser._id;
+    });
+
     let newRandomItems = [];
     for (let i = 0; i < 3; i++) {
-      newRandomItems.push(items[randomNum(items.length - 1, 0)]);
+      newRandomItems.push(filtered[randomNum(items.length - 1, 0)]);
     }
     setRandomItems(newRandomItems);
   }, []);
 
   console.log(items);
-
 
   return (
     <>
@@ -36,7 +38,7 @@ const ItemsRadom = ({ items }) => {
         >
           {randomItems.map((item) => {
             return (
-              <div >
+              <div>
                 <Link to={`item/${item._id}`} key={item._id}>
                   <div>
                     <img
@@ -45,9 +47,9 @@ const ItemsRadom = ({ items }) => {
                       className="random__image"
                     />
                   </div>
-                    <p className="legend" id="random__text">
-                      {item.name}
-                    </p>
+                  <p className="legend" id="random__text">
+                    {item.name}
+                  </p>
                 </Link>
               </div>
             );

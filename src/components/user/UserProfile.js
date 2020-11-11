@@ -106,8 +106,26 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
             <div className="profile__item">
               {!user.item ? (
                 <>
-                  <p>Please upload your item</p>
-                  <Link to="/upload-item">Upload</Link>
+                  <Grid columns={1} ui grid stackable>
+                    <Grid.Row>
+                      <div style={{marginBottom:'15px'}}>
+                        <p>Please upload your item</p>
+                        <Link to="/upload-item">
+                          <Button
+                            className="profile__inbox goback"
+                            animated
+                            color="linkedin"
+                            
+                          >
+                            <Button.Content hidden>
+                              <Icon name="cloud upload" />
+                            </Button.Content>
+                            <Button.Content visible>Upload</Button.Content>
+                          </Button>
+                        </Link>
+                      </div>
+                    </Grid.Row>
+                  </Grid>
                 </>
               ) : (
                 <div>

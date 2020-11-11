@@ -8,16 +8,9 @@ const ItemsLocation = ({ loggedInUser, items }) => {
   const [locationItems, setLocationItems] = useState([]);
 
   useEffect(() => {
-    // axios
-    //   .get(`${API_URL}/items/location`, { withCredentials: true })
-    //   .then((response) => {
-    //     setLocationItems(response.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+
     let sorted = items.filter((item) => {
-      return loggedInUser.location == item.user.location;
+      return loggedInUser.location == item.user.location && item.user._id != loggedInUser._id;
     });
     if (items.length > 4) {
       setLocationItems(sorted.slice(0, 4));
