@@ -36,11 +36,16 @@ const ItemDetail = (props) => {
         <p>Loading</p>
       ) : (
         <>
-          <img
-            src={item.image}
-            alt="itemDetail__img"
-            className="itemDetail__img"
-          />
+          <Container text
+            style={{ marginTop: "30px", height: "500px", objectFit: "contain" }}
+          >
+            <img
+              src={item.image}
+              alt="itemDetail__img"
+              className="itemDetail__img"
+            />
+          </Container>
+
           <Container text>
             {item.user.location ? (
               <Grid>
@@ -64,7 +69,7 @@ const ItemDetail = (props) => {
             <Grid>
               <Grid.Column floated="left" width={5}>
                 <Link to={`/public/${item.user._id}`}>
-                  <Image avatar circular src={item.user.image} />
+                  <Image avatar circular src={item.user.imageProfile} />
                   <span>{item.user.username}</span>
                 </Link>{" "}
               </Grid.Column>

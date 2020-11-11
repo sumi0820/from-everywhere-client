@@ -8,9 +8,9 @@ import ItemsLocation from "../components/ItemsLocation";
 const Home = ({ loggedInUser, items }) => {
   return (
     <>
-      <div>
+      <Container>
         <ItemsRandom items={items} />
-      </div>
+      </Container>
       <div>
         <ItemsLatest items={items} />
       </div>

@@ -42,7 +42,7 @@ const ItemsRadom = ({ items }) => {
         >
           {randomItems.map((item) => {
             return (
-              <div>
+              <div >
                 <Link to={`item/${item._id}`} key={item._id}>
                   <div>
                     <img
@@ -51,9 +51,9 @@ const ItemsRadom = ({ items }) => {
                       className="random__image"
                     />
                   </div>
-                  <p className="legend" id="random__text">
-                    {item.name}
-                  </p>
+                    <p className="legend" id="random__text">
+                      {item.name}
+                    </p>
                 </Link>
               </div>
             );

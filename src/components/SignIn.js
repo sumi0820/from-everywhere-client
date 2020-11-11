@@ -30,7 +30,12 @@ const SignIn = ({ onSignIn, onUnmount, onChange, errorMessage, onTest }) => {
                 <input type="password" name="password" onChange={onChange} />
               </Form.Field>
 
-              <Button className="form__button goback" animated type="submit" secondary>
+              <Button
+                className="form__button goback"
+                animated
+                type="submit"
+                secondary
+              >
                 <Button.Content hidden>
                   <Icon name="sign-in" />
                 </Button.Content>
@@ -46,21 +51,23 @@ const SignIn = ({ onSignIn, onUnmount, onChange, errorMessage, onTest }) => {
                 </>
               ) : null}
             </Form>
+
+            <div className="form__testMode__container goback">
+              <Button
+                className="form__button "
+                animated
+                onClick={onTest}
+                color="linkedin"
+              >
+                <Button.Content hidden>
+                  <Icon name="wrench" />
+                </Button.Content>
+                <Button.Content visible>Test Mode</Button.Content>
+              </Button>
+            </div>
+
           </Grid.Column>
         </Grid>
-        <div className="form__testMode__container goback">
-          <Button
-            className="form__button form__testMode"
-            animated
-            onClick={onTest}
-            color="linkedin"
-          >
-            <Button.Content hidden>
-              <Icon name="wrench" />
-            </Button.Content>
-            <Button.Content visible>Test Mode</Button.Content>
-          </Button>
-        </div>
 
         <div className="form__right">
           <Link to="/sign-up">Sign up?</Link>

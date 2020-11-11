@@ -1,15 +1,29 @@
 import React from "react";
+import { Form, Input, Grid, Button, Icon } from "semantic-ui-react";
+import "./styles/Inbox.scss";
 
-const MessageForm = ({ onSend, userId }) => {
+const MessageForm = ({ onSend }) => {
   return (
-    <div>
+    <div className="inbox__messageForm">
       <form
         onSubmit={(event) => {
-          onSend(userId, event);
+          onSend(event);
         }}
+        className="message__form"
       >
-        <input type="text" name="body" />
-        <button type="submit">Send</button>
+        {/* <Form.Field> */}
+          <Input
+            type="text"
+            name="body"
+            className="inbox__messageForm__input"
+          />
+        {/* </Form.Field>
+        <Form.Field> */}
+          <Button
+            type="submit"
+            className="inbox__messageForm__btn"
+          ><Icon name='send'/></Button>
+        {/* </Form.Field> */}
       </form>
     </div>
   );

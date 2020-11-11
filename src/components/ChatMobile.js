@@ -10,7 +10,6 @@ const Chat = (props) => {
   const {
     loggedInUser,
     onGoBack,
-    onSend,
     initialChat,
     initialAccepted,
     selectedUser,
@@ -18,32 +17,15 @@ const Chat = (props) => {
   // let userId = match.params.userId;
   const [chat, setChat] = useState(initialChat);
   const [accepted, setAccepted] = useState(initialAccepted);
+  const [receiver, setReceiver] = useState(null)
   const [item, setItem] = useState(null);
 
   let chatCheck = !chat ? initialChat : chat;
   console.log(selectedUser);
-  // useEffect(() => {
-  //   axios
-  //     .get(`${API_URL}/chat/${userId}`, { withCredentials: true })
-  //     .then((response) => {
-  //       setChat(response.data);
-  //       axios
-  //       .get(`${API_URL}/item/${loggedInUser.item}`, { withCredentials: true })
-  //       .then((response) => {
-  //         setAccepted(response.data.accepted);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
 
-  // }, []);
-
-  const handleSend = (e) => {
+  const handleSend = ( e) => {
     e.preventDefault();
+    console.log(selectedUser);
 
     const { body } = e.target;
     axios
@@ -55,8 +37,8 @@ const Chat = (props) => {
         { withCredentials: true }
       )
       .then((response) => {
+        setReceiver(selectedUser)
         setChat(response.data);
-        console.log(response.data)
       });
   };
 
@@ -80,80 +62,6 @@ const Chat = (props) => {
 
   return (
     <div>
-        {!chatCheck ? (
-          <div className="chat__noChat">
-            <p className="chat__noChat__text">Please select conversation</p>
-          </div>
-        ) : (
-          <>
-            <div className="inbox__chatBox__header">
-              <List divided relaxed style={{ marginTop: "20px" }}>
-                <List.Item>
-                  <Image avatar src={selectedUser.imageProfile} />
-                  <List.Content>
-                    <List.Header as="h3">{selectedUser.username}</List.Header>
-                  </List.Content>
-                </List.Item>
-              </List>
-              {!accepted ? (
-                <div>
-                  <button
-                    onClick={() => {
-                      handleAccept(selectedUser._id);
-                    }}
-                  >
-                    Accept
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <p>You accepted to exchange!</p>
-                  <button
-                    onClick={() => {
-                      handleRevoke(selectedUser._id);
-                    }}
-                  >
-                    Revoke?
-                  </button>
-                </>
-              )}
-            </div>
-            <div className="inbox__chatBox__container">
-              {chatCheck.map((message, i) => {
-                return (
-                  <>
-                    {message.from._id == loggedInUser._id ? (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "flex-end",
-                        }}
-                        key={message._id + i}
-                        className="inbox__me"
-                      >
-                        <div className="inbox__entete">
-                          <h2>{message.from.username}</h2>
-                        </div>
-                        <div className="inbox__triangle"></div>
-                        <p className="inbox__text">{message.body}</p>
-                      </div>
-                    ) : (
-                      <div key={message._id + i} className="inbox__you">
-                        <div className="inbox__entete">
-                          <h2>{message.from.username}</h2>
-                        </div>
-                        <div className="inbox__triangle"></div>
-                        <p className="inbox__text">{message.body}</p>
-                      </div>
-                    )}
-                  </>
-                );
-              })}
-            </div>
-          </>
-        )}
-        <MessageForm onSend={handleSend} />
       <div className="chat__mobile__container">
       {!chatCheck ? (
           <div className="chat__noChat">
@@ -164,9 +72,9 @@ const Chat = (props) => {
             <div className="inbox__chatBox__header">
               <List divided relaxed style={{ marginTop: "20px" }}>
                 <List.Item>
-                  <Image avatar src={selectedUser.imageProfile} />
+                  <Image avatar src={!selectedUser ? receiver.imageProfile : selectedUser.imageProfile} />
                   <List.Content>
-                    <List.Header as="h3">{selectedUser.username}</List.Header>
+                    <List.Header as="h3">{!selectedUser ? receiver.username : selectedUser.username}</List.Header>
                   </List.Content>
                 </List.Item>
               </List>
@@ -174,7 +82,7 @@ const Chat = (props) => {
                 <div>
                   <button
                     onClick={() => {
-                      handleAccept(selectedUser._id);
+                      handleAccept(!selectedUser ? receiver._id : selectedUser._id);
                     }}
                   >
                     Accept
@@ -185,7 +93,7 @@ const Chat = (props) => {
                   <p>You accepted to exchange!</p>
                   <button
                     onClick={() => {
-                      handleRevoke(selectedUser._id);
+                      handleRevoke(!selectedUser ? receiver._id : selectedUser._id);
                     }}
                   >
                     Revoke?
@@ -228,7 +136,7 @@ const Chat = (props) => {
             </div>
           </>
         )}
-        <MessageForm selectedUserId={selectedUser._id} onSend={handleSend} />
+        <MessageForm selectedUserId={!selectedUser ? receiver._id : selectedUser._id} onSend={handleSend} />
       </div>
     </div>
   );

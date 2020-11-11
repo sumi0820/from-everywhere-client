@@ -15,7 +15,6 @@ import "./styles/Form.scss";
 const UserCreate = ({ onEditProfile, loggedInUser }) => {
   return (
     <div>
-
       <div className="form__container">
         <Container text>
           <Grid container>
@@ -46,23 +45,40 @@ const UserCreate = ({ onEditProfile, loggedInUser }) => {
                   </Grid.Column>
                 </Grid>
 
-                <Button
-                  className="form__button goback"
-                  animated
-                  type="submit"
-                  secondary
-                >
-                  <Button.Content hidden>
-                    <Icon name="sign-in" />
-                  </Button.Content>
-                  <Button.Content visible>Sign in</Button.Content>
-                </Button>
+                <div className="itemDetail__btn profile__btn__container">
+                  <Button
+                    className="form__button goback"
+                    animated
+                    type="submit"
+                    secondary
+                  >
+                    <Button.Content hidden>
+                      <Icon name="edit outline" />
+                    </Button.Content>
+                    <Button.Content visible>Proceed</Button.Content>
+                  </Button>
+                </div>
               </Form>
+
+              <div className="form__testMode__container goback">
+                <Link to={`/user/${loggedInUser}`} style={{width:'100%'}}>
+                  <Button
+                    className="form__button "
+                    animated
+                    type="submit"
+                    secondary
+                  >
+                    <Button.Content hidden>
+                      <Icon name="forward " />
+                    </Button.Content>
+                    <Button.Content visible>Skip for now</Button.Content>
+                  </Button>
+                </Link>
+              </div>
             </Grid.Column>
           </Grid>
         </Container>
       </div>
-      <Link to={`/user/${loggedInUser}`}>Skip for now</Link>
     </div>
   );
 };

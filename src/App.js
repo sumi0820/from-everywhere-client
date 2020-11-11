@@ -18,15 +18,17 @@ import ItemsList from "./components/ItemsList";
 import ItemDetail from "./components/ItemDetail";
 import Inbox from "./components/Inbox";
 import Chat from "./components/Chat";
+import ChatMobile from "./components/ChatMobile";
 
 class App extends Component {
   state = {
     loggedInUser: null,
-    // updatedUser: null,
     errorMessage: null,
     items: [],
     cloneItems: [],
-    // messages: [],
+    chat: [],
+    selectedUser: null,
+    accepted: null,
   };
 
   componentDidMount() {
@@ -95,10 +97,10 @@ class App extends Component {
             this.props.history.push("/home");
           }
         );
+      })
+      .catch((err) => {
+        this.setState({ errorMessage: err.response.data.error });
       });
-    // .catch((err) => {
-    //   this.setState({ errorMessage: err.response.data.error });
-    // });
   };
 
   handleTestMode = (e) => {
@@ -235,34 +237,36 @@ class App extends Component {
     e.preventDefault();
     const { name, description, condition, image } = e.target;
 
-    axios
-      .patch(
-        `${API_URL}/item-edit`,
-        {
-          name: name.value,
-          description: description.value,
-          condition: condition.value,
-          image: image.value,
-        },
-        { withCredentials: true }
-      )
-      .then((response) => {
-        let items = response.data;
-        axios
-          .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
-            withCredentials: true,
-          })
-          .then((response) => {
-            let userData = response.data;
-            this.setState({ loggedInUser: userData, items: items }, () => {
-              this.props.history.push(`/user/${this.state.loggedInUser._id}`);
+    let imageFile = image.files[0];
+    let uploadForm = new FormData();
+    uploadForm.append("imageUrl", imageFile);
+    axios.post(`${API_URL}/upload`, uploadForm).then((response) => {
+      let newItem = {
+        name: name.value,
+        description: description.value,
+        condition: condition.value,
+        image: response.data.image,
+      };
+      axios
+        .patch(`${API_URL}/item-edit`, newItem, { withCredentials: true })
+        .then((response) => {
+          let items = response.data;
+          axios
+            .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
+              withCredentials: true,
+            })
+            .then((response) => {
+              let userData = response.data;
+              this.setState({ loggedInUser: userData, items: items }, () => {
+                this.props.history.push(`/user/${this.state.loggedInUser._id}`);
+              });
             });
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        // this.setState({ errorMessage: err.response.data.errorMessage });
-      });
+        })
+        .catch((err) => {
+          console.log(err);
+          // this.setState({ errorMessage: err.response.data.errorMessage });
+        });
+    });
   };
 
   handleDeleteItem = (itemId) => {
@@ -306,12 +310,49 @@ class App extends Component {
     });
   };
 
+  handleSelectUserMobile = (userId) => {
+    axios
+      .get(`${API_URL}/chat/${userId}`, { withCredentials: true })
+      .then((response) => {
+        this.setState({
+          chat: response.data,
+          selectedUser: response.data[0].from._id == this.state.loggedInUser._id ? response.data[1].from : response.data[0].from,
+        });
+        axios
+          .get(`${API_URL}/item/${this.state.loggedInUser.item._id}`, {
+            withCredentials: true,
+          })
+          .then((response) => {
+
+            this.setState(
+              {
+                accepted: response.data.accepted,
+              },
+              () => {
+                this.props.history.push(`/mb/inbox/${userId}`);
+              }
+            );
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
-    const { loggedInUser, errorMessage, items, cloneItems } = this.state;
+    const {
+      loggedInUser,
+      errorMessage,
+      items,
+      cloneItems,
+      selectedUser,
+      accepted,
+      chat,
+    } = this.state;
     return (
       <div className="App">
         <Nav loggedInUser={loggedInUser} onLogOut={this.handleLogOut} />
-        {loggedInUser ? <h5>User is: {loggedInUser.username}</h5> : null}
+        {/* {loggedInUser ? <h5>User is: {loggedInUser.username}</h5> : null} */}
 
         <Switch>
           <Route
@@ -461,6 +502,7 @@ class App extends Component {
                   loggedInUser={loggedInUser}
                   {...routeProps}
                   onGoBack={this.handleGoBack}
+                  onSelectedUserMobile={this.handleSelectUserMobile}
                 />
               );
             }}
@@ -475,6 +517,22 @@ class App extends Component {
                   {...routeProps}
                   onGoBack={this.handleGoBack}
                   // onSend={this.handleSend}
+                />
+              );
+            }}
+          />
+          <Route
+            exact
+            path="/mb/inbox/:userId"
+            render={(routeProps) => {
+              return (
+                <ChatMobile
+                  loggedInUser={loggedInUser}
+                  {...routeProps}
+                  onGoBack={this.handleGoBack}
+                  initialChat={chat}
+                  selectedUser={selectedUser}
+                  initialAccepted={accepted}
                 />
               );
             }}

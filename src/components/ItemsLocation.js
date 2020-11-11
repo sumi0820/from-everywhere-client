@@ -62,7 +62,7 @@ const ItemsLocation = ({ loggedInUser, items }) => {
                                   <Image
                                     avatar
                                     circular
-                                    src={item.user.image}
+                                    src={item.user.imageProfile}
                                   />
                                   {item.user.username}
                                 </Link>
@@ -97,7 +97,7 @@ const ItemsLocation = ({ loggedInUser, items }) => {
                                   <Image
                                     avatar
                                     circular
-                                    src={item.user.image}
+                                    src={item.user.imageProfile}
                                   />
                                   {item.user.username}
                                 </Link>

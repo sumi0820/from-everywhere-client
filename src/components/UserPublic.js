@@ -70,6 +70,11 @@ const UserProfile = (props) => {
     <p className="form__available">Successfully sent</p>
   );
 
+  const profileStyle = {
+    backgroundImage:
+      user && user.imageBg ? `url(${user.imageBg})` : loggedInUser.imageBg,
+  };
+
   return (
     <div>
       {!user ? (
@@ -99,22 +104,24 @@ const UserProfile = (props) => {
           >
             X
           </button> */}
-          <div className="profile__bg ">
-            <div className="profile__bg ">
-              <Grid container columns={1} stackable textAlign="center">
-                <div className="profile__top">
-                  <img
-                    src={user.image}
-                    alt="profile-image"
-                    className="profile__photo"
-                  />
-                  <Header as="h1" className="profile__top__header">
-                    {user.username}
-                  </Header>
-                </div>
-              </Grid>
+          <Container style={{ marginTop: "30px" }}>
+            <div className="profile__bg " style={profileStyle}>
+              <div className="profile__bg ">
+                <Grid container columns={1} stackable textAlign="center">
+                  <div className="profile__top">
+                    <img
+                      src={user.imageProfile}
+                      alt="profile-image"
+                      className="profile__photo"
+                    />
+                    <Header as="h1" className="profile__top__header">
+                      {user.username}
+                    </Header>
+                  </div>
+                </Grid>
+              </div>
             </div>
-          </div>
+          </Container>
 
           <Container text>
             {user.location ? (

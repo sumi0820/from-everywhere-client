@@ -171,7 +171,7 @@ const SignUp = ({ onSignUp, onUnmount, errorMessage }) => {
                 <Button.Content hidden>
                   <Icon name="sign-in" />
                 </Button.Content>
-                <Button.Content visible>Sign in</Button.Content>
+                <Button.Content visible>Sign up</Button.Content>
               </Button>
 
               {errorMessage ? (

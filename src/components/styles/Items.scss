@@ -4,8 +4,9 @@
 //Random items
 
 .random__image {
-    height: 600px;
-    width: 100%;
+    // width:100%;
+    object-fit: contain;
+    height:400px;
     @include media("<=phone") {
      height: 300px;
     }
@@ -13,7 +14,7 @@
 
 #random__text {
     font-size: 24px;
-    width: 30%;
+    
     @include media("<=phone") {
     font-size: 14px;
     width: 30%;
@@ -72,8 +73,7 @@
 }
 
 .itemDetail__btn{
-    display:flex;
-    justify-content:center;
+    margin-top: 15px;
 }
 
 .goback{

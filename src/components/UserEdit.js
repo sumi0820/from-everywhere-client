@@ -165,31 +165,21 @@ const UserEdit = ({ onEditProfile, loggedInUser, onUnmount, onGoBack }) => {
                   </Grid.Column>
                 </Grid>
 
-                <Grid columns={1} ui centered grid stackable>
-                  <Grid.Row>
-                    <div className="itemDetail__btn profile__btn__container">
-                      <Button
-                        className="form__button goback "
-                        animated
-                        type="submit"
-                        secondary
-                      >
-                        <Button.Content hidden>
-                          <Icon name="edit outline" />
-                        </Button.Content>
-                        <Button.Content visible>Update</Button.Content>
-                      </Button>
-                    </div>
-                  </Grid.Row>
-                </Grid>
+                <div className="itemDetail__btn profile__btn__container">
+                  <Button
+                    className="form__button goback "
+                    animated
+                    type="submit"
+                    secondary
+                  >
+                    <Button.Content hidden>
+                      <Icon name="edit outline" />
+                    </Button.Content>
+                    <Button.Content visible>Update</Button.Content>
+                  </Button>
+                </div>
               </Form>
-            </Grid.Column>
-          </Grid>
-        </Container>
-        <Container text className='form__edit__container'>
-          <Grid columns={1} ui centered grid stackable>
-            <Grid.Row>
-              <div className="itemDetail__btn profile__btn__container">
+              <div className="form__testMode__container goback">
                 <Button
                   className="profile__inbox goback"
                   animated
@@ -204,7 +194,7 @@ const UserEdit = ({ onEditProfile, loggedInUser, onUnmount, onGoBack }) => {
                   <Button.Content visible>Go Back</Button.Content>
                 </Button>
               </div>
-            </Grid.Row>
+            </Grid.Column>
           </Grid>
         </Container>
       </div>

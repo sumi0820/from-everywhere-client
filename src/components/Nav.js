@@ -54,14 +54,14 @@ const Nav = ({ loggedInUser, onLogOut }) => {
           <Link to="/" className="menu-item" onClick={handleOnClose}>
             Home
           </Link>
-          <Button className="profile__inbox goback " animated id="nav__btn">
+          {/* <Button className="profile__inbox goback " animated id="nav__btn">
             <Button.Content hidden>
               <FontAwesomeIcon icon={faHome} color="white"/>
             </Button.Content>
             <Button.Content visible>
               <p className="nav__btn__text">Home</p>
             </Button.Content>
-          </Button>
+          </Button> */}
 
           <Link to="/sign-up" className="menu-item" onClick={handleOnClose}>
             Signup
