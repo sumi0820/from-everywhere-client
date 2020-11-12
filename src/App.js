@@ -30,6 +30,7 @@ class App extends Component {
     chat: [],
     selectedUser: null,
     accepted: null,
+    text: "",
   };
 
   componentDidMount() {
@@ -210,7 +211,7 @@ class App extends Component {
             })
             .then((response) => {
               let items = response.data;
-              console.log('this is item creation', items);
+              console.log("this is item creation", items);
               axios
                 .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
                   withCredentials: true,
@@ -313,7 +314,7 @@ class App extends Component {
     e.preventDefault();
     let useInput = e.target.keyWord.value.toLowerCase();
     axios.get(`${API_URL}/item-search/?q=${useInput}`).then((response) => {
-      this.setState({ cloneItems: response.data }, () => {
+      this.setState({ cloneItems: response.data, text: "" }, () => {
         this.props.history.push("/item-list");
       });
     });
@@ -378,6 +379,8 @@ class App extends Component {
       });
   };
 
+  handleChange = (e) => this.setState({ text: e.target.value });
+
   render() {
     const {
       loggedInUser,
@@ -387,6 +390,7 @@ class App extends Component {
       selectedUser,
       accepted,
       chat,
+      text,
     } = this.state;
     return (
       <div className="App">
@@ -394,6 +398,8 @@ class App extends Component {
           loggedInUser={loggedInUser}
           onLogOut={this.handleLogOut}
           onSearch={this.handleSearch}
+          onChange={this.handleChange}
+          text={text}
         />
 
         <Switch>

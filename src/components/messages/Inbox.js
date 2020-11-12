@@ -94,7 +94,11 @@ const Inbox = ({ loggedInUser, onSelectedUserMobile, onGoBack }) => {
                           <p>{chat.from.username}</p>
                         </List.Header>
                         <List.Description as="a">
-                          <p className="inbox__userList__text">{chat.body}</p>
+                          <p className="inbox__userList__text">
+                          {chat.body.length >= 30
+                            ? chat.body.slice(0, 30) + "..."
+                            : chat.body}
+                          </p>
                         </List.Description>
                       </List.Content>
                     </List.Item>

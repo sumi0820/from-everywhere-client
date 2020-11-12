@@ -19,6 +19,7 @@ const Chat = (props) => {
   // let userId = match.params.userId;
   const [chat, setChat] = useState(initialChat);
   const [accepted, setAccepted] = useState(null);
+  const [text, setText] = useState("");
 
   let chatCheck = !chat ? initialChat : chat;
   let acceptedStatus = accepted == null ? initialAccepted : accepted;
@@ -38,9 +39,12 @@ const Chat = (props) => {
       )
       .then((response) => {
         setChat(response.data);
+        setText("");
         console.log(response.data);
       });
   };
+
+  const handleChange = (e) => setText(e.target.value);
 
   const handleAccept = (userId) => {
     axios
@@ -73,12 +77,6 @@ const Chat = (props) => {
                 handleAccept={handleAccept}
                 selectedUser={selectedUser}
               />
-            ) : acceptedStatus == selectedUser._id ? (
-              <div className="inbox__chatBox__alert">
-                <b className="inbox__chatBox__text__alert">
-                  You accepted other's!
-                </b>
-              </div>
             ) : (
               <div className="inbox__chatBox__alert">
                 <b className="inbox__chatBox__text__success">
@@ -122,7 +120,11 @@ const Chat = (props) => {
           </div>
         </>
       )}
-      <MessageForm onSend={handleSend} />
+      <MessageForm
+        onSend={handleSend}
+        text={text}
+        onChange={handleChange}
+      />
     </div>
   );
 };

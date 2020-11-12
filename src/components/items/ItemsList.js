@@ -22,38 +22,51 @@ const ItemsList = ({ items, onQuickSearch, onSearch, loggedInUser }) => {
       </Grid>
 
       <Grid container columns={3} doubling stackable>
-        {items.map((item) => {
-          return (
-            <Grid.Column
-              className="latest__grid"
-              as={Link}
-              to={`/item/${item._id}`}
-            >
-              <Card key={item._id}>
-                <img
-                  src={item.image}
-                  style={{ width: "100%", height: "200px", objectFit: "cover" }}
-                />
-                <Card.Content>
-                  <Card.Header>
-                    {item.name.length >= 20
-                      ? item.name.slice(0, 20) + "..."
-                      : item.name}
-                  </Card.Header>
-                  <Card.Meta>{item.user.username}</Card.Meta>
-                  <Card.Description>
-                    {item.description.length >= 70
-                      ? item.description.slice(0, 70) + "..."
-                      : item.description}
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <Link to={`/item/${item._id}`}>Read more</Link>
-                </Card.Content>
-              </Card>
-            </Grid.Column>
-          );
-        })}
+        {!items.length ? (
+          <Grid centered columns={2}>
+            <Grid.Column />
+            <h2>No results</h2>
+          </Grid>
+        ) : (
+          <>
+            {items.map((item) => {
+              return (
+                <Grid.Column
+                  className="latest__grid"
+                  as={Link}
+                  to={`/item/${item._id}`}
+                >
+                  <Card key={item._id}>
+                    <img
+                      src={item.image}
+                      style={{
+                        width: "100%",
+                        height: "200px",
+                        objectFit: "cover",
+                      }}
+                    />
+                    <Card.Content>
+                      <Card.Header>
+                        {item.name.length >= 20
+                          ? item.name.slice(0, 20) + "..."
+                          : item.name}
+                      </Card.Header>
+                      <Card.Meta>{item.user.username}</Card.Meta>
+                      <Card.Description>
+                        {item.description.length >= 70
+                          ? item.description.slice(0, 70) + "..."
+                          : item.description}
+                      </Card.Description>
+                    </Card.Content>
+                    <Card.Content extra>
+                      <Link to={`/item/${item._id}`}>Read more</Link>
+                    </Card.Content>
+                  </Card>
+                </Grid.Column>
+              );
+            })}
+          </>
+        )}
       </Grid>
     </Container>
   );

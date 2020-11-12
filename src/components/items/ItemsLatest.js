@@ -69,8 +69,8 @@ const ItemsLatest = ({ items, loggedInUser }) => {
                         </Card.Header>
                         <Card.Meta>{item.user.username}</Card.Meta>
                         <Card.Description>
-                          {item.description.length >= 70
-                            ? item.description.slice(0, 70) + "..."
+                          {item.description.length >= 65
+                            ? item.description.slice(0, 65) + "..."
                             : item.description}
                         </Card.Description>
                       </Card.Content>

@@ -21,7 +21,7 @@ const Chat = (props) => {
   const [chat, setChat] = useState(initialChat);
   const [accepted, setAccepted] = useState(null);
   const [receiver, setReceiver] = useState(null);
-  const [item, setItem] = useState(null);
+  const [text, setText] = useState("");
 
   let chatCheck = !chat ? initialChat : chat;
   let acceptedStatus = accepted == null ? initialAccepted : accepted;
@@ -44,6 +44,7 @@ const Chat = (props) => {
       .then((response) => {
         setReceiver(selectedUser);
         setChat(response.data);
+        setText("");
       });
   };
 
@@ -64,6 +65,8 @@ const Chat = (props) => {
         console.log(response.data);
       });
   };
+
+  const handleChange = (e) => setText(e.target.value);
 
   if (!loggedInUser) {
     return <Redirect to={"/sign-in"} />;
@@ -97,13 +100,11 @@ const Chat = (props) => {
                   handleAccept={handleAccept}
                   selectedUser={selectedUser}
                 />
-              ) : acceptedStatus == selectedUser._id ? (
-                <div className="inbox__chatBox__alert">
-                  <p className="inbox__chatBox__text__alert">You accepted other's!</p>
-                </div>
               ) : (
                 <div className="inbox__chatBox__alert">
-                  <p className="inbox__chatBox__text__success">You accepted to exchange!</p>
+                  <b className="inbox__chatBox__text__success">
+                    You accepted to exchange!
+                  </b>
                 </div>
               )}
             </div>
@@ -145,6 +146,8 @@ const Chat = (props) => {
         <MessageForm
           selectedUserId={!selectedUser ? receiver._id : selectedUser._id}
           onSend={handleSend}
+          text={text}
+          onChange={handleChange}
         />
       </div>
     </div>

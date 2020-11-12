@@ -2,7 +2,7 @@ import React from "react";
 import { Input, Button, Icon } from "semantic-ui-react";
 import "../styles/Inbox.scss";
 
-const MessageForm = ({ onSend }) => {
+const MessageForm = ({ onSend, text, onChange }) => {
   return (
     <div className="inbox__messageForm">
       <form
@@ -11,16 +11,17 @@ const MessageForm = ({ onSend }) => {
         }}
         className="message__form"
       >
-          <Input
-            type="text"
-            name="body"
-            className="inbox__messageForm__input"
-          />
+        <Input
+          type="text"
+          name="body"
+          value={text}
+          onChange={onChange}
+          className="inbox__messageForm__input"
+        />
 
-          <Button
-            type="submit"
-            className="inbox__messageForm__btn"
-          ><Icon name='send'/></Button>
+        <Button type="submit" className="inbox__messageForm__btn">
+          <Icon name="send" />
+        </Button>
       </form>
     </div>
   );

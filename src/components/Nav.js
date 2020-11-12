@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./styles/Nav.scss";
 
-const Nav = ({ loggedInUser, onLogOut, onSearch }) => {
+const Nav = ({ loggedInUser, onLogOut, onSearch, text, onChange }) => {
   const [burger, setBurger] = useState(false);
 
   const handleOnOpen = () => {
@@ -106,7 +106,6 @@ const Nav = ({ loggedInUser, onLogOut, onSearch }) => {
         </Menu>
       ) : (
         <Menu right isOpen={burger}>
-
           <Link
             to="/home"
             className="menu-item"
@@ -184,14 +183,19 @@ const Nav = ({ loggedInUser, onLogOut, onSearch }) => {
               </Button.Content>
             </Button>
           </Link>
-                    <Grid container columns={1} centered stackable className="menu-item">
+          <Grid container columns={1} centered stackable className="menu-item">
             <Grid.Column>
-              <form onSubmit={onSearch} style={{display:'flex', justifyContent:'center'}}>
+              <form
+                onSubmit={onSearch}
+                style={{ display: "flex", justifyContent: "center" }}
+              >
                 <Input
                   name="keyWord"
                   type="text"
                   action={{ icon: "search", type: "submit" }}
                   placeholder="Search"
+                  value={text}
+                  onChange={onChange}
                 />
               </form>
             </Grid.Column>
