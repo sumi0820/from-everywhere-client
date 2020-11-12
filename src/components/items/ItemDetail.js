@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react";
 
 import Loading from '../Loading'
-<Loading />
+
 
 import "../styles/Items.scss";
 import { API_URL } from "../../config";
@@ -27,10 +27,9 @@ const ItemDetail = (props) => {
       .get(`${API_URL}/item/${itemId}`)
       .then((response) => {
         setItem(response.data);
-        console.log(response.data);
+        console.log(item);
       })
       .catch((err) => {
-        console.log(err);
       });
   }, []);
   if (!props.loggedInUser) {
@@ -41,7 +40,7 @@ const ItemDetail = (props) => {
       {!item ? (
         <Loading />
       ) : (
-        <Loading>
+        <>
           <Container
             style={{
               marginTop: "30px",
@@ -114,7 +113,7 @@ const ItemDetail = (props) => {
               </Grid>
             </Container>
           </Container>
-        </Loading>
+        </>
       )}
     </div>
   );

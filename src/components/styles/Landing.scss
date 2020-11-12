@@ -1,5 +1,17 @@
 @import "./breakpoints.scss";
 
+.fp-controlArrow.fp-next {
+    right: 15px;
+    border-width: 38.5px 0 38.5px 34px;
+    border-color: transparent transparent transparent rgba(0, 0, 0, 0.6) !important;
+}
+
+.fp-controlArrow.fp-prev {
+    left: 15px;
+    width: 0;
+    border-width: 38.5px 34px 38.5px 0;
+    border-color: transparent rgba(0, 0, 0, 0.6) transparent transparent !important;
+}
 
 .sec1__container,
 .sec2__container {
@@ -138,7 +150,6 @@
     }
 }
 
-
 .sec4__btns {
     display: flex;
     justify-content: space-around;
@@ -146,15 +157,3 @@
     width: 300px;
 }
 
-.fp-controlArrow.fp-next {
-    right: 15px;
-    border-width: 38.5px 0 38.5px 34px;
-    border-color: transparent transparent transparent rgba(0, 0, 0, 0.6);
-}
-
-.fp-controlArrow.fp-prev {
-    left: 15px;
-    width: 0;
-    border-width: 38.5px 34px 38.5px 0;
-    border-color: transparent rgba(0, 0, 0, 0.6) transparent transparent;
-}
