@@ -10,27 +10,30 @@ const ItemsRadom = ({ items, loggedInUser }) => {
     const randomNum = (max, min) =>
       Math.floor(Math.random() * (max - min + 1) + min);
 
-    let filtered = items.filter((item) => {
-      return item.user._id != loggedInUser._id;
-    });
-
-    let newRandomItems = [];
-    if (filtered.length >= 3) {
-      for (let i = 0; i < 3; i++) {
-        newRandomItems.push(filtered[randomNum(items.length - 1, 0)]);
-      }
-      setRandomItems(newRandomItems);
+    if (!items.length) {
+      setRandomItems(null);
     } else {
-      setRandomItems(filtered);
-    }
+      let filtered = items.filter((item) => {
+        return item.user._id != loggedInUser._id;
+      });
+      if (filtered.length < 3 && !filtered.length) {
+        setRandomItems(filtered);
+      } else if (filtered.length > 3) {
+        let newRandomItems = [];
 
-    console.log(newRandomItems);
+        for (let i = 0; i < 3; i++) {
+          console("this is random", randomNum(items.length - 1, 0));
+          newRandomItems.push(filtered[randomNum(items.length - 1, 0)]);
+        }
+        setRandomItems(newRandomItems);
+      }
+    }
   }, []);
 
   return (
     <>
       {!randomItems.length ? (
-        <p>There's no item uploaded yet</p>
+        null
       ) : (
         <Carousel
           showArrows={true}
@@ -43,7 +46,7 @@ const ItemsRadom = ({ items, loggedInUser }) => {
           {randomItems.map((item) => {
             return (
               <div>
-                <Link to={`/item/${item._id}`} >
+                <Link to={`/item/${item._id}`}>
                   <div key={item._id}>
                     <img
                       src={item.image}

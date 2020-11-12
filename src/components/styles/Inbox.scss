@@ -119,6 +119,15 @@
     }
 }
 
+.inbox__link{
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
 .inbox__userList__text {
     color: white;
     font-size: 11px;

@@ -257,9 +257,14 @@ class App extends Component {
             })
             .then((response) => {
               let userData = response.data;
-              this.setState({ loggedInUser: userData, items: items }, () => {
-                this.props.history.push(`/user/${this.state.loggedInUser._id}`);
-              });
+              this.setState(
+                { loggedInUser: userData, items: items, ...this.state.items },
+                () => {
+                  this.props.history.push(
+                    `/user/${this.state.loggedInUser._id}`
+                  );
+                }
+              );
             });
         })
         .catch((err) => {

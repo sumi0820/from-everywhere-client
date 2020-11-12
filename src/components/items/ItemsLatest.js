@@ -3,28 +3,31 @@ import { Link } from "react-router-dom";
 import { Container, Grid, Icon, Card } from "semantic-ui-react";
 import "../styles/Items.scss";
 
-
 const ItemsLatest = ({ items, loggedInUser }) => {
   const [latestItems, setLatestItems] = useState([]);
 
   useEffect(() => {
+    if (items.length) {
+      let sorted = items
+        .sort((a, b) => {
+          return a.updatedAt - b.updatedAt;
+        })
+        .filter((item) => {
+          return item.user._id != loggedInUser._id;
+        });
 
-    let sorted = items.sort((a, b) => {
-      return a.updatedAt - b.updatedAt;
-    }).filter(item =>{
-      return item.user._id != loggedInUser._id
-    });
-    if (items.length > 7) {
-      setLatestItems(sorted.slice(0, 6));
-    } else {
-      setLatestItems(sorted);
+      if (items.length > 7) {
+        setLatestItems(sorted.slice(0, 6));
+      } else {
+        setLatestItems(sorted);
+      }
     }
   }, []);
 
   return (
     <>
       {!latestItems.length ? (
-        <p>There's no item uploaded yet</p>
+        null
       ) : (
         <div className="items__container">
           <Container>

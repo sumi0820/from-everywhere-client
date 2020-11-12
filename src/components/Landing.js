@@ -16,10 +16,6 @@ class Landing extends React.Component {
   afterLoad(origin, destination, direction) {
     console.log("After load: " + destination.index);
   }
-  componentDidMount() {
-
-
-  }
 
   render() {
     return (

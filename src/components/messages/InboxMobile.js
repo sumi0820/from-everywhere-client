@@ -22,7 +22,7 @@ const InboxMobile = ({ onGoBack, messages, onSelectedUserMobile }) => {
                 return (
                   <>
                     <List.Item
-                      className="inbox__mobile__fromList inbox__btn"
+                      className="inbox__mobile__fromList inbox__link"
                       key={i}
                       as="button"
                       onClick={() => {

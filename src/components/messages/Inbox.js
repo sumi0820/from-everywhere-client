@@ -75,7 +75,7 @@ const Inbox = ({ loggedInUser, onSelectedUserMobile, onGoBack }) => {
                   return (
                     <List.Item
                       key={i}
-                      className="inbox__fromList__user inbox__btn"
+                      className="inbox__fromList__user inbox__link"
                       as="button"
                       onClick={() => {
                         handleSelectUser(chat.from._id);

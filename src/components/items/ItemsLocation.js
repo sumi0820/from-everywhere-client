@@ -3,19 +3,24 @@ import { Link } from "react-router-dom";
 import { Container, Item, Image, Grid } from "semantic-ui-react";
 import "../styles/Items.scss";
 
-
 const ItemsLocation = ({ loggedInUser, items }) => {
   const [locationItems, setLocationItems] = useState([]);
 
   useEffect(() => {
-
-    let sorted = items.filter((item) => {
-      return loggedInUser.location == item.user.location && item.user._id != loggedInUser._id;
-    });
-    if (items.length > 4) {
-      setLocationItems(sorted.slice(0, 4));
+    if (!items.length) {
+      setLocationItems(null);
     } else {
-      setLocationItems(sorted);
+      let sorted = items.filter((item) => {
+        return (
+          loggedInUser.location == item.user.location &&
+          item.user._id != loggedInUser._id
+        );
+      });
+      if (items.length > 4) {
+        setLocationItems(sorted.slice(0, 4));
+      } else {
+        setLocationItems(sorted);
+      }
     }
   }, []);
 
