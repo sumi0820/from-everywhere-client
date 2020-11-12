@@ -9,6 +9,10 @@ import {
   Icon,
   Image,
 } from "semantic-ui-react";
+
+import Loading from '../Loading'
+<Loading />
+
 import "../styles/Items.scss";
 import { API_URL } from "../../config";
 
@@ -35,9 +39,9 @@ const ItemDetail = (props) => {
   return (
     <div>
       {!item ? (
-        <p>Loading</p>
+        <Loading />
       ) : (
-        <>
+        <Loading>
           <Container
             style={{
               marginTop: "30px",
@@ -110,7 +114,7 @@ const ItemDetail = (props) => {
               </Grid>
             </Container>
           </Container>
-        </>
+        </Loading>
       )}
     </div>
   );

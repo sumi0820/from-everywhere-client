@@ -22,7 +22,6 @@ const ItemsRadom = ({ items, loggedInUser }) => {
         let newRandomItems = [];
 
         for (let i = 0; i < 3; i++) {
-          console("this is random", randomNum(items.length - 1, 0));
           newRandomItems.push(filtered[randomNum(items.length - 1, 0)]);
         }
         setRandomItems(newRandomItems);
@@ -32,9 +31,7 @@ const ItemsRadom = ({ items, loggedInUser }) => {
 
   return (
     <>
-      {!randomItems.length ? (
-        null
-      ) : (
+      {!randomItems.length ? null : (
         <Carousel
           showArrows={true}
           showStatus={false}

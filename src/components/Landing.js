@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { Container, Grid, Button, Icon } from "semantic-ui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import { TweenMax, Power3 } from "gsap";
 
 import "./styles/Landing.scss";
 

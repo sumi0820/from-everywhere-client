@@ -12,7 +12,7 @@ import {
 } from "semantic-ui-react";
 import "../styles/Profile.scss";
 import { API_URL } from "../../config";
-import ProfileBtn from "./ProfileBtn";
+import Loading from '../Loading'
 
 const UserProfile = (props) => {
   const { loggedInUser, match, onGoBack } = props;
@@ -75,7 +75,7 @@ const UserProfile = (props) => {
   return (
     <div>
       {!user ? (
-        <p>Loading</p>
+        <Loading />
       ) : user._id == loggedInUser._id ? (
         <Redirect to={`/user/${user._id}`} />
       ) : (

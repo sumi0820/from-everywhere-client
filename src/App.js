@@ -19,6 +19,7 @@ import ItemDetail from "./components/items/ItemDetail";
 import Inbox from "./components/messages/Inbox";
 import Chat from "./components/messages/Chat";
 import ChatMobile from "./components/messages/ChatMobile";
+import NotFoundComponent from "./components/NotFoundComponent";
 
 class App extends Component {
   state = {
@@ -578,6 +579,7 @@ class App extends Component {
               );
             }}
           />
+          <Route path="*" component={NotFoundComponent} />
         </Switch>
       </div>
     );

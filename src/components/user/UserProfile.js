@@ -16,6 +16,7 @@ import { API_URL } from "../../config";
 import Feedback from "./Feedback";
 import FeedbackModal from "./FeedbackModal";
 import ProfileBtn from "./ProfileBtn";
+import Loading from "../Loading";
 
 const UserProfile = ({ loggedInUser, onGoBack, onFeedback }) => {
   const [user, setUser] = useState(null);
@@ -39,7 +40,7 @@ const UserProfile = ({ loggedInUser, onGoBack, onFeedback }) => {
   return (
     <div>
       {!user ? (
-        <p>Loading</p>
+        <Loading />
       ) : (
         <>
           <Container style={{ marginTop: "30px" }}>

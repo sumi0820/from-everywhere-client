@@ -46,6 +46,7 @@ const Inbox = ({ loggedInUser, onSelectedUserMobile, onGoBack }) => {
           })
           .then((response) => {
             setAccepted(response.data.accepted);
+
           })
           .catch((err) => {
             console.log(err);
