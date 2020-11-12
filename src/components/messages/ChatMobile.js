@@ -5,6 +5,8 @@ import { Redirect } from "react-router-dom";
 
 import { API_URL } from "../../config";
 import MessageForm from "./MessageForm";
+import ChatModal from "./ChatModal";
+
 import "../styles/Inbox.scss";
 
 const Chat = (props) => {
@@ -91,36 +93,17 @@ const Chat = (props) => {
                 </List.Item>
               </List>
               {!acceptedStatus ? (
-                <div className="inbox__chatBox__header__btn">
-                  <Button
-                    animated
-                    type="submit"
-                    secondary
-                    onClick={() => {
-                      handleAccept(selectedUser._id);
-                    }}
-                  >
-                    <Button.Content hidden>
-                      <Icon name="handshake outline" />
-                    </Button.Content>
-                    <Button.Content visible>Accept</Button.Content>
-                  </Button>
+                <ChatModal
+                  handleAccept={handleAccept}
+                  selectedUser={selectedUser}
+                />
+              ) : acceptedStatus == selectedUser._id ? (
+                <div className="inbox__chatBox__alert">
+                  <p className="inbox__chatBox__text__alert">You accepted other's!</p>
                 </div>
               ) : (
-                <div className="inbox__chatBox__header__btn">
-                  <Button
-                    animated
-                    type="submit"
-                    color="google plus"
-                    onClick={() => {
-                      handleRevoke(selectedUser._id);
-                    }}
-                  >
-                    <Button.Content hidden>
-                      <Icon name="cancel" />
-                    </Button.Content>
-                    <Button.Content visible>Revoke</Button.Content>
-                  </Button>
+                <div className="inbox__chatBox__alert">
+                  <p className="inbox__chatBox__text__success">You accepted to exchange!</p>
                 </div>
               )}
             </div>

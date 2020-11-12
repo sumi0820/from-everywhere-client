@@ -15,17 +15,21 @@ const ItemsRadom = ({ items, loggedInUser }) => {
     });
 
     let newRandomItems = [];
-    for (let i = 0; i < 3; i++) {
-      newRandomItems.push(filtered[randomNum(items.length - 1, 0)]);
+    if (filtered.length >= 3) {
+      for (let i = 0; i < 3; i++) {
+        newRandomItems.push(filtered[randomNum(items.length - 1, 0)]);
+      }
+      setRandomItems(newRandomItems);
+    } else {
+      setRandomItems(filtered);
     }
-    setRandomItems(newRandomItems);
-  }, []);
 
-  console.log(items);
+    console.log(newRandomItems);
+  }, []);
 
   return (
     <>
-      {!items.length || !randomItems.length ? (
+      {!randomItems.length ? (
         <p>There's no item uploaded yet</p>
       ) : (
         <Carousel
@@ -39,8 +43,8 @@ const ItemsRadom = ({ items, loggedInUser }) => {
           {randomItems.map((item) => {
             return (
               <div>
-                <Link to={`item/${item._id}`} key={item._id}>
-                  <div>
+                <Link to={`/item/${item._id}`} >
+                  <div key={item._id}>
                     <img
                       src={item.image}
                       alt="random__item"

@@ -10,12 +10,14 @@ import {
   Item,
   Divider,
 } from "semantic-ui-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackspace } from "@fortawesome/free-solid-svg-icons";
+
 import "../styles/Profile.scss";
 import { API_URL } from "../../config";
+import Feedback from "./Feedback";
+import FeedbackModal from "./FeedbackModal";
+import ProfileBtn from "./ProfileBtn";
 
-const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
+const UserProfile = ({ loggedInUser, onGoBack, onFeedback }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -26,22 +28,11 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
       });
   }, []);
 
-  const handleUpdate = () => {
-    axios
-      .post(
-        `${API_URL}/user/${loggedInUser._id}/update-status`,
-        {},
-        { withCredentials: true }
-      )
-      .then((response) => {
-        console.log(response.data);
-      });
-  };
-
   const profileStyle = {
     backgroundImage:
       user && user.imageBg ? `url(${user.imageBg})` : loggedInUser.imageBg,
   };
+
   if (!loggedInUser) {
     return <Redirect to={"/sign-in"} />;
   }
@@ -108,14 +99,13 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
                 <>
                   <Grid columns={1} ui grid stackable>
                     <Grid.Row>
-                      <div style={{marginBottom:'15px'}}>
+                      <div style={{ marginBottom: "15px" }}>
                         <p>Please upload your item</p>
                         <Link to="/upload-item">
                           <Button
                             className="profile__inbox goback"
                             animated
                             color="linkedin"
-                            
                           >
                             <Button.Content hidden>
                               <Icon name="cloud upload" />
@@ -130,25 +120,7 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
               ) : (
                 <div>
                   {user && user.item.accepted ? (
-                    <Container text>
-                      <div className="profile__itemStatus">
-                        <p>Have you received the item?</p>
-                        <Link to="/upload-item">
-                          <Button
-                            className="profile__inbox goback"
-                            animated
-                            secondary
-                            style={{ marginBottom: "10px" }}
-                            onClick={handleUpdate}
-                          >
-                            <Button.Content hidden>
-                              <Icon name="check circle outline" />
-                            </Button.Content>
-                            <Button.Content visible>Yes</Button.Content>
-                          </Button>
-                        </Link>
-                      </div>
-                    </Container>
+                    <FeedbackModal onFeedback={onFeedback} />
                   ) : (
                     <Grid columns={1} container divided="vertically" stackable>
                       <Grid.Row>
@@ -185,39 +157,19 @@ const UserProfile = ({ loggedInUser, onGoBack, onUpdate }) => {
             </div>
           </Container>
 
-          <Grid columns={1} ui centered grid stackable>
-            <Grid.Row>
-              <div className="itemDetail__btn profile__btn__container">
-                <Link to="/inbox">
-                  <Button
-                    className="profile__inbox goback"
-                    animated
-                    secondary
-                    style={{ marginBottom: "10px" }}
-                  >
-                    <Button.Content hidden>
-                      <Icon name="mail outline large" />
-                    </Button.Content>
-                    <Button.Content visible>Inbox</Button.Content>
-                  </Button>
-                </Link>
+          <ProfileBtn onGoBack={onGoBack} />
 
-                <Button
-                  className="profile__inbox goback"
-                  animated
-                  secondary
-                  onClick={() => {
-                    onGoBack();
-                  }}
-                >
-                  <Button.Content hidden>
-                    <FontAwesomeIcon icon={faBackspace} color="white" />
-                  </Button.Content>
-                  <Button.Content visible>Go Back</Button.Content>
-                </Button>
-              </div>
-            </Grid.Row>
-          </Grid>
+          <Container text>
+            <Divider />
+          </Container>
+
+          <Container text>
+            <Grid>
+              <Grid.Column floated="left" width={16}>
+                <Feedback loggedInUser={loggedInUser} />
+              </Grid.Column>
+            </Grid>
+          </Container>
         </>
       )}
     </div>

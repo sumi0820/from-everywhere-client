@@ -29,7 +29,7 @@ const UserCreate = ({ onEditProfile, loggedInUser }) => {
         <Container text>
           <Grid container>
             <Grid.Column>
-              <Form onSubmit={onEditProfile} className="form__form">
+              <Form onSubmit={onEditProfile} className="form__upload">
                 <Form.Field>
                   <label>Bio</label>
                   <TextArea type="text" name="bio" />

@@ -105,7 +105,7 @@ const UserEdit = ({ onEditProfile, loggedInUser, onUnmount, onGoBack }) => {
         <Container text>
           <Grid container>
             <Grid.Column>
-              <Form onSubmit={onEditProfile} className="form__form">
+              <Form onSubmit={onEditProfile} className="form__editUser">
                 <Form.Field required>
                   <label>Username</label>
                   <input

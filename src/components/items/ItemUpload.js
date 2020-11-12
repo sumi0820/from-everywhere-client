@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import {
   Container,
   Grid,
@@ -8,6 +8,8 @@ import {
   Icon,
   TextArea,
   Input,
+  Modal,
+  Header,
 } from "semantic-ui-react";
 import "../styles/Items.scss";
 
@@ -18,6 +20,8 @@ const ItemUpload = ({
   onDeleteItem,
   onGoBack,
 }) => {
+  const [open, setOpen] = useState(false);
+
   if (!loggedInUser) {
     return <Redirect to={"/sign-in"} />;
   }
@@ -29,7 +33,7 @@ const ItemUpload = ({
             <Grid.Column>
               <Form
                 onSubmit={!loggedInUser.item ? onCreateItem : onEditItem}
-                className="form__form"
+                className="form__upload"
               >
                 <Form.Field required>
                   <label>Item Name</label>
@@ -39,6 +43,7 @@ const ItemUpload = ({
                     defaultValue={
                       loggedInUser.item ? loggedInUser.item.name : null
                     }
+                    required
                   />
                 </Form.Field>
 
@@ -50,6 +55,7 @@ const ItemUpload = ({
                     defaultValue={
                       loggedInUser.item ? loggedInUser.item.description : null
                     }
+                    required
                   />
                 </Form.Field>
 
@@ -101,19 +107,58 @@ const ItemUpload = ({
                 </Button>
                 {loggedInUser.item ? (
                   <>
-                    <Button
-                      className="profile__inbox goback"
-                      animated
-                      color="google plus"
-                      onClick={() => {
-                        onDeleteItem(loggedInUser.item._id);
-                      }}
+                    <Modal
+                      basic
+                      onClose={() => setOpen(false)}
+                      onOpen={() => setOpen(true)}
+                      open={open}
+                      size="small"
+                      trigger={
+                        <Button
+                          className="profile__inbox goback"
+                          animated
+                          color="google plus"
+                        >
+                          <Button.Content hidden>
+                            <Icon name="trash alternate" />
+                          </Button.Content>
+                          <Button.Content visible>Delete</Button.Content>
+                        </Button>
+                      }
                     >
-                      <Button.Content hidden>
+                      <Header icon>
                         <Icon name="trash alternate" />
-                      </Button.Content>
-                      <Button.Content visible>Delete</Button.Content>
-                    </Button>
+                        <p>Are you sure you want to delete?</p>
+                      </Header>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-around",
+                        }}
+                      >
+                        <Modal.Actions>
+                          <Button
+                            color="green"
+                            inverted
+                            onClick={() => {
+                              setOpen(false);
+                            }}
+                          >
+                            <Icon name="remove" /> Cancel
+                          </Button>
+                          <Button
+                            color="google plus"
+                            inverted
+                            onClick={() => {
+                              onDeleteItem(loggedInUser.item._id);
+                              setOpen(false);
+                            }}
+                          >
+                            <Icon name="checkmark" /> Delete
+                          </Button>
+                        </Modal.Actions>
+                      </div>
+                    </Modal>
                   </>
                 ) : null}
               </div>

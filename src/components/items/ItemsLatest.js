@@ -23,7 +23,7 @@ const ItemsLatest = ({ items, loggedInUser }) => {
 
   return (
     <>
-      {!items.length ? (
+      {!latestItems.length ? (
         <p>There's no item uploaded yet</p>
       ) : (
         <div className="items__container">
@@ -47,7 +47,7 @@ const ItemsLatest = ({ items, loggedInUser }) => {
                   <Grid.Column
                     className="latest__grid"
                     as={Link}
-                    to={`item/${item._id}`}
+                    to={`/item/${item._id}`}
                   >
                     <Card key={item._id}>
                       <img
@@ -72,7 +72,7 @@ const ItemsLatest = ({ items, loggedInUser }) => {
                         </Card.Description>
                       </Card.Content>
                       <Card.Content extra>
-                        <Link to={`item/${item._id}`}>Read more</Link>
+                        <Link to={`/item/${item._id}`}>Read more</Link>
                       </Card.Content>
                     </Card>
                   </Grid.Column>

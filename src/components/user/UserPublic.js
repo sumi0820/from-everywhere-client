@@ -12,6 +12,7 @@ import {
 } from "semantic-ui-react";
 import "../styles/Profile.scss";
 import { API_URL } from "../../config";
+import ProfileBtn from "./ProfileBtn";
 
 const UserProfile = (props) => {
   const { loggedInUser, match, onGoBack } = props;
@@ -44,13 +45,7 @@ const UserProfile = (props) => {
   };
 
   let sentHiValidation = !sentHi ? (
-    // <Button
-    //   onClick={() => {
-    //     handleSendHi(userId);
-    //   }}
-    // >
-    //   Send Hi
-    // </Button>
+
     <div className="userPublic__btn__container">
       <Button
         className="profile__inbox goback "

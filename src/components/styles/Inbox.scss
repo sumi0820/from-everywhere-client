@@ -2,7 +2,6 @@
 
 
 .inbox__container {
-
     width: 750px;
     height: 800px;
     background: #eff3f7;
@@ -10,11 +9,8 @@
     font-size: 0;
     border-radius: 5px;
     overflow: hidden;
-
     @include media("<=phone") {
         display: none;
-
-
     }
 }
 
@@ -42,13 +38,17 @@
     align-items: center;
 }
 
-.inbox__chatBox__revoke {
+.inbox__chatBox__alert {
     display: flex;
     flex-direction: column;
 
-    p {
-        font-size: 10px;
+    .inbox__chatBox__text__alert {
+        color: #fa5246;
+        padding-left:20px ;
+    }
+    .inbox__chatBox__text__success {
         color: #2cb67d;
+        padding-left:20px ;
     }
 }
 

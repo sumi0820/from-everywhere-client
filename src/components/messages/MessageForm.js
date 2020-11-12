@@ -11,19 +11,16 @@ const MessageForm = ({ onSend }) => {
         }}
         className="message__form"
       >
-        {/* <Form.Field> */}
           <Input
             type="text"
             name="body"
             className="inbox__messageForm__input"
           />
-        {/* </Form.Field>
-        <Form.Field> */}
+
           <Button
             type="submit"
             className="inbox__messageForm__btn"
           ><Icon name='send'/></Button>
-        {/* </Form.Field> */}
       </form>
     </div>
   );

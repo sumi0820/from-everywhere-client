@@ -27,7 +27,7 @@ const ItemsList = ({ items, onQuickSearch, onSearch, loggedInUser }) => {
             <Grid.Column
               className="latest__grid"
               as={Link}
-              to={`item/${item._id}`}
+              to={`/item/${item._id}`}
             >
               <Card key={item._id}>
                 <img
@@ -48,7 +48,7 @@ const ItemsList = ({ items, onQuickSearch, onSearch, loggedInUser }) => {
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                  <Link to={`item/${item._id}`}>Read more</Link>
+                  <Link to={`/item/${item._id}`}>Read more</Link>
                 </Card.Content>
               </Card>
             </Grid.Column>

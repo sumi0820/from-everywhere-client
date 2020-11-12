@@ -5,6 +5,7 @@ import { List, Button, Image, Icon } from "semantic-ui-react";
 import { API_URL } from "../../config";
 import MessageForm from "./MessageForm";
 import "../styles/Inbox.scss";
+import ChatModal from "./ChatModal";
 
 const Chat = (props) => {
   const {
@@ -18,7 +19,6 @@ const Chat = (props) => {
   // let userId = match.params.userId;
   const [chat, setChat] = useState(initialChat);
   const [accepted, setAccepted] = useState(null);
-  const [item, setItem] = useState(null);
 
   let chatCheck = !chat ? initialChat : chat;
   let acceptedStatus = accepted == null ? initialAccepted : accepted;
@@ -51,15 +51,6 @@ const Chat = (props) => {
       });
   };
 
-  const handleRevoke = (userId) => {
-    axios
-      .post(`${API_URL}/item/${userId}/revoke`, {}, { withCredentials: true })
-      .then((response) => {
-        setAccepted(false);
-        console.log(response.data);
-      });
-  };
-
   return (
     <div>
       {!chatCheck ? (
@@ -78,39 +69,21 @@ const Chat = (props) => {
               </List.Item>
             </List>
             {!acceptedStatus ? (
-              <div>
-                <Button
-                  className="form__button goback"
-                  animated
-                  type="submit"
-                  secondary
-                  onClick={() => {
-                    handleAccept(selectedUser._id);
-                  }}
-                >
-                  <Button.Content hidden>
-                    <Icon name="handshake outline " />
-                  </Button.Content>
-                  <Button.Content visible>Accept</Button.Content>
-                </Button>
+              <ChatModal
+                handleAccept={handleAccept}
+                selectedUser={selectedUser}
+              />
+            ) : acceptedStatus == selectedUser._id ? (
+              <div className="inbox__chatBox__alert">
+                <b className="inbox__chatBox__text__alert">
+                  You accepted other's!
+                </b>
               </div>
             ) : (
-              <div className="inbox__chatBox__revoke">
-                <Button
-                  className="form__button goback"
-                  animated
-                  type="submit"
-                  color="google plus"
-                  onClick={() => {
-                    handleRevoke(selectedUser._id);
-                  }}
-                >
-                  <Button.Content hidden>
-                    <Icon name="cancel" />
-                  </Button.Content>
-                  <Button.Content visible>Revoke</Button.Content>
-                </Button>
-                <p>You accepted to exchange!</p>
+              <div className="inbox__chatBox__alert">
+                <b className="inbox__chatBox__text__success">
+                  You accepted to exchange!
+                </b>
               </div>
             )}
           </div>

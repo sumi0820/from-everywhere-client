@@ -343,6 +343,34 @@ class App extends Component {
       });
   };
 
+  handleFeedback = (e, rating) => {
+    e.preventDefault();
+    const { feedback } = e.target;
+    console.log(feedback.value, rating);
+    axios
+      .post(
+        `${API_URL}/user/${this.state.loggedInUser._id}/create-feedback`,
+        {
+          feedback: feedback.value,
+          rate: rating,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then(() => {
+        axios
+          .post(
+            `${API_URL}/user/${this.state.loggedInUser._id}/update-status`,
+            {},
+            { withCredentials: true }
+          )
+          .then((response) => {
+            this.props.history.push("/upload-item");
+          });
+      });
+  };
+
   render() {
     const {
       loggedInUser,
@@ -433,6 +461,7 @@ class App extends Component {
                   loggedInUser={loggedInUser}
                   {...routeProps}
                   onGoBack={this.handleGoBack}
+                  onFeedback={this.handleFeedback}
                 />
               );
             }}

@@ -21,8 +21,8 @@ const ItemsLocation = ({ loggedInUser, items }) => {
 
   return (
     <>
-      {!items.length ? (
-        <p>There's no item uploaded yet</p>
+      {!locationItems.length ? (
+        <p>No one near to your place...</p>
       ) : (
         <div>
           <Container className="location__header__container">
@@ -39,7 +39,7 @@ const ItemsLocation = ({ loggedInUser, items }) => {
                         {i % 2 ? (
                           <Item>
                             <Item.Content>
-                              <Item.Header as={Link} to={`item/${item._id}`}>
+                              <Item.Header as={Link} to={`/item/${item._id}`}>
                                 {item.name}
                               </Item.Header>
                               <Item.Meta>
@@ -62,7 +62,7 @@ const ItemsLocation = ({ loggedInUser, items }) => {
                             <Item.Image
                               src={item.image}
                               as={Link}
-                              to={`item/${item._id}`}
+                              to={`/item/${item._id}`}
                             />
                           </Item>
                         ) : (
@@ -70,11 +70,11 @@ const ItemsLocation = ({ loggedInUser, items }) => {
                             <Item.Image
                               src={item.image}
                               as={Link}
-                              to={`item/${item._id}`}
+                              to={`/item/${item._id}`}
                             />
 
                             <Item.Content>
-                              <Item.Header as={Link} to={`item/${item._id}`}>
+                              <Item.Header as={Link} to={`/item/${item._id}`}>
                                 {item.name}
                               </Item.Header>
                               <Item.Meta>

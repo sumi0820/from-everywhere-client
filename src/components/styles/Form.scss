@@ -1,4 +1,8 @@
-.form__container, .chat__noChat {
+@import "./breakpoints.scss";
+
+
+.form__container,
+.chat__noChat {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -6,9 +10,49 @@
     min-height: 100vh;
 }
 
+
 .form__form {
     border-radius: 10%;
     padding: 40px 40px 0 40px;
+
+    @include media("<=phone") {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        margin-top: 60%
+    }
+}
+
+.form__upload {
+    border-radius: 10%;
+    padding: 40px 40px 0 40px;
+
+    @include media("<=phone") {
+        padding: 0 40px 0 40px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        margin-top: 60%
+    }
+}
+
+
+.form__editUser {
+    border-radius: 10%;
+    padding: 40px 40px 0 40px;
+
+    @include media("<=phone") {
+        padding: 0 40px 0 40px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        margin-top: 30%
+    }
 }
 
 .form__button {
@@ -45,6 +89,6 @@
 }
 
 
-.form__edit__container{
+.form__edit__container {
     margin: 10px 0 10px 0 !important;
 }
