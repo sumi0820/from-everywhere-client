@@ -9,25 +9,43 @@ import {
   Button,
   Item,
   Divider,
+  Rating,
 } from "semantic-ui-react";
 import "../styles/Profile.scss";
 import { API_URL } from "../../config";
-import Loading from '../Loading'
+import Loading from "../Loading";
+import Feedback from "./Feedback";
 
 const UserProfile = (props) => {
   const { loggedInUser, match, onGoBack } = props;
   const [user, setUser] = useState(null);
   const [sentHi, setSentHi] = useState(false);
+  const [aveRating, setAveRating] = useState(0);
+  const [filteredFeedback, setFilteredFeedback] = useState([]);
+
   let userId = match.params.userId;
   useEffect(() => {
-    axios.get(`${API_URL}/user/${userId}`).then((response) => {
-      setUser(response.data);
-      console.log(response.data.item);
-      if (response.data.item.hi) {
-        if (response.data.item.hi.includes(loggedInUser._id)) {
+    axios.get(`${API_URL}/user/${userId}`).then((response1) => {
+      setUser(response1.data);
+      if (response1.data.item.hi) {
+        if (response1.data.item.hi.includes(loggedInUser._id)) {
           setSentHi(true);
         }
       }
+      axios
+        .get(`${API_URL}/feedback`, { withCredentials: true })
+        .then((response2) => {
+          let filtered = response2.data.filter((elem) => {
+            return elem.to._id == userId;
+          });
+          let rateTotal = response2.data.reduce((a, c) => {
+            return a + Number(c.rate);
+          }, 0);
+
+          console.log("rate check", rateTotal, filtered);
+          setFilteredFeedback(filtered);
+          setAveRating(rateTotal / filtered.length);
+        });
     });
   }, []);
 
@@ -45,7 +63,6 @@ const UserProfile = (props) => {
   };
 
   let sentHiValidation = !sentHi ? (
-
     <div className="userPublic__btn__container">
       <Button
         className="profile__inbox goback "
@@ -69,6 +86,7 @@ const UserProfile = (props) => {
     backgroundImage:
       user && user.imageBg ? `url(${user.imageBg})` : loggedInUser.imageBg,
   };
+
   if (!loggedInUser) {
     return <Redirect to={"/sign-in"} />;
   }
@@ -108,6 +126,15 @@ const UserProfile = (props) => {
                     {user.location}
                   </p>
                 </Grid.Column>
+                <Grid.Column floated="center" width={5}>
+                  {user.item.accepted ? (
+                    <p className="form__alert">
+                      Sorry the item no longer available...
+                    </p>
+                  ) : (
+                    sentHiValidation
+                  )}
+                </Grid.Column>
               </Grid>
             ) : (
               <Grid.Column floated="right" width={5} textAlign="center">
@@ -120,7 +147,17 @@ const UserProfile = (props) => {
               </Grid.Column>
             )}
 
-            <p className="itemDetail__description">{user.bio}</p>
+            <div className="profile__content">
+              <Rating
+                rating={aveRating}
+                maxRating={5}
+                size="large"
+                clearable
+                disabled
+              />
+
+              <p className="itemDetail__description">{user.bio}</p>
+            </div>
 
             <Container>
               <Divider />
@@ -157,32 +194,18 @@ const UserProfile = (props) => {
               )}
             </div>
           </Container>
-          <Container>
-            <Grid columns={1} ui centered grid stackable>
-              <Grid.Row>
-                <div className="itemDetail__btn profile__btn__container">
-                  {user.item.accepted ? (
-                    <p className="form__alert">
-                      Sorry the item no longer available...
-                    </p>
-                  ) : (
-                    sentHiValidation
-                  )}
-                  <Button
-                    className="profile__inbox goback"
-                    animated
-                    secondary
-                    onClick={() => {
-                      onGoBack();
-                    }}
-                  >
-                    <Button.Content hidden>
-                      <Icon name="hand point left outline large" />
-                    </Button.Content>
-                    <Button.Content visible>Go Back</Button.Content>
-                  </Button>
-                </div>
-              </Grid.Row>
+          <Container text>
+            <Divider />
+          </Container>
+
+          <Container text style={{ marginBottom: "30px" }}>
+            <Grid>
+              <Grid.Column floated="left" width={16}>
+                <Feedback
+                  loggedInUser={loggedInUser}
+                  filteredFeedback={filteredFeedback}
+                />
+              </Grid.Column>
             </Grid>
           </Container>
         </>

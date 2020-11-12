@@ -35,7 +35,7 @@ const ItemsLocation = ({ loggedInUser, items }) => {
           </Container>
 
           <Container text>
-            <Grid columns={1} container divided="vertically" stackable>
+            <Grid columns={1} container divided="vertically" stackable centered row>
               <Grid.Row>
                 <Item.Group divided>
                   {locationItems.map((item, i) => {

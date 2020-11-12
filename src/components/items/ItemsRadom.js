@@ -7,8 +7,7 @@ const ItemsRadom = ({ items, loggedInUser }) => {
   const [randomItems, setRandomItems] = useState([]);
 
   useEffect(() => {
-    const randomNum = (max, min) =>
-      Math.floor(Math.random() * (max - min + 1) + min);
+    const randomNum = (arr) => Math.floor(Math.random() * arr.length);
 
     if (!items.length) {
       setRandomItems(null);
@@ -20,9 +19,11 @@ const ItemsRadom = ({ items, loggedInUser }) => {
         setRandomItems(filtered);
       } else if (filtered.length > 3) {
         let newRandomItems = [];
-
+        console.log(filtered);
         for (let i = 0; i < 3; i++) {
-          newRandomItems.push(filtered[randomNum(items.length - 1, 0)]);
+          console.log(randomNum(filtered));
+          newRandomItems.push(filtered[randomNum(filtered)]);
+          console.log(newRandomItems);
         }
         setRandomItems(newRandomItems);
       }

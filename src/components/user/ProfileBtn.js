@@ -5,16 +5,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackspace } from "@fortawesome/free-solid-svg-icons";
 import "../styles/Profile.scss";
 
-const ProfileBtn = ({ onGoBack }) => {
+const ProfileBtn = () => {
   return (
-    <Grid columns={1} ui centered grid stackable>
-      <Grid.Row style={{marginBottom:'10px'}}>
-        <div className="itemDetail__btn profile__btn__container">
+    // <Grid columns={1} ui centered grid stackable>
+    //   <Grid.Row style={{marginBottom:'10px'}}>
+        // <div className="itemDetail__btn profile__btn__container">
+        <div>
           <Link to="/inbox">
             <Button
               className="profile__inbox goback"
               animated
-              secondary
+              inverted 
+              color='black'
               style={{ marginBottom: "10px" }}
             >
               <Button.Content hidden>
@@ -24,7 +26,7 @@ const ProfileBtn = ({ onGoBack }) => {
             </Button>
           </Link>
 
-          <Button
+          {/* <Button
             className="profile__inbox goback"
             animated
             secondary
@@ -36,10 +38,10 @@ const ProfileBtn = ({ onGoBack }) => {
               <FontAwesomeIcon icon={faBackspace} color="white" />
             </Button.Content>
             <Button.Content visible>Go Back</Button.Content>
-          </Button>
-        </div>
-      </Grid.Row>
-    </Grid>
+          </Button> */}
+         </div>
+    //   </Grid.Row>
+    // </Grid>
   );
 };
 

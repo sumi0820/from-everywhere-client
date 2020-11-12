@@ -210,6 +210,7 @@ class App extends Component {
             })
             .then((response) => {
               let items = response.data;
+              console.log('this is item creation', items);
               axios
                 .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
                   withCredentials: true,

@@ -29,26 +29,27 @@ class Landing extends React.Component {
               <div className="section section1">
                 <Container>
                   <div className="sec1__container">
-                    <h1 id='sec1__header'>from everywhere</h1>
+                    <h1
+                      id="sec1__header"
+                      style={{ fontWeight: "800", fontSize: "36px" }}
+                    >
+                      from everywhere
+                    </h1>
                     <div className="sec1__content">
                       <Grid columns={2} container doubling stackable>
                         <Grid.Column
                           width={10}
                           style={{ display: "flex", alignItems: "center" }}
                         >
-                          <p id='sec1__header'>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing
-                            elit. Facere, quis dicta ipsa ipsam omnis nesciunt
-                            impedit quidem quibusdam est nemo? Natus, vel!
-                            Accusantium rerum quaerat voluptate quo, quos porro
-                            aperiam!
+                          <p id="sec1__header">
+                            You will never be special, <br />
+                            but you can be special in the eyes of someone else.
                           </p>
                         </Grid.Column>
                         <Grid.Column width={3}>
                           <img
                             src="https://res.cloudinary.com/djct87vbj/image/upload/v1605094483/original_cb6fc0b556c5151ccb1480c27f96a81c_wcreh2.jpg"
                             alt="landing__img01"
-                            
                           />
                         </Grid.Column>
                       </Grid>
@@ -84,10 +85,14 @@ class Landing extends React.Component {
                             you may also be helped by others.
                           </h2>
                           <p>
-                            from everywhere is inspired by a Japanese folk tale
-                            called "The straw millionaire". <br />
-                            Post your item that is not to be used anymore, and
-                            exchange it with others. <br />
+                            <b>from everywhere</b> is a simple online
+                            marketplace.
+                            <br />
+                            What you need it the item that you don't use
+                            anymore.
+                            <br />
+                            <br />
+                            Post your item, and exchange it with others. <br />
                             Keep exchanging, you may get something you have
                             never expected in the end.
                           </p>
@@ -99,13 +104,17 @@ class Landing extends React.Component {
                           you may also be helped by others.
                         </h2>
                         <p>
-                          from everywhere is inspired by a Japanese folk tale
-                          called "The straw millionaire". <br />
-                          Post your item that is not to be used anymore, and
-                          exchange it with others. <br />
-                          Keep exchanging, you may get something you have never
-                          expected in the end.
-                        </p>
+                            <b>from everywhere</b> is a simple online
+                            marketplace.
+                            <br />
+                            What you need it the item that you don't use
+                            anymore.
+                            <br />
+                            <br />
+                            Post your item, and exchange it with others. <br />
+                            Keep exchanging, you may get something you have
+                            never expected in the end.
+                          </p>
                         <img
                           src="https://res.cloudinary.com/djct87vbj/image/upload/v1605097867/Snapseed_mewpfq.jpg"
                           alt="landing__img01"
@@ -154,7 +163,7 @@ class Landing extends React.Component {
                         src="./images/landing__06.svg"
                         alt="landing__img01"
                       />
-                      <h3>Wait for the item</h3>
+                      <h3>Send/Wait for the item</h3>
                     </div>
                   </Grid>
                 </Container>

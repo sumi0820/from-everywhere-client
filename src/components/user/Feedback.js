@@ -4,28 +4,17 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 import "../styles/Profile.scss";
-import { API_URL } from "../../config";
 
-const Feedback = ({ loggedInUser }) => {
-  const [feedbacks, setFeedbacks] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/feedback/${loggedInUser._id}`, { withCredentials: true })
-      .then((response) => {
-        setFeedbacks(response.data);
-      });
-  }, []);
-
+const Feedback = ({ loggedInUser, filteredFeedback }) => {
   return (
     <div>
-      {!feedbacks.length ? (
+      {!filteredFeedback.length ? (
         <>
           <p style={{ textAlign: "center" }}>No feedback</p>
         </>
       ) : (
         <List size="large">
-          {feedbacks.map((feedback) => {
+          {filteredFeedback.map((feedback) => {
             return (
               <List.Item>
                 <Image avatar src={feedback.from.imageProfile} />
@@ -37,9 +26,9 @@ const Feedback = ({ loggedInUser }) => {
                     <Rating
                       maxRating={5}
                       defaultRating={feedback.rate}
-                      icon="star"
                       disabled
                       size="large"
+                      clearable
                     />
                   </List.Description>
                   <List.Description
