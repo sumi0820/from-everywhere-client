@@ -252,5 +252,5 @@ The url to your repository and to your deployed project
 
 The url to your presentation slides
 
-[Slides Link](http://slides.com)
+[Slides Link](https://docs.google.com/presentation/d/1dPZH_lnqRI9ALKJGUBbWw1LZZNBlPxkjTtwW8rNzt4A/edit#slide=id.gab10258ef0_0_0)
 
