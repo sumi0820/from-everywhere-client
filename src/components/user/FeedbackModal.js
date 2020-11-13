@@ -54,7 +54,7 @@ const FeedbackModal = ({ loggedInUser, onGoBack, onFeedback }) => {
 
               <Rating
                 name="rate"
-                icon="star"
+                clearable
                 defaultRating={0}
                 maxRating={5}
                 size="huge"

@@ -23,8 +23,7 @@ const ChatModal = ({ selectedUser, handleAccept }) => {
       <Button
         onClick={() => dispatch({ type: "open" })}
         style={{ marginLeft: "10px" }}
-        inverted
-        color="black"
+        secondary
       >
         Accept
       </Button>
