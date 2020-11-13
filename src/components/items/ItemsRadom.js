@@ -8,9 +8,10 @@ const ItemsRadom = ({ items, loggedInUser }) => {
 
   useEffect(() => {
     const randomNum = (arr) => Math.floor(Math.random() * arr.length);
+    console.log(items);
 
     if (!items.length) {
-      setRandomItems([]);
+      setRandomItems(null);
     } else {
       let filtered = items.filter((item) => {
         return item.user._id != loggedInUser._id;
@@ -32,7 +33,7 @@ const ItemsRadom = ({ items, loggedInUser }) => {
 
   return (
     <>
-      {!randomItems.length ? null : (
+      {randomItems == null ? null : (
         <Carousel
           showArrows={true}
           showStatus={false}

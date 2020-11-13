@@ -218,14 +218,25 @@ class App extends Component {
                 })
                 .then((response) => {
                   let userData = response.data;
-                  this.setState(
-                    { loggedInUser: userData, items: items },
-                    () => {
-                      this.props.history.push(
-                        `/user/${this.state.loggedInUser._id}`
+                  axios
+                    .get(`${API_URL}/items`, { withCredentials: true })
+                    .then((response3) => {
+                      console.log("This is items request", response3.data);
+                      this.setState(
+                        {
+                          loggedInUser: userData,
+                          items: response3.data,
+                          cloneItems: response3.data,
+                        },
+                        () => {
+                          this.props.history.push(
+                            `/user/${this.state.loggedInUser._id}`
+                          );
+                        }
                       );
-                    }
-                  );
+                    });
+
+                  console.log(this.state.items);
                 });
             });
         })

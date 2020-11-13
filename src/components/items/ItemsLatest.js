@@ -7,6 +7,7 @@ const ItemsLatest = ({ items, loggedInUser }) => {
   const [latestItems, setLatestItems] = useState([]);
 
   useEffect(() => {
+    console.log(items);
     if (items.length) {
       let sorted = items
         .sort((a, b) => {

@@ -7,8 +7,10 @@ const ItemsLocation = ({ loggedInUser, items }) => {
   const [locationItems, setLocationItems] = useState([]);
 
   useEffect(() => {
+    console.log(items);
+
     if (!items.length) {
-      setLocationItems([]);
+      setLocationItems(null);
     } else {
       let sorted = items.filter((item) => {
         return (
@@ -26,7 +28,7 @@ const ItemsLocation = ({ loggedInUser, items }) => {
 
   return (
     <>
-      {!locationItems.length ? (
+      {locationItems == null ? (
         <p>No one near to your place...</p>
       ) : (
         <div>
