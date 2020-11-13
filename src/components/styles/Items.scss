@@ -52,7 +52,7 @@
 
 
 // item detail
-.itemDetail__img__container{
+.itemDetail__img__container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,4 +110,20 @@
 // Item List
 .itemList__container {
     margin-top: 50px;
+}
+
+.forDesktop {
+    @include media("<=phone") {
+        display: none !important;
+    }
+
+}
+
+.forMobile {
+    display: none;
+
+    @include media("<=phone") {
+        display: flex !important;
+    }
+
 }
