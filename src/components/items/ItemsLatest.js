@@ -11,12 +11,18 @@ const ItemsLatest = ({ items, loggedInUser }) => {
     if (items.length) {
       let sorted = items
         .sort((a, b) => {
-          return a.updatedAt - b.updatedAt;
+          if (a.updatedAt < b.updatedAt) {
+            return 1;
+          } else if (a.updatedAt > b.updatedAt) {
+            return -1;
+          } else {
+            return 0;
+          }
         })
         .filter((item) => {
           return item.user._id != loggedInUser._id;
         });
-
+console.log(sorted);
       if (items.length > 7) {
         setLatestItems(sorted.slice(0, 6));
       } else {

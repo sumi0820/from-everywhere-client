@@ -54,7 +54,7 @@ const UserProfile = ({ loggedInUser, onGoBack, onFeedback }) => {
       });
   }, []);
 
-
+console.log(user);
   const profileStyle = {
     backgroundImage:
       user && user.imageBg ? `url(${user.imageBg})` : loggedInUser.imageBg,
