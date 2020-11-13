@@ -120,7 +120,7 @@
 }
 
 .forMobile {
-    display: none;
+    display: none !important;
 
     @include media("<=phone") {
         display: flex !important;
