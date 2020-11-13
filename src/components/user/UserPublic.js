@@ -38,13 +38,20 @@ const UserProfile = (props) => {
           let filtered = response2.data.filter((elem) => {
             return elem.to._id == userId;
           });
-          let rateTotal = response2.data.reduce((a, c) => {
-            return a + Number(c.rate);
-          }, 0);
 
-          console.log("rate check", rateTotal, filtered);
-          setFilteredFeedback(filtered);
-          setAveRating(rateTotal / filtered.length);
+          if (filtered.length) {
+            let rateTotal = filtered.reduce((a, c) => {
+              return a + Number(c.rate);
+            }, 0);
+            console.log("rate check", rateTotal, filtered);
+            setFilteredFeedback(filtered);
+            setAveRating(rateTotal / filtered.length);
+          } else {
+            setFilteredFeedback(filtered);
+            setAveRating(0);
+          }
+
+
         });
     });
   }, []);
@@ -79,7 +86,7 @@ const UserProfile = (props) => {
       </Button>
     </div>
   ) : (
-    <p className="form__available">Successfully sent</p>
+    <p className="form__available">Sent</p>
   );
 
   const profileStyle = {

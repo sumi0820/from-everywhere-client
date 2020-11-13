@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import { Button, Modal } from "semantic-ui-react";
 
 const ChatModal = ({ selectedUser, handleAccept }) => {
@@ -20,7 +20,14 @@ const ChatModal = ({ selectedUser, handleAccept }) => {
 
   return (
     <div>
-      <Button onClick={() => dispatch({ type: "open" })}>Accept</Button>
+      <Button
+        onClick={() => dispatch({ type: "open" })}
+        style={{ marginLeft: "10px" }}
+        inverted
+        color="black"
+      >
+        Accept
+      </Button>
       <Modal size="mini" open={open}>
         <Modal.Header>Please confirm</Modal.Header>
         <Modal.Content>

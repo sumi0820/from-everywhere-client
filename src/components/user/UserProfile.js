@@ -36,13 +36,20 @@ const UserProfile = ({ loggedInUser, onGoBack, onFeedback }) => {
             let filtered = response2.data.filter((elem) => {
               return elem.to._id == loggedInUser._id;
             });
-            let rateTotal = response2.data.reduce((a, c) => {
-              return a + Number(c.rate);
-            }, 0);
 
-            console.log("rate check", rateTotal, filtered);
-            setFilteredFeedback(filtered);
-            setAveRating(rateTotal / filtered.length);
+            if(filtered.length){
+              let rateTotal = filtered.reduce((a, c) => {
+                return a + Number(c.rate);
+              }, 0);
+              console.log("rate check", rateTotal, filtered);
+              setFilteredFeedback(filtered);
+              setAveRating(rateTotal / filtered.length);
+            } else {
+              setFilteredFeedback(filtered);
+              setAveRating(0);
+            }
+
+
           });
       });
   }, []);

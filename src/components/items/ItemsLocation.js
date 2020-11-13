@@ -8,7 +8,7 @@ const ItemsLocation = ({ loggedInUser, items }) => {
 
   useEffect(() => {
     if (!items.length) {
-      setLocationItems(null);
+      setLocationItems([]);
     } else {
       let sorted = items.filter((item) => {
         return (

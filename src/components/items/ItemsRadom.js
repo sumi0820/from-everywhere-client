@@ -10,7 +10,7 @@ const ItemsRadom = ({ items, loggedInUser }) => {
     const randomNum = (arr) => Math.floor(Math.random() * arr.length);
 
     if (!items.length) {
-      setRandomItems(null);
+      setRandomItems([]);
     } else {
       let filtered = items.filter((item) => {
         return item.user._id != loggedInUser._id;
