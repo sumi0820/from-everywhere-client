@@ -48,6 +48,7 @@ const InboxMobile = ({ onGoBack, messages, onSelectedUserMobile }) => {
                             onSelectedUserMobile(chat.from._id);
                           }}
                           className="inbox__mobile__btn"
+                          style={{ textAlign: "left", fontSize:'15px' }}
                         >
                           {chat.bodylength >= 20
                             ? chat.body.slice(0, 20) + "..."
