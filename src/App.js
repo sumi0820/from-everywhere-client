@@ -9,7 +9,6 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import Landing from "./components/Landing";
 import UserProfile from "./components/user/UserProfile";
-import UserPublic from "./components/user/UserPublic";
 import UserCreate from "./components/user/UserCreate";
 import UserEdit from "./components/user/UserEdit";
 import ItemUpload from "./components/items/ItemUpload";
@@ -485,7 +484,7 @@ class App extends Component {
             path="/public/:userId"
             render={(routeProps) => {
               return (
-                <UserPublic
+                <UserProfile
                   loggedInUser={loggedInUser}
                   {...routeProps}
                   onGoBack={this.handleGoBack}
