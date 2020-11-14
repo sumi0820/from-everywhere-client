@@ -16,26 +16,39 @@ import { API_URL } from "../../config";
 import Feedback from "./Feedback";
 import FeedbackModal from "./FeedbackModal";
 import ProfileBtn from "./ProfileBtn";
+import UserContent from "./UserContent";
 import UserItem from "./UserItem";
 import Loading from "../Loading";
 
-
-const UserProfile = ({ loggedInUser, onFeedback }) => {
+const UserProfile = ({ loggedInUser, onFeedback, match }) => {
   const [user, setUser] = useState(null);
   const [aveRating, setAveRating] = useState(0);
   const [filteredFeedback, setFilteredFeedback] = useState([]);
+  const [sentHi, setSentHi] = useState(false);
+
+  let userId =
+    match.params.userId == loggedInUser._id
+      ? loggedInUser._id
+      : match.params.userId;
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/user/${loggedInUser._id}`, { withCredentials: true })
+      .get(`${API_URL}/user/${userId}`, { withCredentials: true })
       .then((response1) => {
         setUser(response1.data);
 
+        if (response1.data.item.hi) {
+          if (response1.data.item.hi.includes(loggedInUser._id)) {
+            setSentHi(true);
+          }
+        }
         axios
           .get(`${API_URL}/feedback`, { withCredentials: true })
           .then((response2) => {
             let filtered = response2.data.filter((elem) => {
-              return elem.to._id == loggedInUser._id;
+              return match.params.userId == loggedInUser._id
+                ? elem.to._id == loggedInUser._id
+                : elem.to._id == match.params.userId;
             });
 
             if (filtered.length) {
@@ -50,12 +63,38 @@ const UserProfile = ({ loggedInUser, onFeedback }) => {
             }
           });
       });
-  }, []);
+  }, [match.params.userId]);
 
-  const profileStyle = {
-    backgroundImage:
-      user && user.imageBg ? `url(${user.imageBg})` : loggedInUser.imageBg,
+  const handleSendHi = (userId) => {
+    axios
+      .post(`${API_URL}/send-hi/${userId}`, {}, { withCredentials: true })
+      .then((response) => {
+        setSentHi(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
+  let sentHiValidation = !sentHi ? (
+    <div className="userPublic__btn__container">
+      <Button
+        className="profile__inbox goback "
+        animated
+        secondary
+        onClick={() => {
+          handleSendHi(userId);
+        }}
+      >
+        <Button.Content hidden>
+          <Icon name="send large" />
+        </Button.Content>
+        <Button.Content visible>Send Hi</Button.Content>
+      </Button>
+    </div>
+  ) : (
+    <p className="form__available" style={{textAlign:'center'}}>Sent</p>
+  );
 
   if (!loggedInUser) {
     return <Redirect to={"/sign-in"} />;
@@ -66,75 +105,20 @@ const UserProfile = ({ loggedInUser, onFeedback }) => {
         <Loading />
       ) : (
         <>
-          <Container style={{ marginTop: "30px" }}>
-            <div className="profile__bg" style={profileStyle}>
-              <Grid container columns={1} stackable textAlign="center">
-                <div className="profile__top">
-                  <img
-                    src={user.imageProfile}
-                    alt="profile-image"
-                    className="profile__photo"
-                  />
-                  <Header as="h1" className="profile__top__header">
-                    {user.username}
-                  </Header>
-                  <Grid.Column floated="center" width={2} textAlign="center">
-                    <ProfileBtn />
-                  </Grid.Column>
-                </div>
-              </Grid>
-            </div>
+          <UserContent
+            user={user}
+            loggedInUser={loggedInUser}
+            aveRating={aveRating}
+            sentHiValidation={sentHiValidation}
+          />
+
+          <Container text>
+            <Divider />
           </Container>
 
           <Container text>
-            {user.location ? (
-              <Grid>
-                <Grid.Column floated="left" width={5}>
-                  <p className="itemDetail__location">
-                    <Icon name="map marker alternate" />
-                    {user.location}
-                  </p>
-                </Grid.Column>
-
-                <Grid.Column floated="right" width={2} textAlign="center">
-                  <Link to="/user/edit">
-                    <Icon name="edit outline" />
-                  </Link>
-                </Grid.Column>
-              </Grid>
-            ) : (
-              <Grid>
-                <Grid.Column floated="left" width={5}>
-                  <p className="itemDetail__location">
-                    <Icon name="map marker alternate" />
-                    <span>No location</span>
-                  </p>
-                </Grid.Column>
-
-                <Grid.Column floated="right" width={2} textAlign="center">
-                  <Link to="/user/edit">
-                    <Icon name="edit outline" />
-                  </Link>
-                </Grid.Column>
-              </Grid>
-            )}
-
-            <div className="profile__content">
-              <Rating
-                rating={aveRating}
-                maxRating={5}
-                size="large"
-                clearable
-                disabled
-              />
-              <p className="itemDetail__description">{user.bio}</p>
-            </div>
-
-            <Container>
-              <Divider />
-            </Container>
             <div className="profile__item">
-              {!user.item ? (
+              {!loggedInUser.item ? (
                 <>
                   <Grid columns={1} ui grid stackable>
                     <Grid.Row>
@@ -158,7 +142,7 @@ const UserProfile = ({ loggedInUser, onFeedback }) => {
                 </>
               ) : (
                 <div>
-                  {user && user.item.accepted ? (
+                  {user._id == loggedInUser._id && user.item.accepted ? (
                     <FeedbackModal onFeedback={onFeedback} />
                   ) : (
                     <UserItem user={user} loggedInUser={loggedInUser} />

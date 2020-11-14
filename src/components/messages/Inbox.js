@@ -13,7 +13,7 @@ const Inbox = ({ loggedInUser, onSelectedUserMobile, onGoBack }) => {
   const [chat, setChat] = useState(null);
   const [accepted, setAccepted] = useState(null);
   const [selectedUser, setSelectedUser] = useState({});
- 
+
   useEffect(() => {
     axios
       .get(`${API_URL}/inbox`, {
@@ -43,7 +43,6 @@ const Inbox = ({ loggedInUser, onSelectedUserMobile, onGoBack }) => {
           })
           .then((response) => {
             setAccepted(response.data.accepted);
-
           })
           .catch((err) => {
             console.log(err);
@@ -87,14 +86,18 @@ const Inbox = ({ loggedInUser, onSelectedUserMobile, onGoBack }) => {
                             handleSelectUser(chat.from._id);
                           }}
                           className="inbox__btn"
+                          style={{ textAlign: "left", paddingLeft:'0' }}
                         >
                           <p>{chat.from.username}</p>
                         </List.Header>
                         <List.Description as="a">
-                          <p className="inbox__userList__text">
-                          {chat.body.length >= 30
-                            ? chat.body.slice(0, 30) + "..."
-                            : chat.body}
+                          <p
+                            className="inbox__userList__text"
+                            style={{ textAlign: "left" }}
+                          >
+                            {chat.body.length >= 30
+                              ? chat.body.slice(0, 30) + "..."
+                              : chat.body}
                           </p>
                         </List.Description>
                       </List.Content>
