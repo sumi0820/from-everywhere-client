@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
-import {
-  Container,
-  Grid,
-  Icon,
-  Button,
-  Divider,
-} from "semantic-ui-react";
+import { Container, Grid, Icon, Button, Divider } from "semantic-ui-react";
 
 import "../styles/Profile.scss";
 import { API_URL } from "../../config";
@@ -23,12 +17,13 @@ const UserProfile = ({ loggedInUser, onFeedback, match }) => {
   const [filteredFeedback, setFilteredFeedback] = useState([]);
   const [sentHi, setSentHi] = useState(false);
 
-  let userId =
-    match.params.userId == loggedInUser._id
-      ? loggedInUser._id
-      : match.params.userId;
+  let userId;
 
   useEffect(() => {
+    userId =
+      match.params.userId == loggedInUser._id
+        ? loggedInUser._id
+        : match.params.userId;
     axios
       .get(`${API_URL}/user/${userId}`, { withCredentials: true })
       .then((response1) => {
@@ -90,7 +85,9 @@ const UserProfile = ({ loggedInUser, onFeedback, match }) => {
       </Button>
     </div>
   ) : (
-    <p className="form__available" style={{textAlign:'center'}}>Sent</p>
+    <p className="form__available" style={{ textAlign: "center" }}>
+      Sent
+    </p>
   );
 
   if (!loggedInUser) {

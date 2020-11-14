@@ -122,7 +122,8 @@ class App extends Component {
     // });
   };
 
-  handleLogOut = (e) => {
+  handleLogOut = () => {
+
     axios.post(`${API_URL}/logout`, {}, { withCredentials: true }).then(() => {
       this.setState(
         {
