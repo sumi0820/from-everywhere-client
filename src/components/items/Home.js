@@ -11,7 +11,7 @@ const Home = ({ loggedInUser, items }) => {
   if (!loggedInUser) {
     return <Redirect to={"/sign-in"} />;
   }
-  console.log(items);
+  // console.log(items);
   return (
     <>
       {!items ? (

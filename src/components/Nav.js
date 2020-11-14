@@ -19,14 +19,12 @@ const Nav = ({ loggedInUser, onLogOut, onSearch, text, onChange }) => {
   const handleOnOpen = () => {
     if (!burger) {
       setBurger(true);
-      console.log(burger);
     }
   };
 
   const handleOnClose = () => {
     if (burger) {
       setBurger(false);
-      console.log(burger);
     }
   };
 

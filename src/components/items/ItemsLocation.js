@@ -7,7 +7,6 @@ const ItemsLocation = ({ loggedInUser, items }) => {
   const [locationItems, setLocationItems] = useState([]);
 
   useEffect(() => {
-    console.log(items);
 
     if (!items.length) {
       setLocationItems(null);

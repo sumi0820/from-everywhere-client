@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../styles/Profile.scss";
 
 import {
@@ -11,7 +11,7 @@ import {
   TextArea,
 } from "semantic-ui-react";
 
-const FeedbackModal = ({ loggedInUser, onGoBack, onFeedback }) => {
+const FeedbackModal = ({ onFeedback }) => {
   const [open, setOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const handleChangeOnRate = (e, { rating }) => {

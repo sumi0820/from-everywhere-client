@@ -8,7 +8,6 @@ const ItemsRadom = ({ items, loggedInUser }) => {
 
   useEffect(() => {
     const randomNum = (arr) => Math.floor(Math.random() * arr.length);
-    console.log(items);
 
     if (!items.length) {
       setRandomItems(null);
@@ -20,11 +19,8 @@ const ItemsRadom = ({ items, loggedInUser }) => {
         setRandomItems(filtered);
       } else if (filtered.length > 3) {
         let newRandomItems = [];
-        console.log(filtered);
         for (let i = 0; i < 3; i++) {
-          console.log(randomNum(filtered));
           newRandomItems.push(filtered[randomNum(filtered)]);
-          console.log(newRandomItems);
         }
         setRandomItems(newRandomItems);
       }

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { List, Image, Rating, Grid } from "semantic-ui-react";
-import axios from "axios";
+import React from "react";
+import { List, Image, Rating} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import "../styles/Profile.scss";
 
-const Feedback = ({ loggedInUser, filteredFeedback }) => {
+const Feedback = ({  filteredFeedback }) => {
   return (
     <div>
       {!filteredFeedback.length ? (
@@ -13,7 +12,7 @@ const Feedback = ({ loggedInUser, filteredFeedback }) => {
           <p style={{ textAlign: "center" }}>No feedback</p>
         </>
       ) : (
-        <List size="large">
+        <List size="small">
           {filteredFeedback.map((feedback) => {
             return (
               <List.Item>

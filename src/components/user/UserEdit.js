@@ -1,104 +1,38 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+
 import _ from "lodash";
 import {
   Container,
   Grid,
   Button,
-  Message,
   Form,
   Icon,
   TextArea,
   Input,
 } from "semantic-ui-react";
 import { CountryDropdown } from "react-country-region-selector";
+
+import FormValidation from "../FormValidation";
 import "../styles/Form.scss";
 
-import { API_URL } from "../../config";
-
 const UserEdit = ({ onEditProfile, loggedInUser, onUnmount, onGoBack }) => {
-  const [username, setUsername] = useState(undefined);
-  const [email, setEmail] = useState(undefined);
   const [location, setLocation] = useState("");
-  const updateUsernameQuery = (username) => {
-    // A search query api call.
-    axios
-      .post(
-        `${API_URL}/input-check/edit-user`,
-        { username },
-        { withCredentials: true }
-      )
-      .then((response) => {
-        switch (response.data) {
-          case "isUser":
-            setUsername("isUser");
-            break;
-          default:
-            console.log("Available");
-        }
-      });
-  };
-
-  const updateEmailQuery = (email) => {
-    // A search query api call.
-    console.log(email);
-
-    axios
-      .post(
-        `${API_URL}/input-check/edit-email`,
-        { email },
-        { withCredentials: true }
-      )
-      .then((response) => {
-        switch (response.data) {
-          case "isEmail":
-            setEmail("isEmail");
-            break;
-          default:
-            console.log("Available");
-        }
-      });
-  };
-
-  const debounceSearchUsername = useRef(
-    _.debounce((username) => {
-      updateUsernameQuery(username);
-    }, 1000)
-  );
-
-  const debounceSearchEmail = useRef(
-    _.debounce((email) => {
-      updateEmailQuery(email);
-    }, 1000)
-  );
 
   const handleLocation = (_, e) => {
     const { type, value } = e.target;
     const val = type === "number" ? parseFloat(value) : value;
     setLocation(val);
-    
   };
-
-  useEffect(() => {
-    if (username) {
-      setUsername(username);
-      debounceSearchUsername.current(username);
-    }
-  }, [username]);
-  useEffect(() => {
-    if (email) {
-      setEmail(email);
-      debounceSearchEmail.current(email);
-    }
-  }, [email]);
 
   useEffect(() => {
     return onUnmount;
   }, []);
+
   if (!loggedInUser) {
     return <Redirect to={"/sign-in"} />;
   }
+
   return (
     <div>
       <div className="form__container">
@@ -106,43 +40,7 @@ const UserEdit = ({ onEditProfile, loggedInUser, onUnmount, onGoBack }) => {
           <Grid container>
             <Grid.Column>
               <Form onSubmit={onEditProfile} className="form__editUser">
-                <Form.Field required>
-                  <label>Username</label>
-                  <input
-                    type="text"
-                    name="username"
-                    defaultValue={loggedInUser.username}
-                    onChange={(e) => setUsername(e.target.value.toLowerCase())}
-                  />
-                </Form.Field>
-                {username == "" || username == undefined ? (
-                  ""
-                ) : username == "isUser" ? (
-                  <p className="form__alert">
-                    Username is unavailable, please choose another!
-                  </p>
-                ) : (
-                  <p className="form__available">Username available!</p>
-                )}
-                <Form.Field>
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    defaultValue={loggedInUser.email}
-                    onChange={(e) => setEmail(e.target.value.toLowerCase())}
-                  />
-                </Form.Field>
-                {email == "" || email == undefined ? (
-                  ""
-                ) : email == "isEmail" ? (
-                  <p className="form__alert">
-                    Email is unavailable, please choose another!
-                  </p>
-                ) : (
-                  <p className="form__available">Email available!</p>
-                )}
-
+                <FormValidation loggedInUser={loggedInUser} />
                 <Form.Field>
                   <label>Bio</label>
                   <TextArea

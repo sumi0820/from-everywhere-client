@@ -37,7 +37,6 @@ class App extends Component {
     axios
       .get(`${API_URL}/items`, { withCredentials: true })
       .then((response) => {
-        console.log("This is items request", response.data);
 
         this.setState({ items: response.data });
         this.setState({ cloneItems: response.data });
@@ -72,7 +71,6 @@ class App extends Component {
         );
       })
       .catch((err) => {
-        console.log(err.response.data.errorMessage);
         this.setState({ errorMessage: err.response.data.errorMessage });
       });
   };
@@ -127,7 +125,6 @@ class App extends Component {
 
   handleLogOut = (e) => {
     axios.post(`${API_URL}/logout`, {}, { withCredentials: true }).then(() => {
-      console.log("logout", this.props.history.push);
       this.setState(
         {
           loggedInUser: null,
@@ -154,7 +151,6 @@ class App extends Component {
   handleEditProfile = (e) => {
     e.preventDefault();
     const { bio, location, imageProfile, imageBg, username, email } = e.target;
-    console.log(location.value);
     let imageProfFile = imageProfile.files[0];
     let uploadProfForm = new FormData();
     uploadProfForm.append("imageUrl", imageProfFile);
@@ -178,7 +174,6 @@ class App extends Component {
         axios
           .patch(`${API_URL}/user-edit`, newProfile, { withCredentials: true })
           .then((response) => {
-            console.log(response.data);
             this.props.history.push(`/user/${this.state.loggedInUser._id}`);
           })
           .catch((err) => {
@@ -211,7 +206,6 @@ class App extends Component {
             })
             .then((response) => {
               let items = response.data;
-              console.log("this is item creation", items);
               axios
                 .get(`${API_URL}/user/${this.state.loggedInUser._id}`, {
                   withCredentials: true,
@@ -221,7 +215,6 @@ class App extends Component {
                   axios
                     .get(`${API_URL}/items`, { withCredentials: true })
                     .then((response3) => {
-                      console.log("This is items request", response3.data);
                       this.setState(
                         {
                           loggedInUser: userData,
@@ -236,12 +229,10 @@ class App extends Component {
                       );
                     });
 
-                  console.log(this.state.items);
                 });
             });
         })
         .catch((err) => {
-          console.log(err.response.data.errorMessage);
           this.setState({ errorMessage: err.response.data.errorMessage });
         });
     });
@@ -365,7 +356,6 @@ class App extends Component {
   handleFeedback = (e, rating) => {
     e.preventDefault();
     const { feedback } = e.target;
-    console.log(feedback.value, rating);
     axios
       .post(
         `${API_URL}/user/${this.state.loggedInUser._id}/create-feedback`,

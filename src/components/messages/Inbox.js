@@ -12,16 +12,14 @@ const Inbox = ({ loggedInUser, onSelectedUserMobile, onGoBack }) => {
   const [messages, setMessages] = useState([]);
   const [chat, setChat] = useState(null);
   const [accepted, setAccepted] = useState(null);
-  // const [item, setItem] = useState(null);
   const [selectedUser, setSelectedUser] = useState({});
+ 
   useEffect(() => {
     axios
       .get(`${API_URL}/inbox`, {
         withCredentials: true,
       })
       .then((response) => {
-        console.log("This is messages request", response.data);
-        console.log(response.data[0].from);
         setMessages(response.data);
       })
       .catch((err) => {
@@ -33,7 +31,6 @@ const Inbox = ({ loggedInUser, onSelectedUserMobile, onGoBack }) => {
     axios
       .get(`${API_URL}/chat/${userId}`, { withCredentials: true })
       .then((response) => {
-        console.log("This is handleSelectUser", response.data[0].from);
         setChat(response.data);
         setSelectedUser(
           response.data[0].from._id == loggedInUser._id
@@ -59,7 +56,7 @@ const Inbox = ({ loggedInUser, onSelectedUserMobile, onGoBack }) => {
   if (!loggedInUser) {
     return <Redirect to={"/sign-in"} />;
   }
-  // console.log(selectedUser, chat);
+
   return (
     <div>
       <div className="inbox__container">

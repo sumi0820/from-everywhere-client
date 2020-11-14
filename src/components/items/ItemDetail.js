@@ -27,7 +27,6 @@ const ItemDetail = (props) => {
       .get(`${API_URL}/item/${itemId}`)
       .then((response) => {
         setItem(response.data);
-        console.log(item);
       })
       .catch((err) => {
       });

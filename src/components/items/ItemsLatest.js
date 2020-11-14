@@ -7,7 +7,6 @@ const ItemsLatest = ({ items, loggedInUser }) => {
   const [latestItems, setLatestItems] = useState([]);
 
   useEffect(() => {
-    console.log(items);
     if (items.length) {
       let sorted = items
         .sort((a, b) => {
@@ -22,7 +21,6 @@ const ItemsLatest = ({ items, loggedInUser }) => {
         .filter((item) => {
           return item.user._id != loggedInUser._id;
         });
-console.log(sorted);
       if (items.length > 7) {
         setLatestItems(sorted.slice(0, 6));
       } else {

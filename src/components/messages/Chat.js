@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { List, Button, Image, Icon } from "semantic-ui-react";
+import { List, Image } from "semantic-ui-react";
 
 import { API_URL } from "../../config";
 import MessageForm from "./MessageForm";
@@ -10,8 +10,6 @@ import ChatModal from "./ChatModal";
 const Chat = (props) => {
   const {
     loggedInUser,
-    onGoBack,
-    onSend,
     initialChat,
     initialAccepted,
     selectedUser,
@@ -23,7 +21,6 @@ const Chat = (props) => {
 
   let chatCheck = !chat ? initialChat : chat;
   let acceptedStatus = accepted == null ? initialAccepted : accepted;
-  console.log(selectedUser);
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -40,7 +37,6 @@ const Chat = (props) => {
       .then((response) => {
         setChat(response.data);
         setText("");
-        console.log(response.data);
       });
   };
 
@@ -51,7 +47,6 @@ const Chat = (props) => {
       .post(`${API_URL}/item/${userId}/accept`, {}, { withCredentials: true })
       .then((response) => {
         setAccepted(true);
-        console.log(response.data);
       });
   };
 

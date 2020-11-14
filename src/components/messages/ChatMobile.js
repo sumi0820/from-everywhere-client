@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { List, Button, Image, Icon } from "semantic-ui-react";
+import { List, Image } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
 
 import { API_URL } from "../../config";
@@ -12,12 +12,11 @@ import "../styles/Inbox.scss";
 const Chat = (props) => {
   const {
     loggedInUser,
-    onGoBack,
     initialChat,
     initialAccepted,
     selectedUser,
   } = props;
-  // let userId = match.params.userId;
+
   const [chat, setChat] = useState(initialChat);
   const [accepted, setAccepted] = useState(null);
   const [receiver, setReceiver] = useState(null);
@@ -26,11 +25,9 @@ const Chat = (props) => {
   let chatCheck = !chat ? initialChat : chat;
   let acceptedStatus = accepted == null ? initialAccepted : accepted;
 
-  console.log(selectedUser);
 
   const handleSend = (e) => {
     e.preventDefault();
-    console.log(selectedUser);
 
     const { body } = e.target;
     axios
@@ -53,16 +50,6 @@ const Chat = (props) => {
       .post(`${API_URL}/item/${userId}/accept`, {}, { withCredentials: true })
       .then((response) => {
         setAccepted(true);
-        console.log(response.data);
-      });
-  };
-
-  const handleRevoke = (userId) => {
-    axios
-      .post(`${API_URL}/item/${userId}/revoke`, {}, { withCredentials: true })
-      .then((response) => {
-        setAccepted(false);
-        console.log(response.data);
       });
   };
 

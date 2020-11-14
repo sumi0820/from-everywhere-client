@@ -15,9 +15,10 @@ import "../styles/Profile.scss";
 import { API_URL } from "../../config";
 import Loading from "../Loading";
 import Feedback from "./Feedback";
+import UserItem from "./UserItem";
 
 const UserProfile = (props) => {
-  const { loggedInUser, match, onGoBack } = props;
+  const { loggedInUser, match } = props;
   const [user, setUser] = useState(null);
   const [sentHi, setSentHi] = useState(false);
   const [aveRating, setAveRating] = useState(0);
@@ -43,25 +44,20 @@ const UserProfile = (props) => {
             let rateTotal = filtered.reduce((a, c) => {
               return a + Number(c.rate);
             }, 0);
-            console.log("rate check", rateTotal, filtered);
             setFilteredFeedback(filtered);
             setAveRating(rateTotal / filtered.length);
           } else {
             setFilteredFeedback(filtered);
             setAveRating(0);
           }
-
-
         });
     });
   }, []);
 
   const handleSendHi = (userId) => {
-    console.log(userId);
     axios
       .post(`${API_URL}/send-hi/${userId}`, {}, { withCredentials: true })
       .then((response) => {
-        console.log("This is send hi", response.data);
         setSentHi(true);
       })
       .catch((err) => {
@@ -176,28 +172,7 @@ const UserProfile = (props) => {
                   <p>There's no item uploaded yet...</p>
                 </>
               ) : (
-                <Grid columns={1} container divided="vertically" stackable>
-                  <Grid.Row>
-                    <Item.Group divided>
-                      <Item>
-                        <Item.Image
-                          src={user.item.image}
-                          as={Link}
-                          to={`/item/${user.item._id}`}
-                        />
-                        <Item.Content>
-                          <Item.Header as={Link} to={`/item/${user.item._id}`}>
-                            {user.item.name}
-                          </Item.Header>
-
-                          <Item.Description>
-                            {user.item.description}
-                          </Item.Description>
-                        </Item.Content>
-                      </Item>
-                    </Item.Group>
-                  </Grid.Row>
-                </Grid>
+                <UserItem user={user} />
               )}
             </div>
           </Container>

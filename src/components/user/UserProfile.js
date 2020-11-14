@@ -7,7 +7,6 @@ import {
   Header,
   Icon,
   Button,
-  Item,
   Divider,
   Rating,
 } from "semantic-ui-react";
@@ -17,9 +16,11 @@ import { API_URL } from "../../config";
 import Feedback from "./Feedback";
 import FeedbackModal from "./FeedbackModal";
 import ProfileBtn from "./ProfileBtn";
+import UserItem from "./UserItem";
 import Loading from "../Loading";
 
-const UserProfile = ({ loggedInUser, onGoBack, onFeedback }) => {
+
+const UserProfile = ({ loggedInUser, onFeedback }) => {
   const [user, setUser] = useState(null);
   const [aveRating, setAveRating] = useState(0);
   const [filteredFeedback, setFilteredFeedback] = useState([]);
@@ -37,30 +38,24 @@ const UserProfile = ({ loggedInUser, onGoBack, onFeedback }) => {
               return elem.to._id == loggedInUser._id;
             });
 
-            if(filtered.length){
+            if (filtered.length) {
               let rateTotal = filtered.reduce((a, c) => {
                 return a + Number(c.rate);
               }, 0);
-              console.log("rate check", rateTotal, filtered);
               setFilteredFeedback(filtered);
               setAveRating(rateTotal / filtered.length);
             } else {
               setFilteredFeedback(filtered);
               setAveRating(0);
             }
-
-
           });
       });
   }, []);
 
-console.log(user);
   const profileStyle = {
     backgroundImage:
       user && user.imageBg ? `url(${user.imageBg})` : loggedInUser.imageBg,
   };
-console.log(filteredFeedback);
-
 
   if (!loggedInUser) {
     return <Redirect to={"/sign-in"} />;
@@ -108,19 +103,20 @@ console.log(filteredFeedback);
                 </Grid.Column>
               </Grid>
             ) : (
-              <Grid.Column floated="right" width={5} textAlign="center">
+              <Grid>
                 <Grid.Column floated="left" width={5}>
                   <p className="itemDetail__location">
                     <Icon name="map marker alternate" />
-                    <span>No location provided</span>
+                    <span>No location</span>
                   </p>
                 </Grid.Column>
+
                 <Grid.Column floated="right" width={2} textAlign="center">
                   <Link to="/user/edit">
                     <Icon name="edit outline" />
                   </Link>
                 </Grid.Column>
-              </Grid.Column>
+              </Grid>
             )}
 
             <div className="profile__content">
@@ -165,35 +161,7 @@ console.log(filteredFeedback);
                   {user && user.item.accepted ? (
                     <FeedbackModal onFeedback={onFeedback} />
                   ) : (
-                    <Grid columns={1} container divided="vertically" stackable>
-                      <Grid.Row>
-                        <Item.Group divided>
-                          <Item>
-                            <Item.Image
-                              src={user.item.image}
-                              as={Link}
-                              to={`/item/${user.item._id}`}
-                            />
-                            <Item.Content>
-                              <Item.Header
-                                as={Link}
-                                to={`/item/${user.item._id}`}
-                              >
-                                {user.item.name}
-                              </Item.Header>
-                              <Item.Meta>
-                                <Link to="/upload-item">
-                                  <Icon name="edit outline" />
-                                </Link>
-                              </Item.Meta>
-                              <Item.Description>
-                                {user.item.description}
-                              </Item.Description>
-                            </Item.Content>
-                          </Item>
-                        </Item.Group>
-                      </Grid.Row>
-                    </Grid>
+                    <UserItem user={user} loggedInUser={loggedInUser} />
                   )}
                 </div>
               )}
@@ -207,7 +175,10 @@ console.log(filteredFeedback);
           <Container text style={{ marginBottom: "30px" }}>
             <Grid>
               <Grid.Column floated="left" width={16}>
-                <Feedback loggedInUser={loggedInUser} filteredFeedback={filteredFeedback} />
+                <Feedback
+                  loggedInUser={loggedInUser}
+                  filteredFeedback={filteredFeedback}
+                />
               </Grid.Column>
             </Grid>
           </Container>
