@@ -16,7 +16,6 @@ import { API_URL } from "../../config";
 import Loading from "../Loading";
 import Feedback from "./Feedback";
 import UserItem from "./UserItem";
-import UserContent from "./UserItem";
 
 const UserProfile = (props) => {
   const { loggedInUser, match } = props;
@@ -29,7 +28,6 @@ const UserProfile = (props) => {
   useEffect(() => {
     axios.get(`${API_URL}/user/${userId}`).then((response1) => {
       setUser(response1.data);
-
       if (response1.data.item.hi) {
         if (response1.data.item.hi.includes(loggedInUser._id)) {
           setSentHi(true);
@@ -87,6 +85,11 @@ const UserProfile = (props) => {
     <p className="form__available">Sent</p>
   );
 
+  const profileStyle = {
+    backgroundImage:
+      user && user.imageBg ? `url(${user.imageBg})` : loggedInUser.imageBg,
+  };
+
   if (!loggedInUser) {
     return <Redirect to={"/sign-in"} />;
   }
@@ -98,19 +101,71 @@ const UserProfile = (props) => {
         <Redirect to={`/user/${user._id}`} />
       ) : (
         <>
-
-          <UserContent
-            user={user}
-            loggedInUser={loggedInUser}
-            sentHiValidation={sentHiValidation}
-            aveRating={aveRating}
-          />
-
-
-          <Container>
-            <Divider />
+          <Container style={{ marginTop: "30px" }}>
+            <div className="profile__bg " style={profileStyle}>
+              <div className="profile__bg ">
+                <Grid container columns={1} stackable textAlign="center">
+                  <div className="profile__top">
+                    <img
+                      src={user.imageProfile}
+                      alt="profile-image"
+                      className="profile__photo"
+                    />
+                    <Header as="h1" className="profile__top__header">
+                      {user.username}
+                    </Header>
+                  </div>
+                </Grid>
+              </div>
+            </div>
           </Container>
+
           <Container text>
+            {user.location ? (
+              <Grid>
+                <Grid.Column floated="left" width={5}>
+                  <p className="itemDetail__location">
+                    <Icon name="map marker alternate" />
+                    {user.location}
+                  </p>
+                </Grid.Column>
+                <Grid.Column floated="center" width={5}>
+                  {user.item.accepted ? (
+                    <p className="form__alert">
+                      Sorry the item no longer available...
+                    </p>
+                  ) : (
+                    sentHiValidation
+                  )}
+                </Grid.Column>
+              </Grid>
+            ) : (
+              <Grid.Column floated="right" width={5} textAlign="center">
+                <Grid.Column floated="left" width={5}>
+                  <p className="itemDetail__location">
+                    <Icon name="map marker alternate" />
+                    <span>No location provided</span>
+                  </p>
+                </Grid.Column>
+              </Grid.Column>
+            )}
+
+            <div className="profile__content">
+              <Rating
+                rating={aveRating}
+                maxRating={5}
+                size="large"
+                clearable
+                disabled
+              />
+
+              <p className="itemDetail__description">{user.bio}</p>
+            </div>
+
+            <Container>
+              <Divider />
+            </Container>
+
             <div>
               {!user.item ? (
                 <>
