@@ -10,7 +10,13 @@ You can start from everywhere. Let's enjoy serendipity in the world!
 
 For your reference: [Straw Millionaire](https://en.wikipedia.org/wiki/Straw_Millionaire)
 
+![Home Page](./public/screenshot-main.png)
+![Home Page](./public/screenshot-home.png)
+![Mobile test](./public/screenshot.gif)
 
+[Demo here](https://from-everywhere.herokuapp.com/)
+
+<!-- 
 ## User Stories
 
 -  **404:** As an anon/user I can see a 404 page if I try to reach a page that does not exist so that I know it's my fault
@@ -253,4 +259,4 @@ The url to your repository and to your deployed project
 The url to your presentation slides
 
 [Slides Link](https://docs.google.com/presentation/d/1dPZH_lnqRI9ALKJGUBbWw1LZZNBlPxkjTtwW8rNzt4A/edit#slide=id.gab10258ef0_0_0)
-
+ -->
