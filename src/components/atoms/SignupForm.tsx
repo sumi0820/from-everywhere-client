@@ -1,42 +1,62 @@
-import { VFC, useState } from 'react';
-import { Button, Modal, Message } from 'semantic-ui-react';
+import { VFC, FormEvent, useState } from 'react';
+import { Button, Modal, Message, Input } from 'semantic-ui-react';
 
 const SignupForm: VFC = () => {
   const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    console.log(email, password);
+  };
 
   return (
     <>
-      <Button
-        onClick={() => {
-          setOpen(true);
-        }}
+      <Modal
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+        open={open}
+        trigger={<Button>Sign up</Button>}
       >
-        Sign up?
-      </Button>
-
-      <Modal size="small" open={open}>
         <Modal.Header>Delete Your Account</Modal.Header>
-        <Modal.Content>
-          <p>Are you sure you want to delete your account</p>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            negative
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            No
-          </Button>
-          <Button
-            positive
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            Yes
-          </Button>
-        </Modal.Actions>
+        <form onSubmit={handleSubmit}>
+          <Modal.Content>
+            <Input
+              placeholder="email"
+              type="email"
+              value={email}
+              onChange={(_, data) => setEmail(data.value)}
+            />
+            <Input
+              placeholder="password"
+              type="password"
+              value={password}
+              onChange={(_, data) => setPassword(data.value)}
+            />
+          </Modal.Content>
+          <Modal.Actions>
+            <Button
+              type="submit"
+              primary
+              onSubmit={handleSubmit}
+              onClose={() => {
+                setOpen(false);
+              }}
+            >
+              Sign up
+            </Button>
+            <Button
+              negative
+              onClose={() => {
+                setOpen(false);
+              }}
+            >
+              Cancel
+            </Button>
+          </Modal.Actions>
+        </form>
+
         <Message
           error
           header="There was some errors with your submission"
