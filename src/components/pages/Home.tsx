@@ -1,8 +1,11 @@
+import ItemList from 'components/templates/ItemList';
+import MainVisual from 'components/templates/MainVisual';
 import { VFC } from 'react';
 
 const Home: VFC = () => (
   <>
-    <h1>This is home</h1>
+    <MainVisual />
+    <ItemList />
   </>
 );
 
