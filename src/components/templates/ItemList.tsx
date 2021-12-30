@@ -1,21 +1,14 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { VFC, useState, useEffect } from 'react';
+import { VFC } from 'react';
 import { css, jsx } from '@emotion/react';
 
-import { mockData } from 'data/items';
-import { Card, Grid, Image } from 'semantic-ui-react';
+import { Card, Container, Grid, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { Items } from 'hooks/use-get-items';
 
-type Data = {
-  _id: string;
-  image: string;
-  accepted?: boolean | null;
-  hi?: string[];
-  name: string;
-  description: string;
-  condition: string;
-  user: { username: string };
+type Props = {
+  latestItems: Items[];
 };
 
 const card = css`
@@ -23,17 +16,21 @@ const card = css`
   justify-content: center;
 `;
 
-const ItemList: VFC = () => {
-  const [items, setItems] = useState<Data[] | null>([]);
-
-  useEffect(() => {
-    setItems(mockData);
-  }, []);
-
-  return (
+const ItemList: VFC<Props> = ({ latestItems = [] }) => (
+  <Container>
+    <Grid columns={2} container divided="vertically" stackable>
+      <Grid.Row>
+        <Grid.Column floated="left" width={5} textAlign="left">
+          <h1>Latest Items</h1>
+        </Grid.Column>
+        <Grid.Column floated="right" width={5} textAlign="center">
+          {/* <SearchForm onQuickSearch={onQuickSearch} onSearch={onSearch} /> */}
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
     <Grid columns={3} stackable>
-      {items &&
-        items.map((item) => (
+      {latestItems &&
+        latestItems.map((item) => (
           <Grid.Column as={Link} to={`/item/${item._id}`} css={card}>
             <Card key={item._id}>
               <Image src={item.image} wrapped ui={false} alt="item-image" />
@@ -57,6 +54,6 @@ const ItemList: VFC = () => {
           </Grid.Column>
         ))}
     </Grid>
-  );
-};
+  </Container>
+);
 export default ItemList;

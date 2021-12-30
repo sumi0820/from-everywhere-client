@@ -4,20 +4,22 @@ import { VFC } from 'react';
 import { css, jsx } from '@emotion/react';
 
 const container = css`
-  background-image: url('https://res.cloudinary.com/djct87vbj/image/upload/v1605097867/Snapseed_mewpfq.jpg');
+  background-image: url('https://res.cloudinary.com/djct87vbj/image/upload/v1605094483/original_cb6fc0b556c5151ccb1480c27f96a81c_wcreh2.jpg');
   background-size: cover;
   background-position: center;
   display: flex;
   justify-content: center;
-  width: calc(100% + 20px);
   height: calc(100% + 200px);
   padding: 140px 0;
+  margin-top: 30px;
   margin-bottom: 100px;
 `;
 const Tagline = css`
   h1,
   p {
     margin-bottom: 0px;
+    color: white;
+    text-shadow: 1px 0 black;
   }
 `;
 
