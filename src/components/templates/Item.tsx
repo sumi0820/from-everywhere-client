@@ -9,7 +9,7 @@ type Props = {
   item: Item | undefined;
 };
 
-const ItemList: VFC<Props> = ({ item = {} }) => (
+const EnhancedItem: VFC<Props> = ({ item = {} }) => (
   <Container>
     {item && item.user ? (
       <>
@@ -41,4 +41,4 @@ const ItemList: VFC<Props> = ({ item = {} }) => (
     ) : null}
   </Container>
 );
-export default ItemList;
+export default EnhancedItem;
