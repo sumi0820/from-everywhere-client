@@ -3,8 +3,6 @@
 import { VFC } from 'react';
 import { Loader, SemanticSIZES } from 'semantic-ui-react';
 
-import './Spinner.css';
-
 import { css, jsx } from '@emotion/react';
 
 const spinner = css`
@@ -13,7 +11,7 @@ const spinner = css`
 const Spinner: VFC<{ size?: SemanticSIZES }> = ({ size = 'medium' }) => (
   <div css={spinner}>
     <Loader size={size} inline="centered" active>
-      読み込み中...
+      Loading...
     </Loader>
   </div>
 );

@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { mockData } from 'data/items';
 
 type ReturnValue = {
-  latestItems: Items[];
+  latestItems: Item[];
   isLoading: boolean;
 };
 
-export type Items = {
+export type Item = {
   _id: string;
   image: string;
   accepted?: boolean | null;
@@ -15,15 +15,15 @@ export type Items = {
   name: string;
   description: string;
   condition: string;
-  user: { username: string };
+  user: { _id: string; imageProfile: string; username: string };
 };
 
 const useGetItems = (): ReturnValue => {
   const [isLoading, setIsLoading] = useState(false);
-  const [latestItems, setLatestItems] = useState<Items[]>([]);
+  const [latestItems, setLatestItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    const isUnmounted = false;
+    let isUnmounted = false;
 
     // TODO: Need to fetch async
     // const load = async (): Promise<void> => {
@@ -49,6 +49,10 @@ const useGetItems = (): ReturnValue => {
     };
 
     void load();
+
+    return () => {
+      isUnmounted = true;
+    };
   }, []);
 
   return { latestItems, isLoading };

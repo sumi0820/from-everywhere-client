@@ -5,10 +5,10 @@ import { css, jsx } from '@emotion/react';
 
 import { Card, Container, Grid, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { Items } from 'hooks/use-get-items';
+import { Item } from 'hooks/use-get-items';
 
 type Props = {
-  latestItems: Items[];
+  latestItems: Item[];
 };
 
 const card = css`
@@ -31,9 +31,9 @@ const ItemList: VFC<Props> = ({ latestItems = [] }) => (
     <Grid columns={3} stackable>
       {latestItems &&
         latestItems.map((item) => (
-          <Grid.Column as={Link} to={`/item/${item._id}`} css={card}>
+          <Grid.Column  css={card}>
             <Card key={item._id}>
-              <Image src={item.image} wrapped ui={false} alt="item-image" />
+              <Image src={item.image} wrapped ui={false} alt="item-image" as={Link} to={`/item/${item._id}`}/>
               <Card.Content>
                 <Card.Header>
                   {item.name.length >= 20
