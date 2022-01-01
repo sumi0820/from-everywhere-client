@@ -5,9 +5,9 @@ import BurgerMenu from 'components/atoms/BurgerMenu';
 import useGetUser from 'hooks/use-get-user';
 import { useParams } from 'react-router-dom';
 import { Header } from 'semantic-ui-react';
-import User from 'components/templates/User';
+import UserEditForm from 'components/templates/UserEditForm';
 
-const UserDetail: VFC = () => {
+const UserEdit: VFC = () => {
   const { userId = '' } = useParams<{ userId: string }>();
   const { user, isLoading } = useGetUser(userId);
 
@@ -19,7 +19,7 @@ const UserDetail: VFC = () => {
         <>
           <Header />
           <BurgerMenu />
-          <User {...{ user }} />
+          <UserEditForm />
           <Footer />
         </>
       )}
@@ -27,4 +27,4 @@ const UserDetail: VFC = () => {
   );
 };
 
-export default UserDetail;
+export default UserEdit;

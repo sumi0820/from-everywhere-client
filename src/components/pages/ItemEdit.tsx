@@ -2,24 +2,24 @@ import { VFC } from 'react';
 import Spinner from 'components/atoms/Spinner';
 import Footer from 'components/atoms/Footer';
 import BurgerMenu from 'components/atoms/BurgerMenu';
-import useGetUser from 'hooks/use-get-user';
+import useGetItem from 'hooks/use-get-item';
 import { useParams } from 'react-router-dom';
 import { Header } from 'semantic-ui-react';
-import User from 'components/templates/User';
+import ItemEditForm from 'components/templates/ItemEditForm';
 
-const UserDetail: VFC = () => {
-  const { userId = '' } = useParams<{ userId: string }>();
-  const { user, isLoading } = useGetUser(userId);
+const ItemEdit: VFC = () => {
+  const { itemId = '' } = useParams<{ itemId: string }>();
+  const { item, isLoading } = useGetItem(itemId);
 
   return (
     <>
-      {isLoading && !user ? (
+      {isLoading && !item ? (
         <Spinner />
       ) : (
         <>
           <Header />
           <BurgerMenu />
-          <User {...{ user }} />
+          <ItemEditForm />
           <Footer />
         </>
       )}
@@ -27,4 +27,4 @@ const UserDetail: VFC = () => {
   );
 };
 
-export default UserDetail;
+export default ItemEdit;

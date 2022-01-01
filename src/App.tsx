@@ -8,6 +8,8 @@ import './App.css';
 import Home from 'components/pages/Home';
 import ItemDetail from 'components/pages/ItemDetail';
 import UserDetail from 'components/pages/UserDetail';
+import UserEdit from 'components/pages/UserEdit';
+import ItemEdit from 'components/pages/ItemEdit';
 
 const App: VFC = () => (
   <>
@@ -17,6 +19,8 @@ const App: VFC = () => (
         <Route path="/home" element={<Home />} />
         <Route path="/item/:itemId" element={<ItemDetail />} />
         <Route path="/user/:userId" element={<UserDetail />} />
+        <Route path="/item/edit" element={<ItemEdit />} />
+        <Route path="/user/edit" element={<UserEdit />} />
       </Routes>
     </Container>
   </>
