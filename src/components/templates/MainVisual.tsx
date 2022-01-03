@@ -4,7 +4,9 @@ import { VFC } from 'react';
 import { css, jsx } from '@emotion/react';
 
 const container = css`
-  background-image: url('https://res.cloudinary.com/djct87vbj/image/upload/v1605094483/original_cb6fc0b556c5151ccb1480c27f96a81c_wcreh2.jpg');
+  background: linear-gradient(to bottom, #fce4dc 0%, #c5e4e4 100%);
+  background: -webkit-linear-gradient(to bottom, #fce4dc 0%, #c5e4e4 100%);
+  background: -moz-linear-gradient(to bottom, #fce4dc 0%, #c5e4e4 100%);
   background-size: cover;
   background-position: center;
   display: flex;
@@ -12,14 +14,14 @@ const container = css`
   height: calc(100% + 200px);
   padding: 140px 0;
   margin-top: 30px;
-  margin-bottom: 100px;
+  margin-bottom: 90px;
 `;
 const Tagline = css`
   h1,
   p {
     margin-bottom: 0px;
-    color: white;
-    text-shadow: 1px 0 black;
+    color: #25201a;
+    text-shadow: 0 0 2px #444444;
   }
 `;
 

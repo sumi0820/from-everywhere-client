@@ -4,7 +4,7 @@
 import React, { VFC } from 'react';
 import { css, jsx } from '@emotion/react';
 
-import { Container, Grid, Header, Icon, Image } from 'semantic-ui-react';
+import { Container, Grid, Icon, Image } from 'semantic-ui-react';
 import { User } from 'hooks/use-get-user';
 import GoBackBtn from 'components/atoms/GoBackBtn';
 
@@ -12,45 +12,40 @@ type Props = {
   user: User | undefined;
 };
 
+const container = css`
+  margin-top: 30px;
+
+  .sixteen.wide.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .sixteen.wide.column > image {
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.6));
+    object-fit: contain;
+  }
+`;
+
 const EnhancedUser: VFC<Props> = ({ user = {} }) => (
-  <Container>
+  <Container text>
     {user && user.username ? (
-      <div>
-        <Container>
-          <Grid columns={1} stackable>
-            <Grid.Column width={16}>
-              <div
-                css={css`
-                  background-image: url(${user.imageBg});
-                  background-repeat: no-repeat;
-                  background-size: 100% 100%;
-                  height: 500px;
-                  width: 100%;
-                  filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.6));
-                  margin-bottom: 50px;
-                  display: flex;
-                  flex-direction: column;
-                  justify-content: center;
-                  align-items: center;
-                `}
-              >
-                <Image src={user.imageProfile} size="medium" circular />
-                <Header as="h1">{user.username}</Header>
-              </div>
-            </Grid.Column>
-          </Grid>
-        </Container>
-        <Container text>
-          <Grid>
-            <Grid.Column floated="left" width={5}>
-              <p>
-                <Icon name="map marker alternate" />
-                {user.location}
-              </p>
-            </Grid.Column>
-          </Grid>
-          <p>{user.bio}</p>
-        </Container>
+      <div css={container}>
+        <Grid columns={1} stackable>
+          <Grid.Column width={16}>
+            <Image src={user.imageProfile} size="medium" circular />
+            <h1>{user.username}</h1>
+          </Grid.Column>
+        </Grid>
+        <Grid>
+          <Grid.Column floated="left" width={5}>
+            <p>
+              <Icon name="map marker alternate" />
+              {user.location}
+            </p>
+          </Grid.Column>
+        </Grid>
+        <p>{user.bio}</p>
         <GoBackBtn />
       </div>
     ) : null}

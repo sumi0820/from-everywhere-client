@@ -28,6 +28,59 @@
   color: #61dafb;
 }
 
+h1,
+h2,
+p {
+  color: #25201a;
+  text-shadow: 0 0 2px #444;
+}
+
+.header,
+.description {
+  color: #25201a;
+  text-shadow: 0 0 1px #cbcccc;
+}
+
+.meta,
+.extra {
+  text-shadow: 0 0 2px #cbcccc;
+}
+
+.ui.input,
+textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #f8af86 !important;
+  border-radius: 5px;
+}
+
+.ui.label {
+  margin-right: 10px !important;
+  margin-bottom: 5px !important;
+  text-shadow: 0 0 0.5px #444 !important;
+  background-color: #d8e0a0 !important;
+}
+
+.ui.primary.button,
+.ui.primary.buttons .button {
+  padding: 0.5rem 2rem;
+  color: #25201a !important;
+  text-shadow: 0 0 0.5px #444 !important;
+  background-color: #c5e4e4 !important;
+  border-radius: 0.5rem;
+  border-radius: 100% 80px / 80px 100%;
+}
+
+.ui.negative.button,
+.ui.negative.buttons .button {
+  padding: 0.5rem 2rem;
+  color: #25201a !important;
+  text-shadow: 0 0 0.5px #444 !important;
+  background-color: #fcecf3 !important;
+  border-radius: 0.5rem;
+  border-radius: 100% 80px / 80px 100%;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

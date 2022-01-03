@@ -31,9 +31,16 @@ const ItemList: VFC<Props> = ({ latestItems = [] }) => (
     <Grid columns={3} stackable>
       {latestItems &&
         latestItems.map((item) => (
-          <Grid.Column  css={card}>
+          <Grid.Column css={card}>
             <Card key={item._id}>
-              <Image src={item.image} wrapped ui={false} alt="item-image" as={Link} to={`/item/${item._id}`}/>
+              <Image
+                src={item.image}
+                wrapped
+                ui={false}
+                alt="item-image"
+                as={Link}
+                to={`/item/${item._id}`}
+              />
               <Card.Content>
                 <Card.Header>
                   {item.name.length >= 20

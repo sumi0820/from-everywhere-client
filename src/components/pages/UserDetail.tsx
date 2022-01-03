@@ -4,7 +4,7 @@ import Footer from 'components/atoms/Footer';
 import BurgerMenu from 'components/atoms/BurgerMenu';
 import useGetUser from 'hooks/use-get-user';
 import { useParams } from 'react-router-dom';
-import { Header } from 'semantic-ui-react';
+import Header from 'components/atoms/Header';
 import User from 'components/templates/User';
 
 const UserDetail: VFC = () => {

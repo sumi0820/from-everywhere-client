@@ -1,7 +1,8 @@
 /** @jsxRuntime classic */
-
+/** @jsx jsx */
 import GoBackBtn from 'components/atoms/GoBackBtn';
 import React, { VFC } from 'react';
+import { css, jsx } from '@emotion/react';
 
 import {
   Button,
@@ -13,8 +14,15 @@ import {
   TextArea,
 } from 'semantic-ui-react';
 
+const container = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 const UserEditForm: VFC = () => (
-  <Container text>
+  <Container text css={container}>
+    <h2>Edit Your Profile</h2>
     <Grid container>
       <Grid.Column>
         <Form className="form__editUser">
@@ -35,26 +43,14 @@ const UserEditForm: VFC = () => (
             /> */}
           {/* </Form.Field> */}
 
-          <Grid container columns={2} stackable>
-            <Grid.Column>
-              <Form.Field>
-                <Label>Profile Image</Label>
-                <Input type="file" name="imageProfile" />
-              </Form.Field>
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Field>
-                <Label>Background Image</Label>
-                <Input type="file" name="imageBg" />
-              </Form.Field>
-            </Grid.Column>
-          </Grid>
+          <Form.Field>
+            <Label>Profile Image</Label>
+            <Input type="file" name="imageProfile" />
+          </Form.Field>
 
-          <div className="itemDetail__btn profile__btn__container">
-            <Button type="submit" secondary>
-              Update
-            </Button>
-          </div>
+          <Button type="submit" primary>
+            Update
+          </Button>
         </Form>
         <GoBackBtn />
       </Grid.Column>

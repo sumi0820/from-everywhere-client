@@ -1,5 +1,5 @@
 /** @jsxRuntime classic */
-
+/** @jsx jsx */
 import GoBackBtn from 'components/atoms/GoBackBtn';
 import React, { VFC } from 'react';
 
@@ -12,9 +12,18 @@ import {
   Label,
   TextArea,
 } from 'semantic-ui-react';
+import { css, jsx } from '@emotion/react';
+
+const container = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 
 const ItemEditform: VFC = () => (
-  <Container text>
+  <Container text css={container}>
+    <h2>Edit Your Item</h2>
     <Grid container>
       <Grid.Column>
         <Form className="form__editUser">
@@ -28,20 +37,15 @@ const ItemEditform: VFC = () => (
             <TextArea type="text" name="bio" />
           </Form.Field>
 
-          <Form.Field required>
-            <Label>Condition</Label>
-            <Input placeholder="..." />
-          </Form.Field>
-
           <Form.Field>
             <Label>Item Image</Label>
             <Input type="file" name="imageProfile" />
           </Form.Field>
 
-          <Button type="submit" secondary>
+          <Button type="submit" primary>
             Update
           </Button>
-          <Button type="submit" secondary>
+          <Button type="submit" negative>
             Delete
           </Button>
         </Form>

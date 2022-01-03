@@ -1,8 +1,58 @@
+/** @jsxRuntime classic */
+/** @jsx jsx */
 import { VFC, FormEvent, useState } from 'react';
-import { Button, Modal, Message, Input } from 'semantic-ui-react';
+import { Button, Modal, Input, Message } from 'semantic-ui-react';
+import { css, jsx } from '@emotion/react';
+
+const container = css`
+  .ui.button {
+    margin-bottom: 10px;
+    background-color: #c5e4e4;
+    color: #25201a;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+  }
+`;
+const modal = css`
+  .header.header {
+    background: #fffdf0;
+    border-bottom: 0px;
+  }
+
+  .ui.error.message {
+    margin-top: 0px;
+    background-color: #fcecf3;
+    box-shadow: none;
+  }
+
+  .ui.error.message .header {
+    background-color: #fcecf3;
+  }
+`;
+
+const form = css`
+  background: #fffdf0;
+
+  .content,
+  .actions {
+    display: flex;
+    padding: 5px 30px;
+    justify-content: center;
+  }
+
+  .content {
+    flex-direction: column;
+  }
+  .actions {
+    margin-bottom: 10px;
+  }
+`;
 
 const SignupForm: VFC = () => {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -12,15 +62,22 @@ const SignupForm: VFC = () => {
   };
 
   return (
-    <>
+    <div css={container}>
       <Modal
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        open={open}
-        trigger={<Button>Sign up</Button>}
+        onClose={() => {
+          setOpen(false);
+        }}
+        onOpen={() => {
+          setOpen(true);
+        }}
+        open={isOpen}
+        dimmer="inverted"
+        size="mini"
+        trigger={<Button>Sign up?</Button>}
+        css={modal}
       >
-        <Modal.Header>Delete Your Account</Modal.Header>
-        <form onSubmit={handleSubmit}>
+        <Modal.Header className="header">Create Your Account</Modal.Header>
+        <form onSubmit={handleSubmit} css={form}>
           <Modal.Content>
             <Input
               placeholder="email"
@@ -37,10 +94,10 @@ const SignupForm: VFC = () => {
           </Modal.Content>
           <Modal.Actions>
             <Button
-              type="submit"
+              type="button"
               primary
               onSubmit={handleSubmit}
-              onClose={() => {
+              onClick={() => {
                 setOpen(false);
               }}
             >
@@ -48,7 +105,7 @@ const SignupForm: VFC = () => {
             </Button>
             <Button
               negative
-              onClose={() => {
+              onClick={() => {
                 setOpen(false);
               }}
             >
@@ -66,7 +123,7 @@ const SignupForm: VFC = () => {
           ]}
         />
       </Modal>
-    </>
+    </div>
   );
 };
 

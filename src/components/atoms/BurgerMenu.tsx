@@ -12,8 +12,8 @@ const burger = css`
     position: fixed;
     width: 36px;
     height: 30px;
-    right: 36px;
-    top: 36px;
+    right: 16px;
+    top: 10px;
   }
 
   /* Color/shape of burger icon bars */

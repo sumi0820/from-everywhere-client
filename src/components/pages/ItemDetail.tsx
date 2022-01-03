@@ -13,20 +13,14 @@ const ItemDetail: VFC = () => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && !item ? (
         <Spinner />
       ) : (
         <>
-          {isLoading && !item ? (
-            <Spinner />
-          ) : (
-            <>
-              <Header />
-              <BurgerMenu />
-              <Item {...{ item }} />
-              <Footer />
-            </>
-          )}
+          <Header />
+          <BurgerMenu />
+          <Item {...{ item }} />
+          <Footer />
         </>
       )}
     </>
