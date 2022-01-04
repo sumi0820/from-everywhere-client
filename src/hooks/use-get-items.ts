@@ -1,48 +1,35 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { mockData } from 'data/items';
+import { itemsSlice, ItemsState } from '../features/item';
+import { Item, getItems } from '../domains/index';
 
 type ReturnValue = {
-  latestItems: Item[];
+  items: Item[];
   isLoading: boolean;
-};
-
-export type Item = {
-  _id: string;
-  image: string;
-  accepted?: boolean | null;
-  hi?: string[];
-  name: string;
-  description: string;
-  condition: string;
-  user: { _id: string; imageProfile: string; username: string };
 };
 
 const useGetItems = (): ReturnValue => {
   const [isLoading, setIsLoading] = useState(false);
-  const [latestItems, setLatestItems] = useState<Item[]>([]);
+  const items = useSelector<ItemsState, Item[]>((state) => state.items);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let isUnmounted = false;
+    const { itemsGotten } = itemsSlice.actions;
 
-    // TODO: Need to fetch async
-    // const load = async (): Promise<void> => {
-    const load = (): void => {
+    const load = async (): Promise<void> => {
       setIsLoading(true);
+      try {
+        const items = await getItems(); // eslint-disable-line no-shadow
 
-      if (!isUnmounted && mockData.length) {
-        const sorted = mockData.sort((a, b) => {
-          if (a.updatedAt < b.updatedAt) return 1;
-          if (a.updatedAt > b.updatedAt) return -1;
-
-          return 0;
-        });
-        // .filter((item) => item.user._id != loggedInUser._id);
-        if (mockData.length > 7) {
-          setLatestItems(sorted.slice(0, 6));
-        } else {
-          setLatestItems(sorted);
+        if (!isUnmounted) {
+          dispatch(itemsGotten({ items }));
         }
+      } catch (err) {
+        throw new Error(`something's wrong`);
+      } finally {
+        setIsLoading(false);
       }
 
       setIsLoading(false);
@@ -53,9 +40,10 @@ const useGetItems = (): ReturnValue => {
     return () => {
       isUnmounted = true;
     };
-  }, []);
+  }, [dispatch]);
+  console.log(items);
 
-  return { latestItems, isLoading };
+  return { items, isLoading };
 };
 
 export default useGetItems;

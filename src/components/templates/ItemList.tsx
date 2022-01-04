@@ -5,10 +5,10 @@ import { css, jsx } from '@emotion/react';
 
 import { Card, Container, Grid, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { Item } from 'hooks/use-get-items';
+import { Item } from '../../domains/models/item';
 
 type Props = {
-  latestItems: Item[];
+  items: Item[];
 };
 
 const card = css`
@@ -16,7 +16,7 @@ const card = css`
   justify-content: center;
 `;
 
-const ItemList: VFC<Props> = ({ latestItems = [] }) => (
+const ItemList: VFC<Props> = ({ items = [] }) => (
   <Container>
     <Grid columns={2} container divided="vertically" stackable>
       <Grid.Row>
@@ -29,17 +29,17 @@ const ItemList: VFC<Props> = ({ latestItems = [] }) => (
       </Grid.Row>
     </Grid>
     <Grid columns={3} stackable>
-      {latestItems &&
-        latestItems.map((item) => (
+      {items &&
+        items.map((item) => (
           <Grid.Column css={card}>
-            <Card key={item._id}>
+            <Card key={item.id}>
               <Image
                 src={item.image}
                 wrapped
                 ui={false}
                 alt="item-image"
                 as={Link}
-                to={`/item/${item._id}`}
+                to={`/item/${item.id}`}
               />
               <Card.Content>
                 <Card.Header>
@@ -55,7 +55,7 @@ const ItemList: VFC<Props> = ({ latestItems = [] }) => (
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>
-                <Link to={`/item/${item._id}`}>Read more</Link>
+                <Link to={`/item/${item.id}`}>Read more</Link>
               </Card.Content>
             </Card>
           </Grid.Column>

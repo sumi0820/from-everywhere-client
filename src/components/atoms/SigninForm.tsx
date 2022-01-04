@@ -28,13 +28,7 @@ const container = css`
 
   .ui.primary.button {
     margin-bottom: 10px;
-    background-color: #c5e4e4;
-    color: #25201a;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    appearance: none;
+    background-color: transparent !important;
   }
 `;
 
