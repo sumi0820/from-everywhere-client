@@ -11,8 +11,6 @@ export const itemsSlice = createSlice({
     itemsGotten: (state, action: PayloadAction<{ items: Item[] }>) => ({
       ...state,
       items: action.payload.items,
-      isLoading: false,
-      error: null,
     }),
   },
 });

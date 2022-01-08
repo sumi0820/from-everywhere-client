@@ -5,8 +5,8 @@ import React, { VFC } from 'react';
 import { css, jsx } from '@emotion/react';
 
 import { Container, Grid, Icon, Image } from 'semantic-ui-react';
-import { User } from 'hooks/use-get-user';
 import GoBackBtn from 'components/atoms/GoBackBtn';
+import { User } from '../../domains';
 
 type Props = {
   user: User | undefined;

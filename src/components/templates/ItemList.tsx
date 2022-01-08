@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { Item } from '../../domains/models/item';
 
 type Props = {
-  items: Item[];
+  items: Item[] ;
 };
 
 const card = css`
@@ -31,8 +31,8 @@ const ItemList: VFC<Props> = ({ items = [] }) => (
     <Grid columns={3} stackable>
       {items &&
         items.map((item) => (
-          <Grid.Column css={card}>
-            <Card key={item.id}>
+          <Grid.Column css={card} key={item.id}>
+            <Card>
               <Image
                 src={item.image}
                 wrapped

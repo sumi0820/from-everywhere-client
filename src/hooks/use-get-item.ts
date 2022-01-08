@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { RootState } from 'features/reducers';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Item } from '../domains/models/item';
-import { ItemsState } from '../features/item';
+import { Item as ItemType } from '../domains/models/item';
 
 type ReturnValue = {
   item: Item | undefined;
@@ -11,8 +12,10 @@ type ReturnValue = {
 
 const useGetItem = (id: string): ReturnValue => {
   const [isLoading, setIsLoading] = useState(false);
-  const items = useSelector<ItemsState, Item[]>((state) => state.items);
-  const [item, setItem] = useState<Item>();
+  const items = useSelector<RootState, ItemType[]>(
+    (state) => state.item.items,
+  );
+    const [item, setItem] = useState<Item>();
 
   useEffect(() => {
     let isUnmounted = false;

@@ -2,21 +2,33 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import reducers from 'features/reducers';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css';
 import './index.css';
-import { itemsSlice } from './features/item';
 
-const store = configureStore({
-  reducer: itemsSlice.reducer,
-});
+const persistConfig = {
+  key: 'root',
+  storage,
+  // blacklist: ['items'],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+const store = configureStore({ reducer: persistedReducer });
+const persistor = persistStore(store);
+
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </PersistGate>
   </Provider>,
   document.getElementById('root'),
 );
