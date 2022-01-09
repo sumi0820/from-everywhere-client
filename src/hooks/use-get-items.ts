@@ -26,8 +26,6 @@ const useGetItems = (): ReturnValue => {
 
         if (!isUnmounted) {
           dispatch(itemsGotten({ items: fetchedItems }));
-          console.log(items);
-          // setItems(fetchedItems);
         }
       } catch (err) {
         throw new Error(`something's wrong`);

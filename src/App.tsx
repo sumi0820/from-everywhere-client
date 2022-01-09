@@ -25,10 +25,38 @@ const App: VFC = () => (
             </RequireAuth>
           }
         />
-        <Route path="/item/:itemId" element={<ItemDetail />} />
-        <Route path="/user/:userId" element={<UserDetail />} />
-        <Route path="/item/edit" element={<ItemEdit />} />
-        <Route path="/user/edit" element={<UserEdit />} />
+        <Route
+          path="/item/:itemId"
+          element={
+            <RequireAuth redirectTo="/">
+              <ItemDetail />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/user/:userId"
+          element={
+            <RequireAuth redirectTo="/">
+              <UserDetail />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/item/edit"
+          element={
+            <RequireAuth redirectTo="/">
+              <ItemEdit />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/user/edit"
+          element={
+            <RequireAuth redirectTo="/">
+              <UserEdit />
+            </RequireAuth>
+          }
+        />
       </Routes>
     </Container>
   </>

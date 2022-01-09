@@ -6,10 +6,16 @@ import useGetItem from 'hooks/use-get-item';
 import Spinner from 'components/atoms/Spinner';
 import Item from 'components/templates/Item';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from 'features/reducers';
+import { User as UserType } from 'domains';
 
 const ItemDetail: VFC = () => {
   const { itemId = '' } = useParams<{ itemId: string }>();
   const { item, isLoading } = useGetItem(itemId);
+  const loggedInUser = useSelector<RootState, UserType | null>(
+    (state) => state.user.loggedInUser,
+  );
 
   return (
     <>
@@ -19,7 +25,7 @@ const ItemDetail: VFC = () => {
         <>
           <Header />
           <BurgerMenu />
-          <Item {...{ item }} />
+          <Item {...{ item, loggedInUser }} />
           <Footer />
         </>
       )}

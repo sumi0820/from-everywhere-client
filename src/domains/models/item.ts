@@ -2,7 +2,7 @@
 import { User } from './user';
 
 export type Item = {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   image: string;
@@ -11,4 +11,5 @@ export type Item = {
   user: User;
   hi?: string[];
   timestamps: string;
+  _id?: string;
 };

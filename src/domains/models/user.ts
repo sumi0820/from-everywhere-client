@@ -2,7 +2,7 @@
 import { Item } from './item';
 
 export type User = {
-  id: string;
+  id?: string;
   login: string;
   username: string;
   email: string;
@@ -16,4 +16,5 @@ export type User = {
   feedback?: string[];
   accepted?: string;
   like: string[];
+  _id?: string;
 };

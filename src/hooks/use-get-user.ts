@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { User } from 'domains';
 import { RootState } from 'features/reducers';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Item, Item as ItemType } from '../domains/models/item';
+import { Item as ItemType } from '../domains/models/item';
 
 type ReturnValue = {
-  item: Item | undefined;
+  filteredUser: User | undefined;
   isLoading: boolean;
 };
 
-const useGetItem = (id: string): ReturnValue => {
+const useGetUser = (id: string): ReturnValue => {
   const [isLoading, setIsLoading] = useState(false);
   const items = useSelector<RootState, ItemType[]>((state) => state.item.items);
-  const [item, setItem] = useState<Item>();
+  const [filteredUser, setFilteredUser] = useState<User>();
 
   useEffect(() => {
     let isUnmounted = false;
@@ -20,7 +21,9 @@ const useGetItem = (id: string): ReturnValue => {
       setIsLoading(true);
 
       if (!isUnmounted && items) {
-        setItem(items.filter((elem) => elem.id === id)[0]);
+        const { user } = items.filter((elem) => elem.user._id === id)[0];
+
+        setFilteredUser(user);
         setIsLoading(false);
       }
     };
@@ -32,7 +35,7 @@ const useGetItem = (id: string): ReturnValue => {
     };
   }, [id]);
 
-  return { item, isLoading };
+  return { filteredUser, isLoading };
 };
 
-export default useGetItem;
+export default useGetUser;
