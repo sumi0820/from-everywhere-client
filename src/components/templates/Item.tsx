@@ -60,7 +60,7 @@ const EnhancedItem: VFC<Props> = ({ item = {}, loggedInUser }) => (
           </Grid.Row>
           <Grid.Row columns={1}>
             <Grid.Column>
-              <p>{item.description}</p>
+              <p className='description'>{item.description}</p>
             </Grid.Column>
           </Grid.Row>
         </Grid>

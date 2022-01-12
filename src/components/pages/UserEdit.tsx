@@ -1,28 +1,31 @@
 import { VFC } from 'react';
 import Spinner from 'components/atoms/Spinner';
-// import Footer from 'components/atoms/Footer';
-// import BurgerMenu from 'components/atoms/BurgerMenu';
-// import useGetUser from 'hooks/use-post-user';
-// import { useParams } from 'react-router-dom';
-// import UserEditForm from 'components/templates/UserEditForm';
-// import Header from 'components/atoms/Header';
+import Footer from 'components/atoms/Footer';
+import BurgerMenu from 'components/atoms/BurgerMenu';
+import UserEditForm from 'components/templates/UserEditForm';
+import Header from 'components/atoms/Header';
+import { useSelector } from 'react-redux';
+import { RootState } from 'features/reducers';
+import { User as UserType } from 'domains';
 
-const UserEdit: VFC = () => (
-  // const { userId = '' } = useParams<{ userId: string }>();
-  // const { user, isLoading } = useGetUser(userId);
+const UserEdit: VFC = () => {
+  const loggedInUser = useSelector<RootState, UserType | null>(
+    (state) => state.user.loggedInUser,
+  );
 
-  // <>
-  //   {isLoading && !user ? (
-  <Spinner />
-  // ) : (
-  //     <>
-  //       <Header />
-  //       <BurgerMenu />
-
-  //       <UserEditForm />
-  //       <Footer />
-  //     </>
-  //   )}
-  // </>
-);
+  return (
+    <>
+      {loggedInUser && !loggedInUser ? (
+        <Spinner />
+      ) : (
+        <>
+          <Header />
+          <BurgerMenu />
+          <UserEditForm loggedInUser={loggedInUser} />
+          <Footer />
+        </>
+      )}
+    </>
+  );
+};
 export default UserEdit;
